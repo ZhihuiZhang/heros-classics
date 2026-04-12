@@ -17,13 +17,41 @@ ARCHIVE = Path("archive/www.hero-s.com")
 OUT = Path("content")
 OUT.mkdir(exist_ok=True)
 
-# Strings to strip from any extracted text
+# In-text patterns to remove (substring substitution)
 STRIP_PATTERNS = [
     re.compile(r"Copyright\s*\(C\)\s*\d{4}\s*HERO-?S[^\n]*", re.IGNORECASE),
     re.compile(r"Copyright\s*\(C\)\s*\d{4}\s*G\.?T\.?Entertainment[^\n]*", re.IGNORECASE),
     re.compile(r"当サイトで使用している写真およびテキストの無断転載を禁止します。?"),
     re.compile(r"Mail\s*to\s*:?\s*official@hero-s\.com", re.IGNORECASE),
-    re.compile(r"official@hero-s\.com", re.IGNORECASE),
+    re.compile(r"[\w.+-]*@hero-s\.com", re.IGNORECASE),
+    re.compile(r"https?://(www\.)?dreamofficial\.com[^\s]*", re.IGNORECASE),
+    re.compile(r"https?://(www\.)?hero-s\.com[^\s]*", re.IGNORECASE),
+    re.compile(r"https?://(eee\.)?eplus\.(co\.)?jp[^\s]*", re.IGNORECASE),
+]
+
+# Whole-line drop patterns: if a line matches any of these, drop the whole line
+LINE_DROP_PATTERNS = [
+    re.compile(r"株式会社\s*キョードー"),
+    re.compile(r"キョードー(東京|チケットセンター|大阪|名古屋|横浜)"),
+    # TEL/FAX/電話 followed by digits or colon (i.e. a phone number)
+    re.compile(r"(?:TEL|Tel|tel|FAX|Fax|fax)[\s::\-－ｰ]*[\d0-9０-９]"),
+    re.compile(r"電話[\s::]*\d"),
+    re.compile(r"お問[いあ]?\s*合[わ]?\s*せ"),
+    re.compile(r"問\s*い?\s*合わせ"),
+    re.compile(r"ファンクラブ.*\d{2,}"),
+    re.compile(r"特電"),
+    # 0570 (Japan navi-dial) with ascii/full-width/katakana hyphens
+    re.compile(r"0570[\-－ｰ]?\d{2,3}[\-－ｰ]?\d{3,4}"),
+    # Phone-like with any Unicode hyphen variant
+    re.compile(r"0\d{1,4}[\-－ｰ]\d{1,4}[\-－ｰ]\d{3,4}"),
+    re.compile(r"^\s*\(\s*0\d{1,4}\)\s*\d"),
+    # Lines mentioning eplus
+    re.compile(r"eplus\.jp", re.IGNORECASE),
+    # Booking/code lines that reference 0570 indirectly
+    re.compile(r"0570から始まる"),
+    re.compile(r"Lコード[:：]"),
+    # 実行委員会/開催事務局 contact lines
+    re.compile(r"(実行委員会|開催事務局).*?\d{2,4}[\-－]\d"),
 ]
 
 # Patterns matched against the FULL src path
@@ -105,6 +133,9 @@ def visible_text_blocks(soup: BeautifulSoup) -> str:
     for line in cleaned.split("\n"):
         line = line.strip(" 　\t")
         if not line or len(line) < 2:
+            continue
+        # Drop entire line if it matches contact/company patterns
+        if any(p.search(line) for p in LINE_DROP_PATTERNS):
             continue
         # Skip nav/chrome labels (short lines that match known nav)
         normalized = re.sub(r"[\s［］\[\]【】]+", "", line)

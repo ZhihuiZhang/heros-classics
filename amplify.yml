@@ -3,11 +3,15 @@ frontend:
   phases:
     preBuild:
       commands:
-        - pip3 install --user beautifulsoup4 lxml
+        - python3 --version
+        - python3 -m pip --version || true
+        - python3 -m pip install --user --break-system-packages beautifulsoup4 lxml || python3 -m pip install --user beautifulsoup4 lxml
+        - python3 -c "import bs4, lxml; print('bs4', bs4.__version__, 'lxml', lxml.__version__)"
     build:
       commands:
         - python3 extract.py
         - python3 build.py
+        - ls -la dist | head
   artifacts:
     baseDirectory: dist
     files:

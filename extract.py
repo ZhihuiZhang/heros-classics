@@ -41,13 +41,22 @@ BOILERPLATE_RE = re.compile(
 )
 
 
+TITLE_SKIP_RE = re.compile(
+    r"(HERO'?S.*?[★☆][^\s]*|EVENT\s*(SCHEDULE|RESULT)|"
+    r"FIGHTERS?\s*(INFO|PROFILE)|MEDIA\s*INFO|NEWS|VOTE|TOP|HOME)",
+    re.IGNORECASE,
+)
+
+
 def derive_title(body: str, date_str: str) -> str:
     for line in body.split("\n"):
         line = line.strip()
         line = re.sub(r"^[■●◆▼▲※»\s]+", "", line).strip()
         if len(line) < 6:
             continue
-        # Skip lines that look like nav labels
+        # Skip lines that look like nav/title-tag boilerplate
+        if TITLE_SKIP_RE.search(line) and len(line) < 40:
+            continue
         if len(line) < 20 and BOILERPLATE_RE.search(line):
             continue
         if line.startswith(("http://", "https://")):
@@ -55,7 +64,7 @@ def derive_title(body: str, date_str: str) -> str:
         if len(line) > 70:
             line = line[:70].rstrip() + "…"
         return line
-    return f"HERO'S NEWS {date_str}"
+    return f"HERO'S {date_str}"
 
 
 def clean_text(text: str) -> str:
@@ -179,6 +188,188 @@ def extract_news() -> list[dict]:
     return items
 
 
+# ---------- Events ---------------------------------------------------------
+
+
+def extract_events() -> list[dict]:
+    """Event schedules (02eventschedule/YYYYMMDD/)."""
+    items: list[dict] = []
+    base = ARCHIVE / "02eventschedule"
+    if not base.exists():
+        return items
+    for entry in sorted(base.iterdir()):
+        if not entry.is_dir():
+            continue
+        m = DATE_RE.match(entry.name)
+        if not m:
+            continue
+        date_str = m.group(1)
+        htmls = [h for h in sorted(entry.glob("*.html")) if "@" not in h.name]
+        if not htmls:
+            continue
+        primary = htmls[0]
+        soup = BeautifulSoup(primary.read_text(encoding="utf-8", errors="replace"), "lxml")
+        body = visible_text_blocks(soup)
+        if not body:
+            continue
+        images = collect_local_images(primary, soup)
+        nice_date = f"{date_str[:4]}.{date_str[4:6]}.{date_str[6:8]}"
+        items.append({
+            "id": entry.name,
+            "date": f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:8]}",
+            "slug": entry.name,
+            "title": f"HERO'S {nice_date} 大会概要",
+            "body": body,
+            "images": images,
+            "source": str(primary.relative_to(ARCHIVE)),
+        })
+    items.sort(key=lambda x: x["date"], reverse=True)
+    return items
+
+
+def extract_event_results() -> list[dict]:
+    """Event result top pages (03eventresult/YYYYMMDD/*.html at top level)."""
+    items: list[dict] = []
+    base = ARCHIVE / "03eventresult"
+    if not base.exists():
+        return items
+    for entry in sorted(base.iterdir()):
+        if not entry.is_dir():
+            continue
+        m = DATE_RE.match(entry.name)
+        if not m:
+            continue
+        date_str = m.group(1)
+        # Top-level HTMLs (index / overview), ignore per-fight subdirs here
+        top_htmls = [
+            h for h in sorted(entry.glob("*.html"))
+            if "@" not in h.name
+        ]
+        if not top_htmls:
+            continue
+        primary = top_htmls[0]
+        soup = BeautifulSoup(primary.read_text(encoding="utf-8", errors="replace"), "lxml")
+        body = visible_text_blocks(soup)
+        if not body:
+            continue
+        images = collect_local_images(primary, soup)
+        nice_date = f"{date_str[:4]}.{date_str[4:6]}.{date_str[6:8]}"
+        # Collect additional sub-pages (per fight)
+        subpages: list[dict] = []
+        for sub in sorted(entry.iterdir()):
+            if not sub.is_dir():
+                continue
+            for sub_html in sorted(sub.glob("*.html")):
+                if "@" in sub_html.name:
+                    continue
+                sub_soup = BeautifulSoup(
+                    sub_html.read_text(encoding="utf-8", errors="replace"), "lxml")
+                sub_body = visible_text_blocks(sub_soup)
+                if not sub_body or len(sub_body) < 20:
+                    continue
+                sub_title = derive_title(sub_body, date_str)
+                sub_images = collect_local_images(sub_html, sub_soup)
+                subpages.append({
+                    "slug": sub.name,
+                    "title": sub_title,
+                    "body": sub_body,
+                    "images": sub_images,
+                })
+                break
+        items.append({
+            "id": entry.name,
+            "date": f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:8]}",
+            "slug": entry.name,
+            "title": f"HERO'S {nice_date} 試合結果",
+            "body": body,
+            "images": images,
+            "subpages": subpages,
+            "source": str(primary.relative_to(ARCHIVE)),
+        })
+    items.sort(key=lambda x: x["date"], reverse=True)
+    return items
+
+
+# ---------- Fighters -------------------------------------------------------
+
+
+FIGHTER_LABELS = {
+    "所属": "team",
+    "生年月日": "birth",
+    "出身地": "origin",
+    "身長": "height",
+    "体重": "weight",
+    "バックボーン": "background",
+    "主な獲得タイトル": "titles",
+    "対戦成績": "record_summary",
+}
+
+
+def parse_fighter(html_path: Path) -> dict | None:
+    soup = BeautifulSoup(html_path.read_text(encoding="utf-8", errors="replace"), "lxml")
+    for s in soup(["script", "style", "noscript"]):
+        s.decompose()
+    for br in soup.find_all("br"):
+        br.replace_with("\n")
+    raw_lines = [l.strip() for l in soup.get_text("\n").split("\n") if l.strip()]
+    # Drop leading boilerplate
+    lines: list[str] = []
+    for l in raw_lines:
+        if not lines and ("HERO" in l or "PROFILE" in l or "FIGHTERS" in l):
+            continue
+        # Drop copyright/mail lines
+        if any(p.search(l) for p in STRIP_PATTERNS):
+            continue
+        lines.append(l)
+    if not lines:
+        return None
+    name_jp = lines[0] if lines else ""
+    name_en = lines[1] if len(lines) > 1 and re.search(r"[A-Za-z]", lines[1]) else ""
+    info: dict[str, str] = {}
+    i = 2 if name_en else 1
+    while i < len(lines):
+        label = lines[i]
+        if label in FIGHTER_LABELS and i + 1 < len(lines):
+            info[FIGHTER_LABELS[label]] = lines[i + 1]
+            i += 2
+        else:
+            i += 1
+    images = collect_local_images(html_path, soup)
+    slug_dir = html_path.parent.name
+    category = html_path.parent.parent.name
+    return {
+        "id": f"{category}/{slug_dir}",
+        "slug": slug_dir,
+        "category": category,
+        "name_jp": name_jp,
+        "name_en": name_en,
+        "info": info,
+        "images": images,
+        "source": str(html_path.relative_to(ARCHIVE)),
+    }
+
+
+def extract_fighters() -> list[dict]:
+    items: list[dict] = []
+    base = ARCHIVE / "06fightersinfo"
+    if not base.exists():
+        return items
+    for category in sorted(base.iterdir()):
+        if not category.is_dir() or category.name == "img_share":
+            continue
+        for fighter_dir in sorted(category.iterdir()):
+            if not fighter_dir.is_dir():
+                continue
+            htmls = [h for h in sorted(fighter_dir.glob("*.html")) if "@" not in h.name]
+            if not htmls:
+                continue
+            result = parse_fighter(htmls[0])
+            if result:
+                items.append(result)
+    items.sort(key=lambda x: (x["category"], x["slug"]))
+    return items
+
+
 # ---------- About / What's HERO'S -----------------------------------------
 
 
@@ -191,18 +382,32 @@ def extract_about() -> dict | None:
     return {"title": "HERO'S とは", "body": body, "source": str(p.relative_to(ARCHIVE))}
 
 
+def _save(name: str, data) -> None:
+    (OUT / name).write_text(
+        json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
+
 def main() -> None:
     news = extract_news()
-    (OUT / "news.json").write_text(
-        json.dumps(news, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    _save("news.json", news)
     print(f"news: {len(news)} items")
+
+    events = extract_events()
+    _save("events.json", events)
+    print(f"events: {len(events)} items")
+
+    results = extract_event_results()
+    _save("results.json", results)
+    print(f"results: {len(results)} items")
+
+    fighters = extract_fighters()
+    _save("fighters.json", fighters)
+    print(f"fighters: {len(fighters)} items")
 
     about = extract_about()
     if about:
-        (OUT / "about.json").write_text(
-            json.dumps(about, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
+        _save("about.json", about)
         print(f"about: {len(about['body'])} chars")
 
 

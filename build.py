@@ -48,6 +48,9 @@ def layout(*, title: str, description: str, canonical: str, body: str, extra_hea
     <nav class="site-nav">
       <a href="/">ホーム</a>
       <a href="/news/">ニュース</a>
+      <a href="/events/">イベント</a>
+      <a href="/results/">試合結果</a>
+      <a href="/fighters/">選手</a>
       <a href="/about/">HERO'Sとは</a>
     </nav>
   </div>
@@ -143,26 +146,169 @@ def build_news_index(items: list[dict]) -> str:
     return "\n".join(parts)
 
 
-def build_home(items: list[dict]) -> str:
-    latest = items[:12]
-    cards = "".join(
-        f'<a class="card" href="/news/{esc(it["slug"])}/">'
-        + (f'<img src="{esc(archive_img_url(it["images"][0]))}" alt="" loading="lazy">' if it["images"] else '')
-        + f'<div class="card-body"><time>{esc(format_date(it["date"]))}</time>'
-        f'<h3>{esc(it["title"])}</h3></div></a>'
-        for it in latest
+def build_home(news: list[dict], events: list[dict], results: list[dict], fighters: list[dict]) -> str:
+    def card(base: str, it: dict, date: bool = True) -> str:
+        img = f'<img src="{esc(archive_img_url(it["images"][0]))}" alt="" loading="lazy">' if it.get("images") else ""
+        time_html = f'<time>{esc(format_date(it["date"]))}</time>' if date and it.get("date") else ""
+        return (
+            f'<a class="card" href="{base}{esc(it["slug"])}/">{img}'
+            f'<div class="card-body">{time_html}'
+            f'<h3>{esc(it.get("title") or it.get("name_jp",""))}</h3></div></a>'
+        )
+
+    news_cards = "".join(card("/news/", it) for it in news[:8])
+    result_cards = "".join(card("/results/", it) for it in results[:4])
+    event_cards = "".join(card("/events/", it) for it in events[:4])
+    fighter_sample = [f for f in fighters if f.get("images")][:8] or fighters[:8]
+    fighter_cards = "".join(
+        f'<a class="card fighter-card" href="/fighters/{esc(f["slug"])}/">'
+        + (f'<img src="{esc(archive_img_url(f["images"][0]))}" alt="" loading="lazy">' if f.get("images") else '')
+        + f'<div class="card-body"><h3>{esc(f["name_jp"])}</h3></div></a>'
+        for f in fighter_sample
     )
     return f"""
 <section class="hero">
   <h1>HERO'S Classics</h1>
   <p class="lead">総合格闘技イベント『HERO'S』(2005〜2008) のアーカイブ。<br>
-  当時のニュース記事や選手コメントをそのまま時系列で閲覧できます。</p>
+  当時のニュース記事、試合結果、選手プロフィールを時系列で閲覧できます。</p>
 </section>
 <section>
   <div class="section-head"><h2>最新ニュース</h2><a href="/news/">すべて見る →</a></div>
-  <div class="card-grid">{cards}</div>
+  <div class="card-grid">{news_cards}</div>
+</section>
+<section>
+  <div class="section-head"><h2>試合結果</h2><a href="/results/">すべて見る →</a></div>
+  <div class="card-grid">{result_cards}</div>
+</section>
+<section>
+  <div class="section-head"><h2>開催イベント</h2><a href="/events/">すべて見る →</a></div>
+  <div class="card-grid">{event_cards}</div>
+</section>
+<section>
+  <div class="section-head"><h2>選手</h2><a href="/fighters/">すべて見る →</a></div>
+  <div class="card-grid">{fighter_cards}</div>
 </section>
 """
+
+
+CATEGORY_LABELS = {
+    "01a": "あ行", "02ka": "か行", "03sa": "さ行", "04ta": "た行",
+    "05na": "な行", "06ha": "は行", "07ma": "ま行", "08ya": "や行",
+    "09ra": "ら行", "10wa": "わ行",
+}
+
+
+def build_event_or_result_page(item: dict, kind: str) -> str:
+    body_html = format_body_html(item["body"])
+    imgs_html = ""
+    if item["images"]:
+        tiles = "".join(
+            f'<figure><img src="{esc(archive_img_url(i))}" alt="" loading="lazy"></figure>'
+            for i in item["images"]
+        )
+        imgs_html = f'<div class="gallery">{tiles}</div>'
+    sub_html = ""
+    if item.get("subpages"):
+        cards = ""
+        for s in item["subpages"]:
+            thumb = ""
+            if s["images"]:
+                thumb = f'<img src="{esc(archive_img_url(s["images"][0]))}" alt="" loading="lazy">'
+            preview = re.sub(r"\s+", " ", s["body"])[:120]
+            cards += (
+                f'<div class="sub-card">{thumb}'
+                f'<h3>{esc(s["title"])}</h3>'
+                f'<p>{esc(preview)}…</p></div>'
+            )
+        sub_html = f'<section class="subpages"><h2>関連レポート</h2><div class="sub-grid">{cards}</div></section>'
+    back = "/events/" if kind == "event" else "/results/"
+    back_label = "イベント一覧へ" if kind == "event" else "試合結果一覧へ"
+    return f"""
+<article class="article">
+  <header>
+    <p class="date">{esc(format_date(item["date"]))}</p>
+    <h1>{esc(item["title"])}</h1>
+  </header>
+  {imgs_html}
+  <div class="prose">{body_html}</div>
+  {sub_html}
+  <p class="back"><a href="{back}">← {back_label}</a></p>
+</article>
+"""
+
+
+def build_event_index(items: list[dict], kind: str) -> str:
+    title = "イベント一覧" if kind == "event" else "試合結果一覧"
+    base = "/events/" if kind == "event" else "/results/"
+    parts = [f"<h1>{title}</h1>"]
+    by_year: dict[str, list[dict]] = {}
+    for it in items:
+        by_year.setdefault(it["date"][:4], []).append(it)
+    for year in sorted(by_year.keys(), reverse=True):
+        parts.append(f'<section class="year-block"><h2>{year}年</h2><div class="card-grid">')
+        for it in by_year[year]:
+            thumb = ""
+            if it["images"]:
+                thumb = f'<img src="{esc(archive_img_url(it["images"][0]))}" alt="" loading="lazy">'
+            parts.append(
+                f'<a class="card" href="{base}{esc(it["slug"])}/">'
+                f'{thumb}<div class="card-body">'
+                f'<time>{esc(format_date(it["date"]))}</time>'
+                f'<h3>{esc(it["title"])}</h3></div></a>'
+            )
+        parts.append("</div></section>")
+    return "\n".join(parts)
+
+
+def build_fighter_page(f: dict) -> str:
+    info = f.get("info", {})
+    info_rows = ""
+    label_map = [
+        ("team", "所属"), ("birth", "生年月日"), ("origin", "出身地"),
+        ("height", "身長"), ("weight", "体重"), ("background", "バックボーン"),
+        ("titles", "主な獲得タイトル"), ("record_summary", "対戦成績"),
+    ]
+    for key, jp in label_map:
+        if info.get(key):
+            info_rows += f'<dt>{esc(jp)}</dt><dd>{esc(info[key])}</dd>'
+    img_html = ""
+    if f["images"]:
+        img_html = f'<img class="fighter-photo" src="{esc(archive_img_url(f["images"][0]))}" alt="{esc(f["name_jp"])}" loading="lazy">'
+    return f"""
+<article class="article fighter-detail">
+  <header>
+    <h1>{esc(f["name_jp"])}</h1>
+    {('<p class="name-en">' + esc(f["name_en"]) + '</p>') if f.get("name_en") else ''}
+  </header>
+  {img_html}
+  <dl class="fighter-info">{info_rows}</dl>
+  <p class="back"><a href="/fighters/">← 選手一覧へ</a></p>
+</article>
+"""
+
+
+def build_fighters_index(fighters: list[dict]) -> str:
+    by_cat: dict[str, list[dict]] = {}
+    for f in fighters:
+        by_cat.setdefault(f["category"], []).append(f)
+    parts = ['<h1>選手一覧</h1><p class="lead">HERO\'S に出場した選手のプロフィール。</p>']
+    for cat in sorted(by_cat.keys()):
+        label = CATEGORY_LABELS.get(cat, cat)
+        parts.append(f'<section class="year-block"><h2>{esc(label)}</h2><div class="card-grid">')
+        for f in by_cat[cat]:
+            thumb = ""
+            if f["images"]:
+                thumb = f'<img src="{esc(archive_img_url(f["images"][0]))}" alt="" loading="lazy">'
+            sub = f.get("info", {}).get("team", "")
+            parts.append(
+                f'<a class="card fighter-card" href="/fighters/{esc(f["slug"])}/">'
+                f'{thumb}<div class="card-body">'
+                f'<h3>{esc(f["name_jp"])}</h3>'
+                f'{("<p class=\"sub\">" + esc(sub) + "</p>") if sub else ""}'
+                f'</div></a>'
+            )
+        parts.append("</div></section>")
+    return "\n".join(parts)
 
 
 def build_about(about: dict | None) -> str:
@@ -175,12 +321,15 @@ def build_about(about: dict | None) -> str:
 # ---------- Media / assets -------------------------------------------------
 
 
-def copy_media(items: list[dict]) -> None:
+def copy_media(all_items: list[dict]) -> None:
     media_root = DIST / "media"
     referenced: set[str] = set()
-    for it in items:
-        for rel in it["images"]:
+    for it in all_items:
+        for rel in it.get("images", []) or []:
             referenced.add(rel)
+        for sp in it.get("subpages", []) or []:
+            for rel in sp.get("images", []) or []:
+                referenced.add(rel)
     for rel in referenced:
         src = ARCHIVE / rel
         dst = media_root / rel
@@ -377,7 +526,41 @@ a:hover { text-decoration: underline; }
 }
 .site-footer .small { color: #666; font-size: 12px; margin-top: 4px; }
 
+/* Fighter */
+.fighter-card img { aspect-ratio: 1/1; object-fit: cover; }
+.fighter-detail .name-en { color: var(--muted); font-size: 14px; margin: 4px 0 0; letter-spacing: 0.05em; }
+.fighter-photo { max-width: 320px; margin: 0 0 20px; border-radius: 6px; background: #eee; }
+.fighter-info { display: grid; grid-template-columns: 130px 1fr; gap: 6px 14px; margin: 0; }
+.fighter-info dt { color: var(--muted); font-size: 13px; padding-top: 2px; }
+.fighter-info dd { margin: 0; font-size: 15px; }
+
+/* Sub cards (event result sub-pages) */
+.subpages { margin-top: 28px; }
+.sub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+.sub-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+}
+.sub-card img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #eee;
+  margin-bottom: 8px;
+}
+.sub-card h3 { font-size: 14px; margin: 0 0 6px; line-height: 1.5; }
+.sub-card p { font-size: 12px; color: var(--muted); margin: 0; }
+.card-body .sub { color: var(--muted); font-size: 12px; margin: 4px 0 0; }
+
 @media (max-width: 640px) {
+  .fighter-info { grid-template-columns: 100px 1fr; }
   .site-header .container { flex-direction: column; align-items: flex-start; }
   .site-nav { gap: 14px; }
   .article { padding: 18px; }
@@ -413,14 +596,20 @@ def main() -> None:
         shutil.rmtree(DIST)
     DIST.mkdir()
 
-    news = json.loads((CONTENT / "news.json").read_text(encoding="utf-8"))
-    about_path = CONTENT / "about.json"
-    about = json.loads(about_path.read_text(encoding="utf-8")) if about_path.exists() else None
+    def load(name: str, default):
+        p = CONTENT / name
+        return json.loads(p.read_text(encoding="utf-8")) if p.exists() else default
+
+    news = load("news.json", [])
+    events = load("events.json", [])
+    results = load("results.json", [])
+    fighters = load("fighters.json", [])
+    about = load("about.json", None)
 
     write_css()
 
     # Home
-    home_body = build_home(news)
+    home_body = build_home(news, events, results, fighters)
     write(DIST / "index.html", layout(
         title=SITE_NAME,
         description=SITE_DESC,
@@ -449,6 +638,59 @@ def main() -> None:
             body=build_news_article(it),
         ))
 
+    # Events
+    write(DIST / "events" / "index.html", layout(
+        title="イベント一覧",
+        description="HERO'S 開催イベントの一覧(2005〜2008年)。",
+        canonical=f"{SITE_URL}/events/",
+        body=build_event_index(events, "event"),
+    ))
+    for it in events:
+        url = f"{SITE_URL}/events/{it['slug']}/"
+        urls.append(url)
+        desc = re.sub(r"\s+", " ", it["body"])[:140]
+        write(DIST / "events" / it["slug"] / "index.html", layout(
+            title=it["title"],
+            description=desc or it["title"],
+            canonical=url,
+            body=build_event_or_result_page(it, "event"),
+        ))
+
+    # Results
+    write(DIST / "results" / "index.html", layout(
+        title="試合結果一覧",
+        description="HERO'S 試合結果の一覧(2005〜2008年)。",
+        canonical=f"{SITE_URL}/results/",
+        body=build_event_index(results, "result"),
+    ))
+    for it in results:
+        url = f"{SITE_URL}/results/{it['slug']}/"
+        urls.append(url)
+        desc = re.sub(r"\s+", " ", it["body"])[:140]
+        write(DIST / "results" / it["slug"] / "index.html", layout(
+            title=it["title"],
+            description=desc or it["title"],
+            canonical=url,
+            body=build_event_or_result_page(it, "result"),
+        ))
+
+    # Fighters
+    write(DIST / "fighters" / "index.html", layout(
+        title="選手一覧",
+        description="HERO'S 出場選手のプロフィール一覧。",
+        canonical=f"{SITE_URL}/fighters/",
+        body=build_fighters_index(fighters),
+    ))
+    for f in fighters:
+        url = f"{SITE_URL}/fighters/{f['slug']}/"
+        urls.append(url)
+        write(DIST / "fighters" / f["slug"] / "index.html", layout(
+            title=f["name_jp"],
+            description=f"{f['name_jp']} のプロフィール。" + (f" {f['info'].get('team','')}" if f.get('info') else ""),
+            canonical=url,
+            body=build_fighter_page(f),
+        ))
+
     # About
     write(DIST / "about" / "index.html", layout(
         title="HERO'Sとは",
@@ -457,7 +699,7 @@ def main() -> None:
         body=build_about(about),
     ))
 
-    copy_media(news)
+    copy_media(news + events + results + fighters)
     write_sitemap(urls)
     write_robots()
 

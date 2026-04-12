@@ -60,9 +60,20 @@ def layout(*, title: str, description: str, canonical: str, body: str, extra_hea
 {body}
 </main>
 <footer class="site-footer">
-  <div class="container">
-    <p>HERO'S Classics — 2005〜2008年のアーカイブ</p>
-    <p class="small">本サイトは Wayback Machine 上の公開アーカイブを元に再構成した非公式の歴史資料です。</p>
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">HERO'S <span>Classics</span></div>
+      <p class="footer-tag">2005 — 2008 アーカイブ</p>
+    </div>
+    <nav class="footer-nav">
+      <a href="/">ホーム</a>
+      <a href="/news/">ニュース</a>
+      <a href="/events/">イベント</a>
+      <a href="/results/">試合結果</a>
+      <a href="/fighters/">選手</a>
+      <a href="/about/">HERO'Sとは</a>
+    </nav>
+    <p class="footer-copy">© HERO'S Classics</p>
   </div>
 </footer>
 </body>
@@ -710,14 +721,64 @@ a:hover { text-decoration: underline; }
 /* Footer */
 .site-footer {
   background: var(--ink);
-  color: #888;
-  padding: 36px 0;
-  margin-top: 64px;
+  color: #9a9a99;
+  padding: 48px 0 32px;
+  margin-top: 72px;
   font-size: 13px;
   border-top: 4px solid var(--accent);
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(209,26,42,0.14), transparent 55%);
 }
-.site-footer p { margin: 0 0 4px; }
-.site-footer .small { color: #555; font-size: 12px; margin-top: 6px; }
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px 48px;
+  align-items: start;
+}
+.footer-brand { grid-column: 1; }
+.footer-logo {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.footer-logo span {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-left: 6px;
+}
+.footer-tag {
+  margin: 6px 0 0;
+  color: #6a6a69;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.footer-nav {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-self: center;
+}
+.footer-nav a {
+  color: #c4c4c3;
+  font-size: 13px;
+  font-weight: 500;
+}
+.footer-nav a:hover { color: var(--accent); text-decoration: none; }
+.footer-copy {
+  grid-column: 1 / -1;
+  margin: 24px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid #1f1f1f;
+  color: #555;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
 
 /* Fighter */
 .fighter-card img { aspect-ratio: 1/1; object-fit: cover; }
@@ -753,6 +814,8 @@ a:hover { text-decoration: underline; }
 .card-body .sub { color: var(--muted); font-size: 12px; margin: 4px 0 0; }
 
 @media (max-width: 640px) {
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-nav { grid-column: 1; grid-row: auto; }
   .fighter-info { grid-template-columns: 100px 1fr; }
   .site-header .container { flex-direction: column; align-items: flex-start; }
   .site-nav { gap: 14px; }

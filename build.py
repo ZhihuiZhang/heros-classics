@@ -22,8 +22,9 @@ def esc(s: str) -> str:
     return html_mod.escape(s, quote=True)
 
 
-def layout(*, title: str, description: str, canonical: str, body: str, extra_head: str = "") -> str:
+def layout(*, title: str, description: str, canonical: str, body: str, extra_head: str = "", full_width: bool = False) -> str:
     full_title = f"{title} | {SITE_NAME}" if title != SITE_NAME else SITE_NAME
+    main_open = '<main>' if full_width else '<main class="container">'
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -55,7 +56,7 @@ def layout(*, title: str, description: str, canonical: str, body: str, extra_hea
     </nav>
   </div>
 </header>
-<main class="container">
+{main_open}
 {body}
 </main>
 <footer class="site-footer">
@@ -123,22 +124,24 @@ def build_news_article(item: dict) -> str:
 
 
 def build_news_index(items: list[dict]) -> str:
-    # Group by year
     by_year: dict[str, list[dict]] = {}
     for it in items:
-        y = it["date"][:4]
-        by_year.setdefault(y, []).append(it)
+        by_year.setdefault(it["date"][:4], []).append(it)
     parts: list[str] = ["<h1>ニュース一覧</h1>"]
     for year in sorted(by_year.keys(), reverse=True):
         parts.append(f'<section class="year-block"><h2>{year}年</h2><ul class="news-list">')
         for it in by_year[year]:
-            thumb = ""
+            thumb_html = ""
             if it["images"]:
-                thumb = f'<img src="{esc(archive_img_url(it["images"][0]))}" alt="" loading="lazy">'
+                thumb_html = (
+                    f'<img src="{esc(archive_img_url(it["images"][0]))}" alt="" loading="lazy">'
+                )
+            else:
+                thumb_html = '<div class="thumb-placeholder">NEWS</div>'
             parts.append(
                 f'<li><a href="/news/{esc(it["slug"])}/">'
-                f'{thumb}'
-                f'<div><time>{esc(format_date(it["date"]))}</time>'
+                f'{thumb_html}'
+                f'<div class="news-meta"><time>{esc(format_date(it["date"]))}</time>'
                 f'<span class="title">{esc(it["title"])}</span></div>'
                 f'</a></li>'
             )
@@ -148,30 +151,40 @@ def build_news_index(items: list[dict]) -> str:
 
 def build_home(news: list[dict], events: list[dict], results: list[dict], fighters: list[dict]) -> str:
     def card(base: str, it: dict, date: bool = True) -> str:
-        img = f'<img src="{esc(archive_img_url(it["images"][0]))}" alt="" loading="lazy">' if it.get("images") else ""
+        has_img = bool(it.get("images"))
+        img = (
+            f'<img src="{esc(archive_img_url(it["images"][0]))}" alt="" loading="lazy">'
+            if has_img else ""
+        )
+        cls = "card" if has_img else "card no-img"
         time_html = f'<time>{esc(format_date(it["date"]))}</time>' if date and it.get("date") else ""
         return (
-            f'<a class="card" href="{base}{esc(it["slug"])}/">{img}'
+            f'<a class="{cls}" href="{base}{esc(it["slug"])}/">{img}'
             f'<div class="card-body">{time_html}'
             f'<h3>{esc(it.get("title") or it.get("name_jp",""))}</h3></div></a>'
         )
 
-    news_cards = "".join(card("/news/", it) for it in news[:8])
+    # Prefer items WITH images for the homepage showcases
+    news_with_img = [n for n in news if n.get("images")]
+    news_cards = "".join(card("/news/", it) for it in (news_with_img[:8] or news[:8]))
     result_cards = "".join(card("/results/", it) for it in results[:4])
     event_cards = "".join(card("/events/", it) for it in events[:4])
     fighter_sample = [f for f in fighters if f.get("images")][:8] or fighters[:8]
     fighter_cards = "".join(
         f'<a class="card fighter-card" href="/fighters/{esc(f["slug"])}/">'
-        + (f'<img src="{esc(archive_img_url(f["images"][0]))}" alt="" loading="lazy">' if f.get("images") else '')
+        + (f'<img src="{esc(archive_img_url(f["images"][0]))}" alt="" loading="lazy">' if f.get("images") else '<div class="placeholder">' + esc(f["name_jp"][:1]) + '</div>')
         + f'<div class="card-body"><h3>{esc(f["name_jp"])}</h3></div></a>'
         for f in fighter_sample
     )
     return f"""
-<section class="hero">
-  <h1>HERO'S Classics</h1>
-  <p class="lead">総合格闘技イベント『HERO'S』(2005〜2008) のアーカイブ。<br>
-  当時のニュース記事、試合結果、選手プロフィールを時系列で閲覧できます。</p>
+<section class="hero hero-full">
+  <div class="container">
+    <h1>HERO'S <span>Classics</span></h1>
+    <p class="lead">総合格闘技イベント『HERO'S』(2005〜2008) のアーカイブ。<br>
+    当時のニュース記事、試合結果、選手プロフィールを時系列で閲覧できます。</p>
+  </div>
 </section>
+<div class="container">
 <section>
   <div class="section-head"><h2>最新ニュース</h2><a href="/news/">すべて見る →</a></div>
   <div class="card-grid">{news_cards}</div>
@@ -188,6 +201,7 @@ def build_home(news: list[dict], events: list[dict], results: list[dict], fighte
   <div class="section-head"><h2>選手</h2><a href="/fighters/">すべて見る →</a></div>
   <div class="card-grid">{fighter_cards}</div>
 </section>
+</div>
 """
 
 
@@ -344,14 +358,16 @@ def copy_media(all_items: list[dict]) -> None:
 def write_css() -> None:
     css = """
 :root {
-  --fg: #1a1a1a;
-  --muted: #666;
-  --bg: #fafafa;
+  --fg: #111;
+  --muted: #6b7280;
+  --bg: #f5f5f4;
   --card: #fff;
-  --border: #e5e5e5;
-  --accent: #c8102e;
-  --accent-dark: #8a0a1e;
-  --max-w: 1100px;
+  --border: #e5e5e4;
+  --border-strong: #d4d4d3;
+  --accent: #d11a2a;
+  --accent-dark: #8c0e1a;
+  --ink: #0a0a0a;
+  --max-w: 1180px;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -370,9 +386,13 @@ a:hover { text-decoration: underline; }
 
 /* Header */
 .site-header {
-  background: #0b0b0b;
+  background: var(--ink);
   color: #fff;
-  border-bottom: 3px solid var(--accent);
+  border-bottom: 4px solid var(--accent);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: saturate(140%);
 }
 .site-header .container {
   display: flex;
@@ -380,89 +400,208 @@ a:hover { text-decoration: underline; }
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 .brand {
   color: #fff;
   font-weight: 900;
   font-size: 22px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
-.brand span { color: var(--accent); font-weight: 700; }
-.site-nav { display: flex; gap: 18px; }
-.site-nav a { color: #eee; font-size: 15px; }
-.site-nav a:hover { color: var(--accent); text-decoration: none; }
+.brand span {
+  color: var(--accent);
+  font-weight: 700;
+  margin-left: 4px;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+}
+.site-nav { display: flex; gap: 22px; }
+.site-nav a {
+  color: #d4d4d3;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+.site-nav a:hover {
+  color: #fff;
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}
 
 /* Hero */
 .hero {
-  padding: 48px 0 32px;
+  position: relative;
+  padding: 80px 0 60px;
   text-align: center;
+  background:
+    radial-gradient(ellipse at center top, rgba(209,26,42,0.18), transparent 60%),
+    linear-gradient(180deg, #111 0%, #0a0a0a 100%);
+  color: #fff;
+  margin-bottom: 16px;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
 }
 .hero h1 {
-  font-size: clamp(28px, 5vw, 44px);
-  margin: 0 0 12px;
-  letter-spacing: 0.02em;
+  font-size: clamp(32px, 6vw, 56px);
+  margin: 0 0 16px;
+  letter-spacing: 0.04em;
+  font-weight: 900;
+  text-transform: uppercase;
 }
-.hero .lead { color: var(--muted); margin: 0 auto; max-width: 640px; }
+.hero h1 span { color: var(--accent); }
+.hero .lead {
+  color: #d4d4d3;
+  margin: 0 auto;
+  max-width: 680px;
+  font-size: 16px;
+  line-height: 1.8;
+}
 
 /* Section head */
 .section-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin: 32px 0 16px;
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 8px;
+  margin: 48px 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-strong);
+  position: relative;
 }
-.section-head h2 { margin: 0; font-size: 22px; }
-.section-head a { font-size: 14px; }
+.section-head::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 48px;
+  height: 3px;
+  background: var(--accent);
+}
+.section-head h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.section-head a {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.section-head a:hover { color: var(--accent); }
 
 /* Card grid */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 18px;
-  margin-bottom: 48px;
+  gap: 20px;
+  margin-bottom: 32px;
 }
 .card {
   display: flex;
   flex-direction: column;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   color: var(--fg);
-  transition: transform .15s, box-shadow .15s;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,.08);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.1);
+  border-color: var(--border-strong);
   text-decoration: none;
 }
 .card img {
   width: 100%;
   aspect-ratio: 4/3;
   object-fit: cover;
-  background: #eee;
+  background: #f0f0ef;
+  display: block;
 }
-.card-body { padding: 12px 14px 16px; }
-.card-body time { color: var(--muted); font-size: 12px; }
+.card.no-img {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  color: #fff;
+  border-color: #222;
+}
+.card.no-img:hover {
+  border-color: var(--accent);
+}
+.card.no-img .card-body {
+  padding: 20px 18px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.card.no-img .card-body::before {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 3px;
+  background: var(--accent);
+  margin-bottom: 10px;
+}
+.card.no-img h3 { color: #fff; }
+.card.no-img time { color: #a1a1a0; }
+.card-body { padding: 14px 16px 18px; }
+.card-body time {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
 .card-body h3 {
-  margin: 4px 0 0;
+  margin: 6px 0 0;
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.55;
   font-weight: 600;
-  color: var(--fg);
+  color: inherit;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.fighter-card .placeholder {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background: linear-gradient(135deg, #222, #0a0a0a);
+  color: var(--accent);
+  font-size: 64px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* News list */
-.year-block { margin-bottom: 36px; }
-.year-block h2 {
-  font-size: 24px;
-  margin: 24px 0 12px;
-  padding-bottom: 6px;
-  border-bottom: 2px solid var(--accent);
+/* News list (year listings) */
+.year-block { margin-bottom: 48px; }
+.year-block > h2 {
+  font-size: 28px;
+  margin: 32px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-strong);
+  font-weight: 900;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+.year-block > h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 64px;
+  height: 3px;
+  background: var(--accent);
 }
 .news-list {
   list-style: none;
@@ -470,62 +609,115 @@ a:hover { text-decoration: underline; }
   margin: 0;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 12px;
 }
-.news-list li { background: var(--card); border: 1px solid var(--border); border-radius: 6px; }
+.news-list li {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color .15s, transform .15s;
+}
+.news-list li:hover { border-color: var(--accent); }
 .news-list a {
   display: flex;
-  gap: 14px;
-  padding: 10px 14px;
+  gap: 16px;
+  padding: 14px 18px;
   align-items: center;
   color: var(--fg);
 }
-.news-list a:hover { background: #fff8f9; text-decoration: none; }
+.news-list a:hover { text-decoration: none; }
 .news-list img {
-  width: 80px;
-  height: 60px;
+  width: 96px;
+  height: 72px;
   object-fit: cover;
   flex-shrink: 0;
-  border-radius: 4px;
-  background: #eee;
+  border-radius: 6px;
+  background: #f0f0ef;
 }
+.thumb-placeholder {
+  width: 96px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.news-meta { min-width: 0; flex: 1; }
 .news-list time {
   display: block;
   color: var(--muted);
   font-size: 12px;
+  font-weight: 500;
 }
 .news-list .title {
   display: block;
   font-weight: 600;
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.55;
+  margin-top: 4px;
 }
 
 /* Article */
-.article { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 28px; margin: 24px 0 40px; }
-.article header { margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
-.article .date { color: var(--muted); font-size: 13px; margin: 0 0 6px; }
-.article h1 { font-size: clamp(22px, 4vw, 30px); margin: 0; line-height: 1.4; }
-.prose p { margin: 0 0 1em; }
+.article {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 36px 40px;
+  margin: 32px 0 48px;
+  max-width: 820px;
+}
+.article header {
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+}
+.article .date {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  letter-spacing: 0.05em;
+}
+.article h1 {
+  font-size: clamp(24px, 4vw, 32px);
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 800;
+}
+.prose { font-size: 16px; line-height: 1.9; }
+.prose p { margin: 0 0 1.2em; }
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-  margin: 0 0 24px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 0 0 28px;
 }
 .gallery figure { margin: 0; }
-.gallery img { width: 100%; border-radius: 4px; background: #eee; }
-.back { margin-top: 24px; }
+.gallery img { width: 100%; border-radius: 6px; background: #f0f0ef; }
+.back {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.back a { font-size: 14px; font-weight: 500; }
 
 /* Footer */
 .site-footer {
-  background: #0b0b0b;
-  color: #aaa;
-  padding: 28px 0;
-  margin-top: 48px;
+  background: var(--ink);
+  color: #888;
+  padding: 36px 0;
+  margin-top: 64px;
   font-size: 13px;
+  border-top: 4px solid var(--accent);
 }
-.site-footer .small { color: #666; font-size: 12px; margin-top: 4px; }
+.site-footer p { margin: 0 0 4px; }
+.site-footer .small { color: #555; font-size: 12px; margin-top: 6px; }
 
 /* Fighter */
 .fighter-card img { aspect-ratio: 1/1; object-fit: cover; }
@@ -616,6 +808,7 @@ def main() -> None:
         description=SITE_DESC,
         canonical=f"{SITE_URL}/",
         body=home_body,
+        full_width=True,
     ))
 
     # News index

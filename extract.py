@@ -26,11 +26,20 @@ STRIP_PATTERNS = [
     re.compile(r"official@hero-s\.com", re.IGNORECASE),
 ]
 
-# Generic chrome image patterns to filter out
-CHROME_IMG = re.compile(
-    r"(img_share|img_head|sideline|^he\d+\.gif$|bt_|btn_|sub_|nav_|footer|spacer|menu_|headline_|line\.gif|blank|arrow)",
+# Patterns matched against the FULL src path
+CHROME_PATH = re.compile(
+    r"(img_share|img_head|/share/|/common/|/nav/|/header/|/footer/)",
     re.IGNORECASE,
 )
+# Patterns matched against the basename only
+CHROME_NAME = re.compile(
+    r"(^he[\W_]?\d+\.gif$|^bt_|^btn_|^sub_|^nav_|footer|spacer|^menu_"
+    r"|^headline_|^line\.gif$|blank|arrow|sideline|sidedot|side_"
+    r"|title\.gif$|_title\.gif$|^title|^bg_|background|copyright|^bar)",
+    re.IGNORECASE,
+)
+# Article photos (preferred)
+PHOTO_NAME = re.compile(r"(ph\d+\.jpg|photo\d*\.jpg|^p\d+\.jpg|^img\d+\.jpg)$", re.IGNORECASE)
 
 
 BOILERPLATE_RE = re.compile(
@@ -117,8 +126,13 @@ def visible_text_blocks(soup: BeautifulSoup) -> str:
 
 
 def collect_local_images(html_path: Path, soup: BeautifulSoup) -> list[str]:
-    """Return list of image paths (relative to ARCHIVE) that look like article photos."""
-    out: list[str] = []
+    """Return list of article-photo paths (relative to ARCHIVE).
+
+    Filters out site chrome (nav, headers, banners, title gifs, etc).
+    Photos (ph*.jpg style) come first, then other plausible images.
+    """
+    photos: list[str] = []
+    others: list[str] = []
     seen: set[str] = set()
     base = html_path.parent
     for img in soup.find_all("img"):
@@ -126,9 +140,8 @@ def collect_local_images(html_path: Path, soup: BeautifulSoup) -> list[str]:
         if not src or src.startswith(("http://", "https://", "data:")):
             continue
         name = src.rsplit("/", 1)[-1]
-        if CHROME_IMG.search(name):
+        if CHROME_PATH.search(src) or CHROME_NAME.search(name):
             continue
-        # Resolve relative to the HTML file
         try:
             resolved = (base / src).resolve()
         except Exception:
@@ -143,8 +156,11 @@ def collect_local_images(html_path: Path, soup: BeautifulSoup) -> list[str]:
         if not (ARCHIVE / rel).exists():
             continue
         seen.add(rel_str)
-        out.append(rel_str)
-    return out
+        if PHOTO_NAME.search(name):
+            photos.append(rel_str)
+        else:
+            others.append(rel_str)
+    return photos + others
 
 
 # ---------- News -----------------------------------------------------------

@@ -1,0 +1,380 @@
+﻿<html>
+<head>
+<title>HERO'S［HERO'S★NEWS］</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Fireworks MX Dreamweaver MX target.  Created Thu Jun 23 12:46:04 GMT-1500 2005-->
+<script language="JavaScript">
+<!--
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+ var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+   var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+   if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+//-->
+</script>
+<link href="../../css/heros.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+<!--
+.style3 {color: #9EABD9}
+-->
+</style>
+</head>
+<body bgcolor="#cccccc" text="#000000" link="#000000" vlink="#666666" alink="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="MM_preloadImages('../img_share/bt_head00whats_f2.gif','../img_share/bt_head00ticket_f2.gif','../img_share/bt_head01news_f2.gif','../img_share/bt_head02schedule_f2.gif','../img_share/bt_head03result_f2.gif','../img_share/bt_head04media_f2.gif','../img_share/bt_head05vote_f2.gif','../img_share/bt_head06fighter_f2.gif')">
+<div align="center">
+  <table width="720" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="10" background="../img_share/sideline_l.gif"><img name="sideline_l" src="../img_share/sideline_l.gif" width="10" height="75" border="0" alt=""></td>
+      <td valign="top" bgcolor="#FFFFFF"><table border="0" cellpadding="0" cellspacing="0" width="760">
+        <tr>
+          <td><img name="he00" src="../img_share/he00.gif" width="20" height="10" border="0" alt=""></td>
+          <td><img name="he01" src="../img_share/he01.gif" width="219" height="10" border="0" alt=""></td>
+          <td><img name="he02" src="../img_share/he02.gif" width="501" height="10" border="0" alt=""></td>
+          <td><img name="he03" src="../img_share/he03.gif" width="20" height="10" border="0" alt=""></td>
+        </tr>
+      </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he04" src="../img_share/he04.gif" width="20" height="26" border="0" alt=""></td>
+            <td><a href="../../index.html"><img name="he05" src="../img_share/he05.gif" width="219" height="26" border="0" alt=""></a></td>
+            <td><a href="../../07whatsheros/index.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head00whats','','../img_share/bt_head00whats_f2.gif',1)"><img name="bt_head00whats" src="../img_share/bt_head00whats.gif" width="157" height="26" border="0" alt=""></a></td>
+            <td><img name="he_06" src="../img_share/he_06.gif" width="46" height="26" border="0" alt=""></td>
+            <td><a href="http://w1.onlineticket.jp/heros/page/G/pc/GGWI02100.jsp" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head00ticket','','../img_share/bt_head00ticket_f2.gif',1)"><img name="bt_head00ticket" src="../img_share/bt_head00ticket.gif" width="103" height="26" border="0" alt=""></a></td>
+            <td><img name="he08" src="../img_share/he08.gif" width="150" height="26" border="0" alt=""></td>
+            <td><img name="he09" src="../img_share/he09.gif" width="45" height="26" border="0" alt=""></td>
+            <td><img name="he10" src="../img_share/he10.gif" width="20" height="26" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he11" src="../img_share/he11.gif" width="20" height="26" border="0" alt=""></td>
+            <td><img name="he12" src="../img_share/he12.gif" width="219" height="26" border="0" alt=""></td>
+            <td><img name="he13" src="../img_share/he13.gif" width="19" height="26" border="0" alt=""></td>
+            <td><a href="../index2008.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head01news','','../img_share/bt_head01news_f2.gif',1)"><img name="bt_head01news" src="../img_share/bt_head01news.gif" width="106" height="26" border="0" alt=""></a></td>
+            <td><img name="he14" src="../img_share/he14.gif" width="18" height="26" border="0" alt=""></td>
+            <td><a href="../../02eventschedule/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head02schedule','','../img_share/bt_head02schedule_f2.gif',1)"><img name="bt_head02schedule" src="../img_share/bt_head02schedule.gif" width="163" height="26" border="0" alt=""></a></td>
+            <td><a href="../../03eventresult/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head03result','','../img_share/bt_head03result_f2.gif',1)"><img name="bt_head03result" src="../img_share/bt_head03result.gif" width="150" height="26" border="0" alt=""></a></td>
+            <td><img name="he16" src="../img_share/he16.gif" width="45" height="26" border="0" alt=""></td>
+            <td><img name="he17" src="../img_share/he17.gif" width="20" height="26" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he18" src="../img_share/he18.gif" width="20" height="27" border="0" alt=""></td>
+            <td><img name="he19" src="../img_share/he19.gif" width="219" height="27" border="0" alt=""></td>
+            <td><img name="he20" src="../img_share/he20.gif" width="19" height="27" border="0" alt=""></td>
+            <td><a href="../../04mediainfo/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head04media','','../img_share/bt_head04media_f2.gif',1)"><img name="bt_head04media" src="../img_share/bt_head04media.gif" width="106" height="27" border="0" alt=""></a></td>
+            <td><img name="he21" src="../img_share/he21.gif" width="18" height="27" border="0" alt=""></td>
+            <td><a href="../../05herosvote/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head05vote','','../img_share/bt_head05vote_f2.gif',1)"><img name="bt_head05vote" src="../img_share/bt_head05vote.gif" width="163" height="27" border="0" alt=""></a></td>
+            <td><a href="../../06fightersinfo/index01a.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head06fighter','','../img_share/bt_head06fighter_f2.gif',1)"><img name="bt_head06fighter" src="../img_share/bt_head06fighter.gif" width="150" height="27" border="0" alt=""></a></td>
+            <td><img name="he23" src="../img_share/he23.gif" width="45" height="27" border="0" alt=""></td>
+            <td><img name="he24" src="../img_share/he24.gif" width="20" height="27" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he25" src="../img_share/he25.gif" width="20" height="73" border="0" alt=""></td>
+            <td><img name="he26" src="../img_share/he26.gif" width="219" height="73" border="0" alt=""></td>
+            <td><img name="he27" src="../img_share/he27.gif" width="306" height="73" border="0" alt=""></td>
+            <td><img name="he32" src="../img_share/he32.gif" width="195" height="73" border="0" alt=""></td>
+            <td><img name="he28" src="../img_share/he28.gif" width="20" height="73" border="0" alt=""></td>
+          </tr>
+        </table>        <table width="760" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+          <tr>
+            <td valign="top" background="../img_share/sidedot_l.gif"><img name="sidedot_l" src="../img_share/sidedot_l.gif" width="20" height="20" border="0" alt=""></td>
+            <td><img src="../img_share/spacer.gif" width="10" height="90" border="0" alt=""></td>
+            <td valign="top"><img src="../img_share/spacer.gif" width="700" height="20" border="0" alt="">              <table border="0" cellpadding="0" cellspacing="0" width="700">
+              <tr>
+                  <td width="549"><img src="img/20080213_2title.gif" alt="" name="title01" width="486" height="165" border="0"><br></td>
+                <td width="151"><img src="../img_share/spacer.gif" width="100" height="24" border="0" alt=""></td>
+              </tr>
+            </table>              
+              <img src="../img_share/spacer.gif" width="700" height="20" border="0" alt="">              <table width="700" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+                
+                <tr bgcolor="#FFFFFF">
+                <td width="350" align="left" valign="top" class="heros12px"><p class="subhead"><span class="style3">■</span>TBSでの放送が決定！　制作は『やれんのか！』チームが担当！</p>
+                  <p>　会見場に駆けつけたファンの数は300人以上。期待と興奮の渦巻く中、午後5時から少し遅れて、記者会見が始まった。<br>
+                    　まずは、主催者である谷川貞治FEG代表、笹原圭一イベントプロデューサー、狩野敬TBS事務局長が登壇。“総合格闘技新イベント”開催に向けての挨拶を行った。</p>
+                  <p>【谷川貞治FEG代表】<br>
+                    「昨年大晦日、京セラドーム大阪で『Dynamite!!』、そしてさいたまスーパーアリーナで『やれんのか！』という二大イベントを、TBSさんのご理解もあって、年末に放送させていただきました。そして、そのときからいくつか発言したように、この大連立という大きな流れを途切れさせてはいけないということで、FEGとしては思い切ってここで新しい総合格闘技のイベントを始めたいと思います。その新総合格闘技イベントに関しては、もちろんPRIDEでもないですしHERO'Sでもないです。大連立の続きを、新たなイベントとして行いたいと思っています。この新総合格闘技イベントに関しましては、主催は我々FEGが行っていきます。そしてTBSさんのご理解もあって、TBSさんでの放送も決まっております。そして制作・プロデュースに関しては、『やれんのか！』チームの皆さんに全部お任せいたします。もちろん私はFEGの代表取締役としてこのイベントをしっかりやっていきますが、私個人としてはK-1のプロデュースにより専念して、そしてこの新しい総合格闘技イベントはここにおられます笹原さんに代表になってもらってプロデュースをお願いしたいなと。大連立によって夢のカードをたくさん作っていきたいと思っています。一時、総合格闘技に元気のない時期がありましたけど、熱いファイターとスタッフのもと、この新総合格闘技イベントをどんどん盛り上げていきたいと思います。皆さん、ぜひ期待してください！」</p>
+                  <p>【笹原圭一イベントプロデューサー】<br>
+                    「昨年末、我々は『やれんのか！大晦日！2007』というイベントを開催しました。このイベントは、FEGさんを始めM-1グローバルさんなど、多くの方々のご協力をいただきまして、無事成功裡に終えることができました。日本の格闘技界は沈滞ムードがあったと思いますが、“日本の格闘技界はまだまだ熱がある！　パワーがある！”ということを日本中に知らしめることができたと思っております。そんな中、大晦日以降、『やれんのか！』チームは、今後の方向性をいろいろ探ってまいりました。イベントの最後に“桜の花の咲く頃に夢の続きを”というメッセージを残しつつも、年末のイベントは私たちにとってケジメのイベントでしたので、今後の方向性についてはその時点では決まっておりませんでした。そんな中、いろんな方々とお話をさせていただいて、今、谷川さんからお話がありましたとおり、新しいイベントを我々に任せていただけると。お任せいただいたからには、お客様に喜んでいただけるような熱のあるライブイベントを作っていきたいと思っております。そして、先だってファンの方から約3,000名の“ぜひイベントを続けてほしい”という署名をいただきまして、それにもすごく励まされました。まだまだ私共は力不足だとは思いますが、とはいっても、皆さんから“世界最高峰の制作チーム”というご賞賛をいただいておりますので、その名に恥じぬようなものを作っていきたいと思います。やるからには、今までの財産とか過去の実績にすがることなく、新しいものを、皆さんがまだ見たことないような素晴らしいものを作っていきたいと思っています」</p>
+                  <p>【狩野敬TBS事務局長】<br>
+                    「ご承知のように私共TBSは、K-1とHERO'S、その集大成として大晦日に『Dynamite!!』を、FEGさんと一緒に主催させていただいておりますが、これからはHERO'Sに変わる形でこの新しい格闘技イベントを放送・主催共に全面的にバックアップさせていただきたいと思っております。私共も夢の大連立を非常に楽しみにしています。皆様方におかれましても、ご期待いただければと思います」</p>
+                  <br>
+                  <p class="subhead"><span class="style3">■</span>新イベント名は『DREAM』!!</p>
+                  <p>　続いて、制作スタッフ並びに『DREAM』参戦選手が登壇。そして、ここで総合格闘技新イベントの名称、概要が発表された。<br>
+                    　イベントの総称を『DREAM』とし、3・15『DREAM.1』さいたまスーパーアリーナ大会を皮切りに、2回目の大会より『DREAM.2』『DREAM.3』とカウントアップされていくとのこと。<br>
+                    　また、今年はライト級グランプリ、ミドル級グランプリが行われ、トーナメント覇者はそれぞれ両階級の初代王者となることも発表された。その他の階級の王座に関しては、ワンマッチによって決めていく予定。なお、トーナメントは、3年に1度の割合で開催されていく模様だ。<br>
+                    　ルールに関しては現在調整中で、近日中にDREAMオフィシャルルールが制定される。<br>
+                    　イベント年間スケジュール、階級は下記参照。</p>
+                  <p>☆『DREAM』年間スケジュール☆<br>
+                    ◎3月15日（土）<br>
+                    『HEIWA DREAM.1 ライト級グランプリ2008 開幕戦』<br>
+                    会場／さいたまスーパーアリーナ<br>
+                    ◎4月29日（火・祝）<br>
+                    『OLYMPIA DREAM.2 ミドル級グランプリ2008 開幕戦』<br>
+                    会場／さいたまスーパーアリーナ<br>
+                    ◎5月11日（日）<br>
+                    『HEIWA DREAM.3 ライト級グランプリ2008 2nd ROUND』<br>
+                    会場／さいたまスーパーアリーナ<br>
+                    ◎6月中旬<br>
+                    『OLYMPIA DREAM.4 ミドル級グランプリ2008 2nd ROUND』<br>
+                    会場／韓国or横浜アリーナ<br>
+                    ◎7月21日（月・祝）<br>
+                    『HEIWA DREAM.5 ライト級グランプリ2008 決勝戦』<br>
+                    会場／大阪城ホール<br>
+                    ◎9月下旬<br>
+                    『OLYMPIA DREAM.6 ミドル級グランプリ2008 決勝戦』<br>
+                    会場／さいたまスーパーアリーナ</p>
+                  <p>☆階級☆<br>
+                    ◎ライト級……70kg未満<br>
+                    ◎ウェルター級……76kg未満<br>
+                    ◎ミドル級……84kg未満<br>
+                    ◎ライトヘビー級……93kg未満<br>
+                    ◎ヘビー級……93kg以上</p>
+                  <br>
+                  <p class="subhead"><span class="style3">■</span>20名を越すファイターが集結!!</p>
+                  <p>　『DREAM』の概要が発表された後、会見に登壇した制作スタッフ、選手がコメントした。また、海外より、M-1グローバルのワジム・フィンケリシテイン氏＆エメリヤーエンコ・ヒョードル、そしてホイス・グレイシーからのコメントが発表された。</p>
+                  <p>【山形龍司（演出担当）】<br>
+                    「一番上段のほうに座っていますのが、演出・制作を担当しているスタッフです。我々、美術、音響、照明、映像、今日ここに座っておりますケイ・グラントさん、レニー・ハートさん、皆さんご存じの佐藤大輔君という人たちは“本物”です。我々がやる以上“我々でしかない”というようなイベントにしていきたいと思っています。今日を一つのキッカケに、格闘技というものがこの先10年、20年、日本を発信基地として世界に羽ばたくスポーツ文化になったらいいなと考えています。その一翼を担わせてもらうことに責任を感じていますし、感謝しています。皆さんにより楽しんでいただけるよう、大会を演出・制作という立場で全力でサポートしていきたいと思っています」</p>
+                  <p>【佐藤大輔（映像制作担当）】<br>
+                    「過去にとらわれず新しいものをみんなで作っていきましょう！　極上、熱狂のライブショーはファンの皆さんの協力なしでは作れません。ファンの皆さん、一緒に頑張りましょう！」</p>
+                  <p>【中村大介】<br>
+                    「今日集まっているメンバーを見ましても世界最高峰のリングだと思いますので、その中で自分を出せるように一生懸命練習して強くなっていきたいと思います」</p>
+                  <p>【上山龍紀】<br>
+                    「この素晴らしい新イベント、新団体に参戦できることを非常に嬉しく思います。今年は勝負の年になると思いますので、世界王者目指して頑張りたいと思います」</p>
+                  <p>【柴田勝頼】<br>
+                    「気を引き締めて頑張ります！」</p>
+                  <p>【大山峻護】<br>
+                    「この歴史的なイベントに参加できることを本当に幸せに感じています。選手、スタッフ、ファンの皆さんで、一丸となってこのイベントを盛り上げていけたら最高だなと思っています」</p>
+                  <p>【朴光哲】<br>
+                    「どうも、朴です。よろしくお願いします」</p>
+                  <p>【宮田和幸】<br>
+                    「すごいレベルの高いリングなので、いい試合をしたいと思います」</p>
+                  <p>【金泰泳】<br>
+                    「これだけ選手がたくさんいるので、誰とでも試合をしたいと思います」</p>
+                  <p>【所英男】<br>
+                    「一生懸命練習して、結果を出せるように頑張ります」</p>
+                  <p>【長谷川秀彦】<br>
+                    「すごいメンバーの中で、サンボの強さを皆さんにお見せできたらと思います」</p>
+                  <p>【桜井隆多】<br>
+                    「自分は20日に試合があるのでそれに勝って、この夢の舞台に上がりたいと思います」</p>
+                  <p>【今成正和】<br>
+                    「強い選手と試合をしたいと思います」</p>
+                  <p>【ミノワマン】<br>
+                    「『DREAM』という名前を聞いて、素敵な名前だなと思いました。すごいスタッフ、関係者、素晴らしいファンの方の前で、強くなり、いい試合をしていきたいと思います」</p>
+                  <p>【秋山成勲】<br>
+                    「ざっと見ても、本当に素晴らしい夢のカードがこれからできると思います。自分たちのためではなくて、ファンの皆さんと応援してくれる皆さんのために、夢を追いかけていこうと思います」</p>
+                  <p>【田村潔司】<br>
+                    「選手はリング上がすべてだと思いますので、リング上で自分の持っているものを見せたいと思います」</p>
+                  <p>【船木誠勝】<br>
+                    「新しい新イベント、自分もその力になれるよう選手として頑張っていきたいと思います」</p>
+                  <p>【宇野薫】<br>
+                    「総合格闘技界の進化した形の中で、自分も進化したものを出せればと思います」</p>
+                  <p>【山本“KID”徳郁】<br>
+                    「かなりイケてるイベントになっちゃうと思うんで、オレも頑張ります。ちなみに、3月15日は僕の誕生日なので覚えておいてください（笑）」</p>
+                  <p>【石田光洋】<br>
+                    「このような新イベントに出られることをすごく嬉しく思っています。僕は思いっきり闘うだけですので、応援よろしくお願いします」</p>
+                  <p>【川尻達也】<br>
+                    「『DREAM』。こういう夢のある舞台を作ってくれたことに感謝したいと思います。3月15日は、僕たち選手が夢のある闘いをして、ファンのみんなにいい夢を見てもらいたいと思いますので、ぜひ会場まで遊びに来てください」</p>
+                  <p>【青木真也】<br>
+                    「幸せいっぱい夢いっぱい、夢とロマン溢れる試合をしたいと思います！」</p>
+                  <p>【桜井“マッハ”速人】<br>
+                    「僕はMMAが長いので、殴られ年数がこの中でも長いほうだと思うんですけど、今年はトーナメントはないですけど、来年（行われるであろうウェルター級グランプリで）は、殴られ年数が一番長いということで頑張りたいと思います」</p>
+                  <p>【桜庭和志】<br>
+                    「第1回の『Dynamite!』のときのように、『DREAM』という名前で皆さんに夢を与えられるように、選手、スタッフ共に一生懸命頑張りますので、また応援よろしくお願いします」</p>
+                  <p>【ワジム・フィンケリシテイン氏（M-1グローバル）＆エメリヤーエンコ・ヒョードルのコメント】<br>
+                    「近々日本でスタートする新しい大会『DREAM』の開催をお喜び申し上げます。また、私たちも共に日本で素晴らしいイベントを開きたいと思っています。我々M-1も、グローバルなMMAプロジェクトである『M-1チャレンジ』を『DREAM』の方々と進めていきたいと思っています」</p>
+                  <p>【ホイス・グレイシーのビデオメッセージ】<br>
+                    「日本に『DREAM』という新たなイベントが誕生することを嬉しく思います。日本最大のMMA組織であるFEGと、かつてのPRIDE制作スタッフが結集して作り上げるイベントは成功することでしょう。またいつか、この『DREAM』の舞台で自分のスタイルと技術をお見せします。グレイシー一族は、MMAの歴史を築き上げてきました。そのMMAをFEGとかつてのPRIDE制作スタッフの協力で、さらに発展させてくれることを期待するとともに嬉しく思います。試合が待ち遠しいです。必ず戻ってきます」</p>
+                  <br>
+                  <p class="subhead"><span class="style3">■</span>3・15『DREAM.1』、J.Z.vs青木決定！</p>
+                  <p>　選手たちのコメントが終わると、3・15『DREAM.1』さいたまスーパーアリーナより開幕するライト級グランプリの概要が発表された。この日発表された同グランプリ参戦予定選手は13名。最終的には16名参加のトーナメントとなる予定だ。</p>
+                  <p>☆ライト級グランプリ参戦予定選手☆<br>
+                    J.Z.カルバン、青木真也、川尻達也、石田光洋、アンドレ・ジダ、宇野薫、チョン・ブギョン、宮田和幸、ヨアキム・ハンセン、アルトゥール・ウマハノフ、ギルバート・メレンデス、ルイス・ブスカペ、朴光哲、他</p>
+                  <p>　そして、この日の会見では、1回戦の決定カードとして、J.Z.カルバンvs青木真也の一戦が発表された。この決定を受け、両選手が意気込みを語った（カルバンはビデオメッセージ）。</p>
+                  <p>【青木真也】<br>
+                    「新しい舞台でいきなり第一発目のカード発表が僕ということで、感謝と共に幸せを感じています。正々堂々と僕の背負ってきた看板と向こうの看板を懸けて、世界最高峰の熱い試合をして、僕が勝ちたいと思います」</p>
+                  <p>【J.Z.カルバン】<br>
+                    「アメリカン・トップチームのJ.Z.カルバンです。記者会見に出席できなくてごめんなさい。今、次に行われる3月15日の青木選手との試合に向けて猛練習中です。HERO'Sで2回チャンピオンになった者として、これから自分の本拠地となる『DREAM』でHERO'SとK-1の全てのファンを歓迎します。より多くのファンにMMAの世界とエキサイティングな試合を見せることを楽しみにしています。3月15日『DREAM』。お会いすることを楽しみにしています」</p>
+                  <br>
+                  <p class="subhead"><span class="style3">■</span>ミルコ・クロコップの参戦が電撃決定！</p>
+                  <p>　さらに、この日の会見では、なんとミルコ・クロコップの『DREAM』参戦決定も発表！　極秘来日していたミルコは会見場に姿を現し、ファンに向かって参戦への意気込みを語った。</p>
+                  <p>【ミルコ・クロコップ】<br>
+                    「コンニチワ！　ゲンキデスカ！　また日本の皆さんの目の前で試合ができることを非常に嬉しく思うと共に非常に興奮をしております。3・15さいたま、自分の次の試合を見に来ていただきたいと思いますし、そしてこの新しいイベントのサポートを頑張っていきたいと思います」</p>
+                  <p>　続いて行われた質疑応答では、このミルコの電撃参戦発表についての質問が飛んだ。</p>
+                  <p>☆質疑応答☆<br>
+                    ──ミルコ選手のUFCとの契約問題について教えてください。<br>
+                    笹原　契約に関して、詳細はここでは申し上げられないんですが、ここにこうしてご登壇いただいているということが、そのすべてだと思うんですが、“問題ない”というふうに認識しております。<br>
+                    ──ミルコ選手の参戦決定の経緯については？<br>
+                    笹原　私共としては、ヘビー級の外国人選手で看板になるような選手を探しておりまして、ミルコ選手と話す機会がございまして、今回参戦に至ったということです。<br>
+                    ──階級を見ると、KID選手の階級がないんですけど？<br>
+                    笹原　ライト級のその下の階級も設けたいと思っております。ただ、何キロにするかはきまりきっていないものですから今日渡した資料の中には入っておりませんが、もう一つ軽い階級を作ろうと思っています。<br>
+                    ──谷川代表にお聞きします。これからK-1に専念されるということは、マッチメイク面も谷川代表以外の方が？<br>
+                    谷川　基本的には笹原プロデューサーにすべてお任せしようと思っています。ただ、主催者としての義務とか、選手との契約の調整はちゃんとやっていきます。でも、基本的には、この素晴らしい優秀なスタッフの皆さんにお任せしていきたいなと思っています。<br>
+                    ──HERO'Sは“Road to Dynamite!!”という意味合いもあったと思うんですけど？<br>
+                    谷川　もちろん『Dynamite!!』に関連してくると思います。年末の『Dynamite!!』に向けて、『Dynamite!!』で何をやるかは分からないんですけど、この『DREAM』には格闘技界の素晴らしい頭脳が結集していますからね。どういうふうに関連させていくかはこれからですね。<br>
+                    ──ミルコ選手におうかがいします。闘いの場をUFCから日本に移すことを決意した理由と、このリングで闘ってみたいと思う相手は？<br>
+                    ミルコ　確かにUFCで残念な結果に終わってしまい、その結果、この『DREAM』に移ってきたのではないかという印象があるのかもしれませんが、そうではありません。いずれはUFCに戻って素晴らしい試合をしたいと思っています。ただ、日本で試合をしたいとずっと思っていましたし、この新しいイベント『DREAM』は自分のこれからの格闘技人生の中で非常に重要な場所になると感じて参戦を決めました。正直なところケージファイトというのは自分には合わないと思っていましたし、日本で試合をするのが自分には合っていると思います。長年日本で支えてきてくれたファンのサポートもありますので、日本は第二の故郷だと感じています。これから一生懸命練習して、当然前回の残念な結果から精神的にも肉体的にも立ち直っていますので、いい試合を見せたいと思います。</p>
+                  <br>
+                  <p class="subhead"><span class="style3">■</span>笹原「『DREAM.1』は全部で10試合くらいを考えています」</p>
+                  <p>　記者会見終了後には、谷川代表と笹原イベントプロデューサーが揃って囲み会見に応じた。</p>
+                  <p>☆囲み会見☆<br>
+                    谷川　というわけで、新体制で新しいイベントをやっていきたいと思いますので、よろしくお願いします。本当に、PRIDEでもない、HERO'Sでもない新しいイベントということです。制作・プロデュースに関しては、笹原さん以下『やれんのか！』チームに、マッチメイクも含めて基本的にはお任せしようと思っています。ただ、主催者としての責任はまっとうして、スポンサーの対応とか選手の契約のこととかはやってまいります。盛り上げていきますので、ひとつよろしくお願いします。あと、僕のほうからは今回に関しては新しい体制で、新しいイベントということで、前田（日明）さんに関しては「スーパーバイザー」という肩書きはないです。高田（延彦）さんに関しても「統括本部長」という肩書きはなしで。別にこれは喧嘩をしたわけでもなくこれからも仲良くやっていきます。前田さんに関しては、ずっとこの2〜3年ですね、前田さんのやりたいことっていうのが、HERO'Sでは私個人としてはやれてないと思うんですね。まあ、近々会見とかやると思いますけども、そういうものを頑張ってやっていただいて、お手伝いをしていきたいなというふうに思っています。決して、仲違いをしたとか、そういうこともなく、これからも一緒に僕は、FEGとしてはやっていきたいと思います。あとは本当に笹原さんに聞いてもらえれば。それではひとつよろしくお願いいたします。<br>
+                    ──ルールはどうなりますか？<br>
+                    笹原　先程も申し上げましたけど、島田（裕二）さん、野口（大輔）さん、礒野（元）さんという方がこれから作っていきます。『やれんのか！』のルールとHERO'Sのルール、それぞれに多少違いがあると思うんですけど、うまくミックスして新しい『DREAM』ルールというものを作ります。現時点ではまだ決まっていません。『DREAM』としてルール・ディレクションチームを含めて、これはおそらく島田さんになると思うんですけど、ルールディレクターを置いてやっていきます。<br>
+                    ──『やれんのか！』チームは会社組織になるんですか？<br>
+                    笹原　さっきも「笹原さん、FEGに入られたんですか？」って聞かれたんですけど（笑）、それは違います。FEGさんから我々の制作チームがイベントプロデュースのお仕事を引き受けたという判断をしていただいていいと思います。現時点で我々の制作チームは会社じゃないものですから、今後は会社を作っていって、会社と会社の取り引きということになってくると思います。今日、それは発表できればよかったんですけど、まだ現時点ではできてないものですから。<br>
+                    ──その会社は笹原さんが代表に？<br>
+                    笹原　新しい会社の人事についてはまだ決まっていません。<br>
+                    ──発表された年間スケジュールに大晦日の予定が入っていませんが？<br>
+                    笹原　大晦日は当然何らかの形でやりたいと思っていますけど、ちょっとまだ現時点で「こういう形で、こんな内容に」っていうのは決まってないです。さっき申しあげ忘れたんですけど、目標っていうか、ゆくゆくはかつて国立競技場でやった一回目の『Dynamite!』のような夢のイベントをやりたいなというふうに、目標としてはまずそこですね。年末にそうなるかは分からないんですけど、いずれはそういうことができればなあと。たぶん大晦日は国立は貸してくれないでしょうけど（笑）。<br>
+                    ──『戦極』さんとはどういう関係ですか？<br>
+                    笹原　最終的には我々制作チームが『戦極』さんのイベントをお手伝いすることはありません。1月の頭ぐらいに、たとえば佐藤大輔だったりレニー（・ハート）さんの名前が出たんですけど、さっきも申し上げたとおり、私どもはイベントをトータルでやってこそ力が発揮できると思ってますし、たとえば映像だけとか、コールだけとか、一部分だけ切り売りというか、分けてご提供をしてもですね、たぶん熱のある世界観は作れないと思います。いろいろお話をしたなかで、そこらへんに関して合わなかったということです。べつになにか喧嘩をしているわけではなく、旗揚げ戦に関してお手伝いをすることっていうのはないです。<br>
+                    ──3月の大会は、ライト級のトーナメント8試合プラス、ミルコの試合ということになりますか？<br>
+                    笹原　そうですね。全部で10試合くらいは組みたいなと思います。ミルコのカードに関してはまだ何とも言えないですけど、全部で10試合くらいを考えています。<br>
+                    ──ヒョードル選手はM-1 GLOBALの試合に出ながらという形になる？<br>
+                    笹原　そうですね。M-1さんとは変わらず協調関係というか協力関係にありますので、昨年末の『やれんのか！』に出ていただいたような、もし今後ヒョードル選手に出ていただくのであれば、M-1さんを通じてご協力をいただくという形になると思います。<br>
+                    ──ライト級、ミドル級以外の階級のタイトルマッチも年内におこないますか？<br>
+                    笹原　全部できるかどうかっていうのは、ちょっとまだ断定しきれないんですけど、9月以降のスケジュールがまだ出てないので、今年一年でどの階級もタイトルマッチが組めるなら。そこはその時、一番ファンの後押しがあって、勢いのある注目の選手同士でまさしく夢のカードという形でタイトルマッチが実現できればと思っています。<br>
+                    ──以前に三崎和雄選手の契約に関する話が出ましたが、これはどうなりましたか？<br>
+                    笹原　ご本人とお話をして、誤解は解けてます。円満に解決してますので、今回三崎選手に関しては『戦極』で闘い、我々は『DREAM』というイベントを行うので、もし機会があればまた上がっていただければと思います。■</p>
+                  <p><span class="heros10px">»<a href="../../02eventschedule/20080315/20080315.html">『HEIWA DREAM.1 ライト級グランプリ 2008 開幕戦』実施概要</a></span></p></td>
+<td width="10" align="center" valign="top" class="heros12px"><img src="../img_share/spacer.gif" width="20" height="90" border="0" alt=""></td>
+                  <td width="330" align="right" valign="top"><img src="img/ph01.jpg" width="330" height="237" border="0">
+                    <table width="330" cellspacing="0" cellpadding="3">
+                      <tr>
+                        <td align="right" class="heros10px">ファン公開のもと、総合格闘技新イベント『DREAM』が発表された</td>
+                      </tr>
+                    </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"><img src="img/ph02.jpg" width="220" height="330" border="0"> </span>
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">谷川貞治FEG代表</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph03.jpg" width="220" height="330" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">笹原圭一イベントプロデューサー</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph04.jpg" width="330" height="220" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">会見には20名を越す参戦選手が出席。『DREAM』参戦の意気込みを語った</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph05.jpg" width="220" height="330" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">山本“KID”徳郁</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph06.jpg" width="220" height="330" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">宇野薫</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph07.jpg" width="220" height="330" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">秋山成勲</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph08.jpg" width="220" height="330" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">石田光洋</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph09.jpg" width="220" height="330" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">川尻達也</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph10.jpg" width="220" height="330" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">青木真也</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph11.jpg" width="220" height="330" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">桜井“マッハ”速人</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph12.jpg" width="220" height="330" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">桜庭和志</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph13.jpg" width="220" height="330" border="0">
+                  <table width="220" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">3・15『DREAM.1』さいたまスーパーアリーナ大会、ライト級グランプリ1回戦の決定カードとして、J.Z.カルバンvs青木真也が発表された</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph14.jpg" width="330" height="220" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">J.Z.はビデオメッセージでコメント</td>
+                    </tr>
+                  </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"></span><img src="img/ph15.jpg" width="220" height="330" border="0">
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">ミルコ・クロコップの『DREAM』参戦も電撃決定!!</td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+
+
+                
+
+              </table>              
+              <img src="../img_share/spacer.gif" width="700" height="10" border="0" alt="">              <table width="700" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td background="../img_share/dotline.gif"><img name="dotline" src="../img_share/dotline.gif" width="8" height="13" border="0" alt=""></td>
+                  </tr>
+                </table>
+                <img src="../img_share/spacer.gif" width="700" height="10" border="0" alt=""><br>
+                <span class="heros09px">Copyright (C) 2008 HERO-S  Mail to:<a href="mailto:official@hero-s.com">official@hero-s.com</a><br>
+Copyright (C) 2008 G.T.Entertainment, Inc. All Rights Reserved.<br>
+当サイトで使用している写真およびテキストの無断転載を禁止します。</span><br>
+      <img src="../img_share/spacer.gif" width="20" height="20" border="0" alt=""> <br>
+            </td>
+            <td><img src="../img_share/spacer.gif" width="10" height="90" border="0" alt=""></td>
+            <td align="right" valign="top" background="../img_share/sidedot_r.gif"><img name="sidedot_r" src="../img_share/sidedot_r.gif" width="20" height="20" border="0" alt=""></td>
+          </tr>
+        </table></td>
+      <td width="10" background="../img_share/sideline_r.gif"><img name="sideline_r" src="../img_share/sideline_r.gif" width="10" height="75" border="0" alt=""></td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>

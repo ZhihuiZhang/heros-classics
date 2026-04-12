@@ -1,0 +1,230 @@
+﻿<html>
+<head>
+<title>HERO'S［HERO'S★NEWS］</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Fireworks MX Dreamweaver MX target.  Created Thu Jun 23 12:46:04 GMT-1500 2005-->
+<script language="JavaScript">
+<!--
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+ var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+   var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+   if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+//-->
+</script>
+<link href="../../css/heros.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+<!--
+.style3 {color: #9EABD9}
+-->
+</style>
+</head>
+<body bgcolor="#cccccc" text="#000000" link="#000000" vlink="#666666" alink="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="MM_preloadImages('../img_share/bt_head00whats_f2.gif','../img_share/bt_head00ticket_f2.gif','../img_share/bt_head01news_f2.gif','../img_share/bt_head02schedule_f2.gif','../img_share/bt_head03result_f2.gif','../img_share/bt_head04media_f2.gif','../img_share/bt_head05vote_f2.gif','../img_share/bt_head06fighter_f2.gif')">
+<div align="center">
+  <table width="720" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="10" background="../img_share/sideline_l.gif"><img name="sideline_l" src="../img_share/sideline_l.gif" width="10" height="75" border="0" alt=""></td>
+      <td valign="top" bgcolor="#FFFFFF"><table border="0" cellpadding="0" cellspacing="0" width="760">
+        <tr>
+          <td><img name="he00" src="../img_share/he00.gif" width="20" height="10" border="0" alt=""></td>
+          <td><img name="he01" src="../img_share/he01.gif" width="219" height="10" border="0" alt=""></td>
+          <td><img name="he02" src="../img_share/he02.gif" width="501" height="10" border="0" alt=""></td>
+          <td><img name="he03" src="../img_share/he03.gif" width="20" height="10" border="0" alt=""></td>
+        </tr>
+      </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he04" src="../img_share/he04.gif" width="20" height="26" border="0" alt=""></td>
+            <td><a href="../../index.html"><img name="he05" src="../img_share/he05.gif" width="219" height="26" border="0" alt=""></a></td>
+            <td><a href="../../07whatsheros/index.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head00whats','','../img_share/bt_head00whats_f2.gif',1)"><img name="bt_head00whats" src="../img_share/bt_head00whats.gif" width="157" height="26" border="0" alt=""></a></td>
+            <td><img name="he_06" src="../img_share/he_06.gif" width="46" height="26" border="0" alt=""></td>
+            <td><a href="http://w1.onlineticket.jp/heros/page/G/pc/GGWI02100.jsp" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head00ticket','','../img_share/bt_head00ticket_f2.gif',1)"><img name="bt_head00ticket" src="../img_share/bt_head00ticket.gif" width="103" height="26" border="0" alt=""></a></td>
+            <td><img name="he08" src="../img_share/he08.gif" width="150" height="26" border="0" alt=""></td>
+            <td><img name="he09" src="../img_share/he09.gif" width="45" height="26" border="0" alt=""></td>
+            <td><img name="he10" src="../img_share/he10.gif" width="20" height="26" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he11" src="../img_share/he11.gif" width="20" height="26" border="0" alt=""></td>
+            <td><img name="he12" src="../img_share/he12.gif" width="219" height="26" border="0" alt=""></td>
+            <td><img name="he13" src="../img_share/he13.gif" width="19" height="26" border="0" alt=""></td>
+            <td><a href="../index2008.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head01news','','../img_share/bt_head01news_f2.gif',1)"><img name="bt_head01news" src="../img_share/bt_head01news.gif" width="106" height="26" border="0" alt=""></a></td>
+            <td><img name="he14" src="../img_share/he14.gif" width="18" height="26" border="0" alt=""></td>
+            <td><a href="../../02eventschedule/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head02schedule','','../img_share/bt_head02schedule_f2.gif',1)"><img name="bt_head02schedule" src="../img_share/bt_head02schedule.gif" width="163" height="26" border="0" alt=""></a></td>
+            <td><a href="../../03eventresult/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head03result','','../img_share/bt_head03result_f2.gif',1)"><img name="bt_head03result" src="../img_share/bt_head03result.gif" width="150" height="26" border="0" alt=""></a></td>
+            <td><img name="he16" src="../img_share/he16.gif" width="45" height="26" border="0" alt=""></td>
+            <td><img name="he17" src="../img_share/he17.gif" width="20" height="26" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he18" src="../img_share/he18.gif" width="20" height="27" border="0" alt=""></td>
+            <td><img name="he19" src="../img_share/he19.gif" width="219" height="27" border="0" alt=""></td>
+            <td><img name="he20" src="../img_share/he20.gif" width="19" height="27" border="0" alt=""></td>
+            <td><a href="../../04mediainfo/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head04media','','../img_share/bt_head04media_f2.gif',1)"><img name="bt_head04media" src="../img_share/bt_head04media.gif" width="106" height="27" border="0" alt=""></a></td>
+            <td><img name="he21" src="../img_share/he21.gif" width="18" height="27" border="0" alt=""></td>
+            <td><a href="../../05herosvote/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head05vote','','../img_share/bt_head05vote_f2.gif',1)"><img name="bt_head05vote" src="../img_share/bt_head05vote.gif" width="163" height="27" border="0" alt=""></a></td>
+            <td><a href="../../06fightersinfo/index01a.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head06fighter','','../img_share/bt_head06fighter_f2.gif',1)"><img name="bt_head06fighter" src="../img_share/bt_head06fighter.gif" width="150" height="27" border="0" alt=""></a></td>
+            <td><img name="he23" src="../img_share/he23.gif" width="45" height="27" border="0" alt=""></td>
+            <td><img name="he24" src="../img_share/he24.gif" width="20" height="27" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he25" src="../img_share/he25.gif" width="20" height="73" border="0" alt=""></td>
+            <td><img name="he26" src="../img_share/he26.gif" width="219" height="73" border="0" alt=""></td>
+            <td><img name="he27" src="../img_share/he27.gif" width="306" height="73" border="0" alt=""></td>
+            <td><img name="he32" src="../img_share/he32.gif" width="195" height="73" border="0" alt=""></td>
+            <td><img name="he28" src="../img_share/he28.gif" width="20" height="73" border="0" alt=""></td>
+          </tr>
+        </table>        <table width="760" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+          <tr>
+            <td valign="top" background="../img_share/sidedot_l.gif"><img name="sidedot_l" src="../img_share/sidedot_l.gif" width="20" height="20" border="0" alt=""></td>
+            <td><img src="../img_share/spacer.gif" width="10" height="90" border="0" alt=""></td>
+            <td valign="top"><img src="../img_share/spacer.gif" width="700" height="20" border="0" alt="">              <table border="0" cellpadding="0" cellspacing="0" width="700">
+              <tr>
+                  <td width="549"><img src="img/20080105_2title.gif" alt="" name="title01" width="486" height="165" border="0"></td>
+                <td width="151"><img src="../img_share/spacer.gif" width="100" height="24" border="0" alt=""></td>
+              </tr>
+            </table>              
+              <img src="../img_share/spacer.gif" width="700" height="20" border="0" alt="">              <table width="700" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+                
+                <tr bgcolor="#FFFFFF">
+                <td width="350" align="left" valign="top" class="heros12px"><p class="subhead"><span class="style3">■</span>「ホンマン選手の潜在能力はかなり高いと思います」</p>
+                  <p>──大晦日のチェ・ホンマン戦は、見事な一本勝ちでした。決戦から数日経ちましたが、今の心境から教えていただけますか。<br>
+                    <strong><strong>ヒョードル　</strong></strong>素晴らしい気分です。とても嬉しくて、幸せな気分ですね。<br>
+                    ──1年ぶりの日本でのファイトはいかがでしたか。<br>
+                    <strong>ヒョードル　</strong>まだ自分のことを忘れないで覚えていてくれて、&quot;待っていてくれたんだぁ&quot;ととても昂揚しました。ファンの皆さんの声援は非常に嬉しかったですね。<br>
+                    ──日本で試合をするのと日本以外の国で試合をするのでは違うものですか？<br>
+                    <strong>ヒョードル　</strong>そうですね。日本のファンというのは半分プロみたいなものですから、反応がすごいんです。ファイトのいろいろな局面を理解してくれますからね。例えば、ポジショニング、技、すべての局面での反応が違います。ファイターからすると「素晴らしい」としか言いようがありません。<br>
+                    ──闘ってみたチェ・ホンマン選手の印象を教えてください。<br>
+                    <strong>ヒョードル　</strong>とてもデカくて、とても力強かったです。ただ、スピードは自分のほうがありました。でも、身体能力はとても高いと思いましたね。<br>
+                    ──2度テイクダウンを試みたんですが、逆に2度とも上になられてしまいました。<br>
+                    <strong>ヒョードル　</strong>最初組み合った時は、彼からテイクダウンを狙ってきたんですよ。それは本当に驚きましたね。2回目は、背後にあったロープが気に掛かって、テイクダウンすることができませんでした。<br>
+                    ──しかし、下からの腕ひしぎ十字固めで一本勝ちを収めました。あえて下になって関節技を狙うというのも、作戦として考えていたのでしょうか？<br>
+                    <strong>ヒョードル　</strong>特別に&quot;下になって十字を狙おう&quot;というのはありません。私はいつも、試合前の準備として、すべての技を磨きます。ですから、あの場面でもスムーズに腕十字が出せたと思います。下からの十字がうまくいかなければ、違う技を試していたでしょう。<br>
+                    ──顔の傷が非常に目立つんですけど、ホンマン選手の攻撃で効いたのはなんでしたか？<br>
+                    <strong>ヒョードル　</strong>顔の傷ですか？　目立ちますよね（笑）。ただ、彼のパンチはまったく当たらなかったんですよ。かすったことはあったかもしれませんが、これはマットにこすれてできた怪我です。<br>
+                    ──ホンマン選手はこれが総合2戦目だったわけですが、ホンマン選手の今後の総合での可能性についてはどう思われますか？<br>
+                    <strong>ヒョードル　</strong>試合経験を積んで力を付けていけば、潜在能力としてはかなり高いものがあると思います。なにより身体能力が非常に高いですからね。</p>
+                  <br>
+                  <p class="subhead"><span class="style3">■</span>「クートゥアー選手とはぜひ闘ってみたいです」</p>
+                  <p>──試合後のインタビューでは、「M-1グローバルが日本で大会をやると聞いています。さらに、やるなら旧PRIDEチームと、と聞いています」とコメントしていました。<br>
+                    <strong>ヒョードル　</strong>ええ。そうなったらぜひ出場したいですね。ただ、具体的な日程については、試合後にM-1グローバルのスタッフの人とまだ話をしていないので、まだ分からないんですけどね。それまでに聞いていた情報としては、春、もしくは夏に日本で開催するのではないかということを聞いています。<br>
+                    ──早くて春と？<br>
+                    <strong>ヒョードル　</strong>春といっても晩春。5月くらいかと聞いていますよ。<br>
+                    ──ヒョードル選手の希望としては、&quot;日本でやるならば、『やれんのか！』のスタッフと一緒に&quot;という気持ちが強いと？<br>
+                    <strong>ヒョードル　</strong>そういうことです。<br>
+                    ──試合後には、次の対戦について、現UFC世界ヘビー級王者のランディ・クートゥアー選手の名前も挙がりました。ヒョードル選手にとって、今一番闘ってみたい選手の一人として、クートゥアー選手は上位に位置しているのでしょうか？<br>
+                    <strong>ヒョードル　</strong>そうですね。彼のことはとても尊敬していますし、ぜひ闘ってみたいと思っています。彼の試合は常に気に掛けていましたから。<br>
+                    ──クートゥアー選手自身も「現段階ではヒョードルとの試合だけが意味がある」と発言していたのは知っていましたか？<br>
+                    <strong>ヒョードル　</strong>彼からそのような高い評価をいただけるのは、それは大変喜ばしいことですね。ぜひ闘ってみたいです。<br>
+                    ──クートゥアー選手にはどんな印象がありますか？<br>
+                    <strong>ヒョードル　</strong>世界のトップファイターの一人という認識を持っています。そして、かつてのイベントの時に何度か顔を合わせているのですが、非常に紳士的でいい人間だという印象があります。彼のように人間としても優れているファイターに、私は惹かれますね。<br>
+                    ──2月か3月にはM-1グローバルのアメリカ大会開催が予定されているという噂もあります。それも踏まえて、クートゥアー選手との対戦はいつ頃まとまりそうだと考えていますか？<br>
+                    <strong>ヒョードル　</strong>彼との対戦が3月にまとまるというのは現実的ではないと思います。彼にはまだUFCとの契約があると聞いていますから、もう少し待たなくてはいけないと思います。</p>
+                  <br>
+                  <p class="subhead"><span class="style3">■</span>また日本でのファイトをお約束します</p>
+                  <p>──今年はM-1グローバルの船出の年となります。世界の総合格闘技ファンに向けて、どんな闘い、思いを発信していきたいと考えていますか？<br>
+                    <strong>ヒョードル　</strong>私とM-1グローバルのスタッフは、M-1グローバルというイベントを世界的な大会にしていきたいと考えています。そこには世界中の最強ファイターが集まる。そういうものにしていきたいと考えています。<br>
+                    ──先ほど、eの日本大会が、早くても「5月くらい」という発言がありましたが、その試合が次のヒョードル選手のファイトとなるのでしょうか？<br>
+                    <strong>ヒョードル　</strong>いいえ。2月の頭にコマンドサンボのロシア選手権がありますので、それには出場する予定です。あと、同じ2月にサンボの大統領杯という大会もありますので、それにもぜひ参加したいと考えています。<br>
+                    ──大統領杯ということはロシアのプーチン大統領も出席されるのですか？<br>
+                    <strong>ヒョードル　</strong>そうですね。<br>
+                    ──ヒョードル選手は何回もプーチン大統領と会っていると思いますが、政界進出には興味はないんですか？<br>
+                    <strong>ヒョードル　</strong>そのへんにかんしては何も考えていませんね（笑）。今はできるだけ長く闘い続けたいと思っています。正直、今は政治には全然興味を覚えませんね。<br>
+                    ──分かりました（笑）。それでは最後にファンへ向けてメッセージをお願いできますか？<br>
+                    <strong>ヒョードル　</strong>大晦日は私、そして他のファイターたちを応援してくれてありがとうございます。また日本に来て、皆さんの前でファイトをすることを約束します。新しい年の皆さんのご健康、お幸せを心より祈っております。そして、皆さんの目標がすべて叶えられますように。ありがとうございました。■</p>
+                  <p>&nbsp;</p>
+                  <p class="heros10px">»<a href="../../03eventresult/20071231yare/20071231yare.html">『FieLDS やれんのか！大晦日！2007 Supported by M-1 GLOBAL』大会結果</a></td>
+<td width="10" align="center" valign="top" class="heros12px"><img src="../img_share/spacer.gif" width="20" height="90" border="0" alt=""></td>
+                  <td width="330" align="right" valign="top"><img src="img/ph01.jpg" width="330" height="248" border="0">
+                    <table width="330" cellspacing="0" cellpadding="3">
+                      <tr>
+                        <td align="right" class="heros10px">昨年大晦日『やれんのか！』でチェ・ホンマンを破ったエメリヤーエンコ・ヒョードルにインタビュー</td>
+                      </tr>
+                    </table>
+                    <span class="heros10px">
+                      <img src="../img_share/spacer.gif" alt=" " width="330" height="10"><br>
+<img src="img/ph02.jpg" width="248" height="330"><br>
+                      </span>
+                      <table width="250" cellspacing="0" cellpadding="3">
+                        <tr>
+                          <td align="right" class="heros10px">ホンマンの印象については「とてもデカくて、とても力強かった」とコメント</td>
+                        </tr>
+                      </table>
+      <img src="../img_share/spacer.gif" alt=" " width="330" height="10"><br>
+                      <img src="img/ph03.jpg" width="220" height="330">
+                  <table width="220" cellspacing="0" cellpadding="3">
+              <tr>
+                          <td align="right" class="heros10px">2度テイクダウンを奪われたヒョードル。ホンマンのテイクダウン能力について「本当に驚いた」と絶賛していた</td>
+                      </tr>
+                      </table>
+                  <span class="heros10px"><img src="../img_share/spacer.gif" alt=" " width="330" height="10"><img src="img/ph04.jpg" width="330" height="220"><br>
+                  </span>
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">下からの腕ひしぎ十字固めで完勝。&quot;60億分の1&quot;と賞されるにふさわしいファイトだった</td>
+                    </tr>
+                  </table>
+                  <img src="../img_share/spacer.gif" alt=" " width="330" height="10"><span class="heros10px"><img src="img/ph05.jpg" width="330" height="220"><br>
+                  </span>
+                  <table width="330" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">勝利したヒョードルは「今日はみなさんのために試合をしました。これからも日本で試合を続けていくことを約束します」と挨拶した</td>
+                    </tr>
+                  </table>
+                  <img src="../img_share/spacer.gif" alt=" " width="330" height="10"><span class="heros10px"><img src="img/ph06.jpg" width="248" height="330"></span>
+                  <table width="250" cellspacing="0" cellpadding="3">
+                    <tr>
+                      <td align="right" class="heros10px">現UFC世界ヘビー級王者のランディ・クートゥアーとの対戦は実現するのか!?　ヒョードルの次戦に注目だ!!</td>
+                    </tr>
+                  </table>
+                  e</td>
+                </tr>
+
+
+                
+
+              </table>              
+              <img src="../img_share/spacer.gif" width="700" height="10" border="0" alt="">              <table width="700" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td background="../img_share/dotline.gif"><img name="dotline" src="../img_share/dotline.gif" width="8" height="13" border="0" alt=""></td>
+                  </tr>
+                </table>
+                <img src="../img_share/spacer.gif" width="700" height="10" border="0" alt=""><br>
+                <span class="heros09px">Copyright (C) 2008 HERO-S  Mail to:<a href="mailto:official@hero-s.com">official@hero-s.com</a><br>
+Copyright (C) 2008 G.T.Entertainment, Inc. All Rights Reserved.<br>
+当サイトで使用している写真およびテキストの無断転載を禁止します。</span><br>
+      <img src="../img_share/spacer.gif" width="20" height="20" border="0" alt=""> <br>
+            </td>
+            <td><img src="../img_share/spacer.gif" width="10" height="90" border="0" alt=""></td>
+            <td align="right" valign="top" background="../img_share/sidedot_r.gif"><img name="sidedot_r" src="../img_share/sidedot_r.gif" width="20" height="20" border="0" alt=""></td>
+          </tr>
+        </table></td>
+      <td width="10" background="../img_share/sideline_r.gif"><img name="sideline_r" src="../img_share/sideline_r.gif" width="10" height="75" border="0" alt=""></td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+﻿<html>
+<head>
+<title>HERO'S［HERO'S★NEWS］</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Fireworks MX Dreamweaver MX target.  Created Thu Jun 23 12:46:04 GMT-1500 2005-->
+<script language="JavaScript">
+<!--
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+ var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+   var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+   if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+//-->
+</script>
+<link href="../../css/heros.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+<!--
+.style3 {color: #9EABD9}
+-->
+</style>
+</head>
+<body bgcolor="#cccccc" text="#000000" link="#000000" vlink="#666666" alink="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="MM_preloadImages('../img_share/bt_head00whats_f2.gif','../img_share/bt_head00ticket_f2.gif','../img_share/bt_head01news_f2.gif','../img_share/bt_head02schedule_f2.gif','../img_share/bt_head03result_f2.gif','../img_share/bt_head04media_f2.gif','../img_share/bt_head05vote_f2.gif','../img_share/bt_head06fighter_f2.gif')">
+<div align="center">
+  <table width="720" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="10" background="../img_share/sideline_l.gif"><img name="sideline_l" src="../img_share/sideline_l.gif" width="10" height="75" border="0" alt=""></td>
+      <td valign="top" bgcolor="#FFFFFF"><table border="0" cellpadding="0" cellspacing="0" width="760">
+        <tr>
+          <td><img name="he00" src="../img_share/he00.gif" width="20" height="10" border="0" alt=""></td>
+          <td><img name="he01" src="../img_share/he01.gif" width="219" height="10" border="0" alt=""></td>
+          <td><img name="he02" src="../img_share/he02.gif" width="501" height="10" border="0" alt=""></td>
+          <td><img name="he03" src="../img_share/he03.gif" width="20" height="10" border="0" alt=""></td>
+        </tr>
+      </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he04" src="../img_share/he04.gif" width="20" height="26" border="0" alt=""></td>
+            <td><a href="../../index.html"><img name="he05" src="../img_share/he05.gif" width="219" height="26" border="0" alt=""></a></td>
+            <td><a href="../../07whatsheros/index.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head00whats','','../img_share/bt_head00whats_f2.gif',1)"><img name="bt_head00whats" src="../img_share/bt_head00whats.gif" width="157" height="26" border="0" alt=""></a></td>
+            <td><img name="he_06" src="../img_share/he_06.gif" width="46" height="26" border="0" alt=""></td>
+            <td><a href="http://w1.onlineticket.jp/heros/page/G/pc/GGWI02100.jsp" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head00ticket','','../img_share/bt_head00ticket_f2.gif',1)"><img name="bt_head00ticket" src="../img_share/bt_head00ticket.gif" width="103" height="26" border="0" alt=""></a></td>
+            <td><img name="he08" src="../img_share/he08.gif" width="150" height="26" border="0" alt=""></td>
+            <td><img name="he09" src="../img_share/he09.gif" width="45" height="26" border="0" alt=""></td>
+            <td><img name="he10" src="../img_share/he10.gif" width="20" height="26" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he11" src="../img_share/he11.gif" width="20" height="26" border="0" alt=""></td>
+            <td><img name="he12" src="../img_share/he12.gif" width="219" height="26" border="0" alt=""></td>
+            <td><img name="he13" src="../img_share/he13.gif" width="19" height="26" border="0" alt=""></td>
+            <td><a href="../index2007.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head01news','','../img_share/bt_head01news_f2.gif',1)"><img name="bt_head01news" src="../img_share/bt_head01news.gif" width="106" height="26" border="0" alt=""></a></td>
+            <td><img name="he14" src="../img_share/he14.gif" width="18" height="26" border="0" alt=""></td>
+            <td><a href="../../02eventschedule/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head02schedule','','../img_share/bt_head02schedule_f2.gif',1)"><img name="bt_head02schedule" src="../img_share/bt_head02schedule.gif" width="163" height="26" border="0" alt=""></a></td>
+            <td><a href="../../03eventresult/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head03result','','../img_share/bt_head03result_f2.gif',1)"><img name="bt_head03result" src="../img_share/bt_head03result.gif" width="150" height="26" border="0" alt=""></a></td>
+            <td><img name="he16" src="../img_share/he16.gif" width="45" height="26" border="0" alt=""></td>
+            <td><img name="he17" src="../img_share/he17.gif" width="20" height="26" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he18" src="../img_share/he18.gif" width="20" height="27" border="0" alt=""></td>
+            <td><img name="he19" src="../img_share/he19.gif" width="219" height="27" border="0" alt=""></td>
+            <td><img name="he20" src="../img_share/he20.gif" width="19" height="27" border="0" alt=""></td>
+            <td><a href="../../04mediainfo/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head04media','','../img_share/bt_head04media_f2.gif',1)"><img name="bt_head04media" src="../img_share/bt_head04media.gif" width="106" height="27" border="0" alt=""></a></td>
+            <td><img name="he21" src="../img_share/he21.gif" width="18" height="27" border="0" alt=""></td>
+            <td><a href="../../05herosvote/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head05vote','','../img_share/bt_head05vote_f2.gif',1)"><img name="bt_head05vote" src="../img_share/bt_head05vote.gif" width="163" height="27" border="0" alt=""></a></td>
+            <td><a href="../../06fightersinfo/index01a.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head06fighter','','../img_share/bt_head06fighter_f2.gif',1)"><img name="bt_head06fighter" src="../img_share/bt_head06fighter.gif" width="150" height="27" border="0" alt=""></a></td>
+            <td><img name="he23" src="../img_share/he23.gif" width="45" height="27" border="0" alt=""></td>
+            <td><img name="he24" src="../img_share/he24.gif" width="20" height="27" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he25" src="../img_share/he25.gif" width="20" height="73" border="0" alt=""></td>
+            <td><img name="he26" src="../img_share/he26.gif" width="219" height="73" border="0" alt=""></td>
+            <td><img name="he27" src="../img_share/he27.gif" width="306" height="73" border="0" alt=""></td>
+            <td><img name="he32" src="../img_share/he32.gif" width="195" height="73" border="0" alt=""></td>
+            <td><img name="he28" src="../img_share/he28.gif" width="20" height="73" border="0" alt=""></td>
+          </tr>
+        </table>        <table width="760" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+          <tr>
+            <td valign="top" background="../img_share/sidedot_l.gif"><img name="sidedot_l" src="../img_share/sidedot_l.gif" width="20" height="20" border="0" alt=""></td>
+            <td><img src="../img_share/spacer.gif" width="10" height="90" border="0" alt=""></td>
+            <td valign="top"><img src="../img_share/spacer.gif" width="700" height="20" border="0" alt="">              <table border="0" cellpadding="0" cellspacing="0" width="700">
+              <tr>
+                  <td width="549"><img src="img/20070313title.gif" alt="" name="title01" width="470" height="120" border="0"></td>
+                <td width="151"><img src="../img_share/spacer.gif" width="100" height="24" border="0" alt=""></td>
+              </tr>
+            </table>              
+              <img src="../img_share/spacer.gif" width="700" height="20" border="0" alt="">              <table width="700" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+                
+                <tr bgcolor="#FFFFFF">
+                <td width="350" align="left" valign="top" class="heros12px"><p>　壮絶なKO、一本勝ちの連続で大いに盛り上がった『OLYMPIA HERO'S 2007 開幕戦 ～名古屋発上陸～』の翌日、一夜明け会見が行われた。<br>
+                  　会見に出席したのは、前田日明スーパーバイザー（SV）をはじめ、所英男、柴田勝頼、船木誠勝氏の4名。激戦を振り返りつつ、今後の展望を語った。<br>
+                  <span class="subhead"><span class="style3"><br>
+                  <br>
+                  ■</span>柴田に元気やKID級の期待</span><br>
+<br>
+「昨日、生まれました。何かがようやく始まった実感があります。これからですね…、ケガを早く治して次に備えます。武器を磨きます」と柴田は、会心の勝利を振り返った。心配されていた拳の負傷に関しても、「レントゲンをとって、折れてはいないことを確認しました。痛めているだけです。人間の頭って硬いんだなって思いましたね（笑）」と余裕の表情。練習も2週間後には再開する予定であることを明かした。ケガを心配していたファンも、これで胸を撫で下ろしたことだろう。<br>
+　山本宜久をわずか9秒でKOし、本格的な総合デビュー戦で観客を驚かせた“狂拳レスラー”柴田の誕生に、前田SVは複雑そうな表情を浮かべたが、谷川FEG代表は上機嫌だ。囲み会見でも、「柴田選手はいいですね。須藤元気、山本“KID”徳郁選手のようになってほしいですね」と、大きな期待をかけていることを告白した。さらに、「プロレスラーで一番の知名度にしたいですね。プロレスラー＝柴田勝頼と言われるくらいの期待をかけて、プロモーションをしていきます」と約束。柴田がデビュー戦で残したインパクトは、それほどまでに大きいものだった。<br>
+　柴田のセコンドを務めた船木誠勝氏も、「これからが大変ですが、どこまで強くなれるかを求めて、トレーニングをしていきたいです」と愛弟子に期待をかけつつも、これから先の試練に立ち向かう覚悟を語った。柴田にとっても、マンツーマンで指導してきた船木にとっても、この勝利が大きな一歩だったことは間違いない。全面的なバックアップを得て、柴田は大きく成長していくことだろう。<br>
+<br>
+<br>
+<span class="subhead"><span class="style3">■</span>所がシャオリンに対戦要求!!</span><br>
+<br>
+　安廣一哉から一本勝ちを奪い、見事にメインイベンターとしての重責を果たした所は、「昨日はキッチリ、一本が取れてよかったです。たくさんの応援があったんで、下手な試合はできないなと思っていました」と、ホッとした表情をみせた。対戦相手が急遽、永田克彦から安廣に変更になったアクシデントをものともせず、“ほぼ故郷”に錦を飾ることができた（所は岐阜県出身）。そのキャラクターからは想像できない強心臓ぶりは、さすが所だ。<br>
+　しかも、「昨日の試合を観ていて、ビトー“シャオリン”ヒベイロ選手と対戦がしたいと思いました。上山（龍紀）選手は、あれだけディフェンスがうまいのに一本をとってしまって、どれだけ強いのかを体感したいですね」と、対戦要求まで飛び出した。ところが、記者から寝技の攻防を魅せる自信のほどを訊かれると、「今はあんまり自信はないです…」と、かなり弱気な発言で隣にいた前田SVをズッコケさせる場面も。やっぱりこの男は、掴みどころがない。<br>
+　しかし、この対戦が実現すれば、ハイレベルな寝技の攻防が繰り広げられるのは必至。所VSシャオリンのマッチメイクを望むファンも多いはずだ。<br>
+<br>
+<br>
+<span class="subhead"><span class="style3">■</span>アメリカ大会の展開は？</span><br>
+<br>
+　会見では、6月に開催予定のHERO'Sアメリカ大会の話題に。その全貌はいまだベールに包まれているが、谷川FEG代表は手応えを感じているようで、「ダナ・ホワイト（UFC代表）が腰を抜かすようなことになるでしょう」と自信満々にコメント。出場選手に関しては未発表ながら、「メルヴィン・マヌーフ選手やマイティ・モー選手なんかは、アメリカで話題になりそうですね」と、前日に活躍した二人の出場も十分に可能性はあることを示唆。日本人だと、UFCへの出場経験のある宇野薫、アメリカでも大人気の桜庭和志にも参戦の期待が高まるが、谷川プロデューサーは慎重な姿勢。最終調整は、これから行われるようだ。<br>
+　いったい、ダナ・ホワイト社長が腰を抜かすような発表とは、いかなる内容なのか。今後の動向に注目してほしい!!■<br></p>
+<br>
+                <p><span class="heros10px">»&nbsp;<a href="../../03eventresult/20070312/20070312.html">『OLYMPIA HERO'S 2007 開幕戦 ～名古屋初上陸～』大会結果</a><br>
+                </span></p></td>
+<td width="10" align="center" valign="top" class="heros12px"><img src="../img_share/spacer.gif" width="20" height="90" border="0" alt=""></td>
+                  <td width="330" align="center" valign="top"><div align="right"><img src="img/ph01.jpg" width="330" height="494"><br>
+                  <span class="heros10px">昨夜、衝撃の9秒殺でデビュー戦を飾った、“HERO”柴田が一夜明け会見に出席<br>
+                  </span>
+                    <img src="../img_share/spacer.gif" alt=" " width="20" height="10"><br>
+                    <table width="210" border="0" cellspacing="0" cellpadding="5">
+                      <tr>
+                        <td><img src="img/ph02.jpg" alt="ph" width="200" height="300"></td>
+                      </tr>
+                      <tr>
+                        <td class="heros10px">昨日の激闘を振り返った前田SV。格闘技界を牽引してきたU系選手への肉体のダメージを気遣っていた</td>
+                      </tr>
+                    </table>
+                    <img src="../img_share/spacer.gif" alt=" " width="20" height="10">
+                    <table width="210" border="0" cellspacing="0" cellpadding="5">
+                      <tr>
+                        <td><img src="img/ph03.jpg" alt="ph" width="200" height="300"></td>
+                      </tr>
+                      <tr>
+                        <td class="heros10px">名古屋の象徴・シャチホコ像の前で、打倒・シャオリンを誓った所。日本の寝業師が世界に挑む!</td>
+                      </tr>
+                    </table>
+                    <img src="../img_share/spacer.gif" alt=" " width="20" height="10">
+                    <table width="210" border="0" cellspacing="0" cellpadding="5">
+                      <tr>
+                        <td><img src="img/ph04.jpg" alt="ph" width="200" height="300"></td>
+                      </tr>
+                      <tr>
+                        <td class="heros10px">柴田のセコンドも務めた船木誠勝氏と前田SV。今後のHERO'Sに何を仕掛けるのか!?</td>
+                      </tr>
+                    </table>
+                    <img src="../img_share/spacer.gif" alt=" " width="20" height="10"><img src="img/ph05.jpg" alt="ph" width="330" height="220"><span class="heros10px">今大会の平均視聴率は、12.1％と昨年の数字を上回った。次回のアメリカ大会にも期待がかかる！</span><br>
+                    </div></td></tr>
+                
+
+                
+              </table>              
+              <img src="../img_share/spacer.gif" width="700" height="10" border="0" alt="">              <table width="700" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td background="../img_share/dotline.gif"><img name="dotline" src="../img_share/dotline.gif" width="8" height="13" border="0" alt=""></td>
+                  </tr>
+                </table>
+                <img src="../img_share/spacer.gif" width="700" height="10" border="0" alt=""><br>
+                <span class="heros09px">Copyright (C) 2007 HERO-S  Mail to:<a href="mailto:official@hero-s.com">official@hero-s.com</a><br>
+Copyright (C) 2007 G.T.Entertainment, Inc. All Rights Reserved.<br>
+当サイトで使用している写真およびテキストの無断転載を禁止します。</span><br>
+      <img src="../img_share/spacer.gif" width="20" height="20" border="0" alt=""> <br>
+            </td>
+            <td><img src="../img_share/spacer.gif" width="10" height="90" border="0" alt=""></td>
+            <td align="right" valign="top" background="../img_share/sidedot_r.gif"><img name="sidedot_r" src="../img_share/sidedot_r.gif" width="20" height="20" border="0" alt=""></td>
+          </tr>
+        </table></td>
+      <td width="10" background="../img_share/sideline_r.gif"><img name="sideline_r" src="../img_share/sideline_r.gif" width="10" height="75" border="0" alt=""></td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>

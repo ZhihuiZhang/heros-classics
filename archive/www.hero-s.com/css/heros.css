@@ -1,0 +1,33 @@
+.heros09px { font-size: 9px; line-height: 120%}
+.heros10px{font-size:10px;line-height:13px;}
+.heros10pxB {  font-weight: bold}
+.heros10pxlink { font-size:10px;line-height:105%; ; color: #FFFFFF}
+.heros12px{font-size:12px;line-height:135%;}
+.heros12pxB {  font-size: 12px; line-height: 140%; font-weight: bold}
+.heros14px { font-size:14px;line-height:135%; }
+.heros12pxitalic {
+	font-size: 12px;
+	font-style: oblique;
+	line-height: 140%;
+}
+.heros12px-what-new {
+	font-size: 12px;
+	line-height: 140%;
+	color: #FFFFFF;
+}
+.heros10px-whats-new {
+	font-size: 10px;
+	line-height: 140%;
+	color: #FFFFFF;
+}
+.uchikeshi {
+	text-decoration: line-through;
+}
+.subhead {
+	background-color: #D8DAF2;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-left: 1px;
+	font-weight: bold;
+	padding-right: 100px;
+}

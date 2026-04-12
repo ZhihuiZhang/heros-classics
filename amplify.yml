@@ -1,0 +1,16 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - pip3 install --user beautifulsoup4 lxml
+    build:
+      commands:
+        - python3 extract.py
+        - python3 build.py
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths: []

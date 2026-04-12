@@ -1,0 +1,353 @@
+<html>
+<head>
+<title>HERO'S［MEDIA★INFO］</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Fireworks MX Dreamweaver MX target.  Created Thu Jun 23 12:46:04 GMT-1500 2005-->
+<script language="JavaScript">
+<!--
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+ var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+   var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+   if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+//-->
+</script>
+<link href="../css/heros.css" rel="stylesheet" type="text/css">
+
+</head>
+<body bgcolor="#cccccc" text="#000000" link="#000000" vlink="#666666" alink="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="MM_preloadImages('img2005/bt_head00whats_f2.gif','img2005/bt_head00ticket_f2.gif','img2005/bt_head01news_f2.gif','img2005/bt_head02schedule_f2.gif','img2005/bt_head03result_f2.gif','img2005/bt_head04media_f2.gif','img2005/bt_head05vote_f2.gif','img2005/bt_head06fighter_f2.gif')">
+<div align="center">
+  <table width="720" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td background="img2005/sideline_l.gif"><img name="sideline_l" src="img2005/sideline_l.gif" width="10" height="75" border="0" alt=""></td>
+      <td valign="top" bgcolor="#FFFFFF"><table border="0" cellpadding="0" cellspacing="0" width="760">
+        <tr>
+          <td><img name="he00" src="img2005/he00.gif" width="20" height="10" border="0" alt=""></td>
+          <td><img name="he01" src="img2005/he01.gif" width="219" height="10" border="0" alt=""></td>
+          <td><img name="he02" src="img2005/he02.gif" width="501" height="10" border="0" alt=""></td>
+          <td><img name="he03" src="img2005/he03.gif" width="20" height="10" border="0" alt=""></td>
+        </tr>
+      </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he04" src="img2005/he04.gif" width="20" height="26" border="0" alt=""></td>
+            <td><a href="../index.html"><img name="he05" src="img2005/he05.gif" width="219" height="26" border="0" alt=""></a></td>
+            <td><a href="../07whatsheros/index.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head00whats','','img2005/bt_head00whats_f2.gif',1);"><img name="bt_head00whats" src="img2005/bt_head00whats.gif" width="157" height="26" border="0" alt=""></a></td>
+            <td><img name="he_06" src="img2005/he_06.gif" width="46" height="26" border="0" alt=""></td>
+            <td><a href="http://mtm.onlineticket.jp/heros/" target="_blank" onMouseOver="MM_swapImage('bt_head00ticket','','img2005/bt_head00ticket_f2.gif',1);" onMouseOut="MM_swapImgRestore()"><img name="bt_head00ticket" src="img2005/bt_head00ticket.gif" width="103" height="26" border="0" alt=""></a></td>
+            <td><img name="he08" src="img2005/he08.gif" width="150" height="26" border="0" alt=""></td>
+            <td><img name="he09" src="img2005/he09.gif" width="45" height="26" border="0" alt=""></td>
+            <td><img name="he10" src="img2005/he10.gif" width="20" height="26" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he11" src="img2005/he11.gif" width="20" height="26" border="0" alt=""></td>
+            <td><img name="he12" src="img2005/he12.gif" width="219" height="26" border="0" alt=""></td>
+            <td><img name="he13" src="img2005/he13.gif" width="19" height="26" border="0" alt=""></td>
+            <td><a href="../01herosnews/index2008.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head01news','','img2005/bt_head01news_f2.gif',1);"><img name="bt_head01news" src="img2005/bt_head01news.gif" width="106" height="26" border="0" alt=""></a></td>
+            <td><img name="he14" src="img2005/he14.gif" width="18" height="26" border="0" alt=""></td>
+            <td><a href="../02eventschedule/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head02schedule','','img2005/bt_head02schedule_f2.gif',1);"><img name="bt_head02schedule" src="img2005/bt_head02schedule.gif" width="163" height="26" border="0" alt=""></a></td>
+            <td><a href="../03eventresult/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head03result','','img2005/bt_head03result_f2.gif',1);"><img name="bt_head03result" src="img2005/bt_head03result.gif" width="150" height="26" border="0" alt=""></a></td>
+            <td><img name="he16" src="img2005/he16.gif" width="45" height="26" border="0" alt=""></td>
+            <td><img name="he17" src="img2005/he17.gif" width="20" height="26" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he18" src="img2005/he18.gif" width="20" height="27" border="0" alt=""></td>
+            <td><img name="he19" src="img2005/he19.gif" width="219" height="27" border="0" alt=""></td>
+            <td><img name="he20" src="img2005/he20.gif" width="19" height="27" border="0" alt=""></td>
+            <td><a href="../04mediainfo/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head04media','','img2005/bt_head04media_f2.gif',1);"><img name="bt_head04media" src="img2005/bt_head04media.gif" width="106" height="27" border="0" alt=""></a></td>
+            <td><img name="he21" src="img2005/he21.gif" width="18" height="27" border="0" alt=""></td>
+            <td><a href="../05herosvote/index2005.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head05vote','','img2005/bt_head05vote_f2.gif',1);"><img name="bt_head05vote" src="img2005/bt_head05vote.gif" width="163" height="27" border="0" alt=""></a></td>
+            <td><a href="../06fightersinfo/index01a.html" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('bt_head06fighter','','img2005/bt_head06fighter_f2.gif',1);"><img name="bt_head06fighter" src="img2005/bt_head06fighter.gif" width="150" height="27" border="0" alt=""></a></td>
+            <td><img name="he23" src="img2005/he23.gif" width="45" height="27" border="0" alt=""></td>
+            <td><img name="he24" src="img2005/he24.gif" width="20" height="27" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="760">
+          <tr>
+            <td><img name="he25" src="img2005/he25.gif" width="20" height="73" border="0" alt=""></td>
+            <td><img name="he26" src="img2005/he26.gif" width="219" height="73" border="0" alt=""></td>
+            <td><img name="he27" src="img2005/he27.gif" width="306" height="73" border="0" alt=""></td>
+            <td><img name="he32" src="img2005/he32.gif" width="195" height="73" border="0" alt=""></td>
+            <td><img name="he28" src="img2005/he28.gif" width="20" height="73" border="0" alt=""></td>
+          </tr>
+        </table>
+        <table width="720" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+          <tr>
+            <td valign="top" background="img2005/sidedot_l.gif"><img name="sidedot_l" src="img2005/sidedot_l.gif" width="20" height="13" border="0" alt=""></td>
+            <td><img src="img2005/spacer.gif" width="10" height="90" border="0" alt=""></td>
+            <td valign="top"><img src="img2005/spacer.gif" width="700" height="20" border="0" alt="">              <table border="0" cellpadding="0" cellspacing="0" width="700">
+                <tr valign="top">
+                  <td><img name="title01" src="img2008/title01.gif" width="88" height="24" border="0" alt=""><br>
+                  <img src="img2005/spacer.gif" width="205" height="20" border="0" alt=""></td>
+                  <td><img name="subtitle01" src="img2008/subtitle05.gif" width="455" height="34" border="0" alt=""><br>
+                    <img src="img2005/spacer.gif" width="245" height="20" border="0" alt=""><br>
+                    <table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+                      <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+                        <td>大山峻護が格闘技スクール「FIGHTNESS」を開講！</td>
+                      </tr>
+                      <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+                        <td><p>HERO'Sライトヘビー級で活躍する大山峻護と初代CAGE FORCEウェルター級王者・吉田善行が、2月13日（水）より毎週水曜日20時45分～22時30分、東中野ゴールドジムにて格闘技スクール「FIGHTNESS（ファイトネス）」を開講する。格闘技（ファイト）とフィットネスを融合した、女性や初心者でも楽しく汗をかけるスクール。無料体験もあるので気軽に汗を流しに行ってみよう。東中野ゴールドジムで入会受付中！</p>
+                          <p class="heros10px">◎ホームページ<br>
+                            （<a href="http://www.goldsgym.jp/golds/gghn/saishin/hn_event.html#Fightness" target="_blank">http://www.goldsgym.jp/golds/gghn/saishin/hn_event.html#Fightness</a>）<br>
+                        ◎ 東中野ゴールドジム（03-5348-6500）</p></td>
+                      </tr>
+                    </table>
+                    <img src="img2005/spacer.gif" width="245" height="10" border="0" alt="">
+                    <table width="455" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt=""></td>
+                      </tr>
+                    </table>
+                    <img src="img2005/spacer.gif" width="245" height="20" border="0" alt="">
+                    <br><img name="subtitle01" src="img2005/subtitle01.gif" width="455" height="34" border="0" alt=""><br>                    
+                    <img src="img2005/spacer.gif" width="245" height="20" border="0" alt=""><br>
+                    <table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+                      <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+                        <td width="150">毎週火曜日</td>
+                        <td width="305">『格闘王』</td>
+                      </tr>
+                      <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+                        <td width="150">25:25～25:59 TBS系列<br>
+                          26:25～26:55 MBS系列<br></td>
+                        <td width="305">HERO'S情報が満載!</td>
+                      </tr>
+                    </table>
+                    <img src="img2005/spacer.gif" width="245" height="10" border="0" alt="">
+                    <table width="455" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt=""></td>
+                      </tr>
+                    </table>
+                    <table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+                      <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+                        <td width="150">2月10日（日）</td>
+                        <td width="305">『ザ！鉄腕！DASH!!』</td>
+                      </tr>
+                      <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+                        <td width="150">19:00～19:58<br>
+                        日本テレビ系列</td>
+                        <td width="305" class="heros12px">桜庭和志が出演！</td>
+                      </tr>
+                    </table>
+                    <img src="img2005/spacer.gif" width="245" height="10" border="0" alt="">
+                    <table width="455" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt=""></td>
+                      </tr>
+                    </table>
+                    <table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+                      <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+                        <td width="150">2月11日（月）</td>
+                        <td width="305">『HERO'S 2007 開幕戦 2007・3・12』</td>
+                      </tr>
+                      <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+                        <td width="150">19:00～20:45<br>
+                          J sports ESPN<br>
+                        （CS、CATV等）</td>
+                        <td width="305" class="heros12px">2007年3月に名古屋で行われたHERO'Sを放送！</td>
+                      </tr>
+                    </table>
+                    <img src="img2005/spacer.gif" width="245" height="10" border="0" alt="">
+                    <table width="455" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt=""></td>
+                      </tr>
+                    </table>
+                    <table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+                      <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+                        <td width="150">2月13日（水）</td>
+                        <td width="305">『ジャンプ！○○中！ 2時間スペシャル』</td>
+                      </tr>
+                      <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+                        <td width="150">21:00～<br>
+                        フジテレビ系列</td>
+                        <td width="305" class="heros12px">桜庭和志が出演！</td>
+                      </tr>
+                    </table>
+                    <img src="img2005/spacer.gif" width="245" height="10" border="0" alt="">
+                    <table width="455" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt=""></td>
+                      </tr>
+                    </table>
+                    <img src="img2005/spacer.gif" width="245" height="20" border="0" alt=""> <br>                  
+                    <img name="subtitle4" src="img2005/subtitle03.gif" width="455" height="34" border="0" alt=""> <img src="img2005/spacer.gif" width="245" height="20" border="0" alt=""><br>
+                    <table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+                      <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+                        <td width="150">2月13日発売</td>
+                        <td width="305">『KING』</td>
+                      </tr>
+                      <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+                        <td width="150">講談社</td>
+                        <td width="305">桜庭和志が掲載!!</td>
+                      </tr>
+                    </table>
+                    <img src="img2005/spacer.gif" width="245" height="10" border="0" alt="空白">
+                    <table width="455" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt="ドットライン"></td>
+                      </tr>
+                    </table>
+                    <table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+  <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+    <td width="150">2月23日発売</td>
+    <td width="305">『格闘技通信』</td>
+  </tr>
+  <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+    <td width="150">ベースボール・マガジン社</td>
+    <td width="305">桜庭和志インタビュー掲載!!</td>
+  </tr>
+</table>
+<img src="img2005/spacer.gif" width="245" height="10" border="0" alt="空白">
+<table width="455" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt="ドットライン"></td>
+  </tr>
+</table>
+<table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+  <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+    <td width="150">2月23日発売</td>
+    <td width="305">『GONKAKU』</td>
+  </tr>
+  <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+    <td width="150">イーストプレス</td>
+    <td width="305">桜庭和志インタビュー掲載!!</td>
+  </tr>
+</table>
+<img src="img2005/spacer.gif" width="245" height="10" border="0" alt="空白">
+<table width="455" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt="ドットライン"></td>
+  </tr>
+</table>
+<table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+  <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+    <td width="150">2月25日（月）<br>
+      ※フリーペーパー</td>
+    <td width="305">『HMV the music &amp; movie master』</td>
+  </tr>
+  <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+    <td width="150">HMV</td>
+    <td width="305">桜庭和志が掲載！</td>
+  </tr>
+</table>
+<img src="img2005/spacer.gif" width="245" height="10" border="0" alt="空白">
+<table width="455" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt="ドットライン"></td>
+  </tr>
+</table>
+<table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+                      <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+                        <td width="150">&nbsp;</td>
+                        <td width="305">DVD『GENKI SUDO』</td>
+                      </tr>
+                      <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+                        <td width="150">販売：TCエンタテインメント<br>
+価格：5,250円</td>
+                        <td width="305">須藤元気責任編集! 宇野薫も出演!!<br>
+                          <br>
+                            <br></td>
+                      </tr>
+                  </table>
+                    <img src="img2005/spacer.gif" width="245" height="10" border="0" alt="空白">
+                    <table width="455" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt="ドットライン"></td>
+                      </tr>
+                    </table>
+                    <table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+                      <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+                        <td width="150">&nbsp;</td>
+                        <td width="305">『総合格闘技入門』</td>
+                      </tr>
+                      <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+                        <td width="150">池田書店<br>
+                        価格：1,470円</td>
+                        <td width="305">実演・所英男、監修・勝村周一朗による技術解説本、発売中！<br>
+                        <br></td>
+                      </tr>
+                  </table>
+                    <img src="img2005/spacer.gif" width="245" height="10" border="0" alt="空白">
+                    <table width="455" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt="ドットライン"></td>
+                      </tr>
+                    </table>
+                    <table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+                      <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+                        <td width="150">2007年6月23日（土）発売</td>
+                        <td width="305">『ぼく…。』</td>
+                      </tr>
+                      <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+                        <td width="150">東邦出版<br>
+                          1500円</td>
+                        <td width="305">桜庭和志の書籍第3弾！<br>
+                          <a href="http://books.yahoo.co.jp/special/sakiyomi/sakuraba/" target="_blank">http://books.yahoo.co.jp/special/sakiyomi/sakuraba/</a></td>
+                      </tr>
+                    </table>
+                    <!--<img src="img2005/spacer.gif" width="245" height="10" border="0" alt="">
+                                                <table width="455" border="0" cellspacing="0" cellpadding="0">
+                                                  <tr>
+                                                    <td background="img2005/dotline.gif"><img name="dotline3" src="img2005/dotline.gif" width="8" height="13" border="0" alt=""></td>
+                                                  </tr>
+                                                </table>
+                                                <img src="img2005/spacer.gif" width="245" height="20" border="0" alt=""><a name="event"></a><br>												<img name="subtitle03" src="img2005/subtitle04.gif" width="455" height="34" border="0" alt=""> <img src="img2005/spacer.gif" width="245" height="20" border="0" alt="">
+                                                <table width="455" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+                                                  <tr valign="top" bgcolor="#CCCCCC" class="heros12px">
+                                                    <td width="150">3月3日（土）～4月1日（日）</td>
+                                                    <td width="305">舞台『双頭の鷲』<br>
+                                                    （全26公演・4月以降地方公演あり）</td>
+                                                  </tr>
+                                                  <tr valign="top" bgcolor="#FFFFFF" class="heros12px">
+                                                    <td width="150">PARCO劇場<br>
+                                                    </td>
+                                                    <td width="305"><p>美輪明宏主演舞台に大山峻護が出演！</p>
+                                                    </td>
+                                                  </tr>
+                  </table>-->
+                  <img src="img2005/spacer.gif" width="245" height="20" border="0" alt=""></td>
+                </tr>
+              </table>              
+            <img src="img2005/spacer.gif" width="700" height="10" border="0" alt=""><table width="700" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td background="img2005/dotline.gif"><img name="dotline" src="img2005/dotline.gif" width="8" height="13" border="0" alt=""></td>
+                  </tr>
+              </table>
+                <img src="img2005/spacer.gif" width="700" height="10" border="0" alt=""><br>
+                <span class="heros09px">Copyright (C) 2008 HERO-S  Mail to:<a href="mailto:official@hero-s.com">official@hero-s.com</a><br>
+Copyright (C) 2008 G.T.Entertainment, Inc. All Rights Reserved.<br>
+当サイトで使用している写真およびテキストの無断転載を禁止します。</span><br>
+      <img src="img2005/spacer.gif" width="20" height="20" border="0" alt=""> <br>
+            </td>
+            <td><img src="img2005/spacer.gif" width="10" height="90" border="0" alt=""></td>
+            <td align="right" valign="top" background="img2005/sidedot_r.gif"><img name="sidedot_r" src="img2005/sidedot_r.gif" width="20" height="13" border="0" alt=""></td>
+          </tr>
+        </table></td>
+      <td background="img2005/sideline_r.gif"><img name="sideline_r" src="img2005/sideline_r.gif" width="10" height="75" border="0" alt=""></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

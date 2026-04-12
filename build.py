@@ -40,6 +40,7 @@ def layout(*, title: str, description: str, canonical: str, body: str, extra_hea
 <meta property="og:url" content="{esc(canonical)}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6755798026215933" crossorigin="anonymous"></script>
 {extra_head}
 </head>
 <body>
@@ -844,6 +845,10 @@ Sitemap: {SITE_URL}/sitemap.xml
     write(DIST / "robots.txt", robots)
 
 
+def write_ads_txt() -> None:
+    write(DIST / "ads.txt", "google.com, pub-6755798026215933, DIRECT, f08c47fec0942fa0\n")
+
+
 # ---------- Main -----------------------------------------------------------
 
 
@@ -959,6 +964,7 @@ def main() -> None:
     copy_media(news + events + results + fighters)
     write_sitemap(urls)
     write_robots()
+    write_ads_txt()
 
     # Emit 404 page (Amplify will serve this on missing paths if configured)
     write(DIST / "404.html", layout(

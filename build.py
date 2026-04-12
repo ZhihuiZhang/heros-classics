@@ -300,11 +300,12 @@ def build_fighters_index(fighters: list[dict]) -> str:
             if f["images"]:
                 thumb = f'<img src="{esc(archive_img_url(f["images"][0]))}" alt="" loading="lazy">'
             sub = f.get("info", {}).get("team", "")
+            sub_html = f'<p class="sub">{esc(sub)}</p>' if sub else ""
             parts.append(
                 f'<a class="card fighter-card" href="/fighters/{esc(f["slug"])}/">'
                 f'{thumb}<div class="card-body">'
                 f'<h3>{esc(f["name_jp"])}</h3>'
-                f'{("<p class=\"sub\">" + esc(sub) + "</p>") if sub else ""}'
+                f'{sub_html}'
                 f'</div></a>'
             )
         parts.append("</div></section>")

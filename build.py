@@ -40,7 +40,7 @@ def layout(*, title: str, description: str, canonical: str, body: str, extra_hea
 <meta property="og:url" content="{esc(canonical)}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/site.css">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6755798026215933" crossorigin="anonymous"></script>
+<script async src="/assets/js/kanpou-banner.js"></script>
 {extra_head}
 </head>
 <body>
@@ -846,7 +846,157 @@ Sitemap: {SITE_URL}/sitemap.xml
 
 
 def write_ads_txt() -> None:
-    write(DIST / "ads.txt", "google.com, pub-6755798026215933, DIRECT, f08c47fec0942fa0\n")
+    # AdSense removed; keep an empty file in case crawlers expect it.
+    write(DIST / "ads.txt", "")
+
+
+def write_kanpou_js() -> None:
+    js = r"""(function () {
+  var PROMOTIONS = {
+    kanpou: {
+      url: 'https://kanpou.ai',
+      icon: '📘',
+      brand: '官報AI',
+      domain: 'kanpou.ai',
+      tagline: '膨大な官報をAIが瞬時に検索・要約。<br>毎日の官報チェックをAIで劇的に効率化。',
+      cta: '官報AIを無料で試す →',
+      topbarCopy: '官報をAIで検索・要約',
+      modifier: 'kanpou'
+    },
+    koikoi: {
+      url: 'https://koikoi.chat',
+      icon: '💬',
+      brand: 'KOIKOIチャット',
+      domain: 'koikoi.chat',
+      tagline: 'AIキャラクターとの会話・音声・画像体験を<br>ひとつのインタラクティブチャットに。',
+      cta: 'KOIKOIチャットを試す →',
+      topbarCopy: 'AIキャラクターと会話・音声・画像',
+      modifier: 'koikoi'
+    }
+  };
+
+  var CSS = [
+    '.kanpou-topbar{position:fixed;top:0;left:0;right:0;z-index:1100;display:flex;align-items:stretch;justify-content:center;background:linear-gradient(90deg,#b91c1c 0%,#be185d 100%);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:.875rem;line-height:1.4}',
+    '.kanpou-topbar-link{flex:1 1 0;min-width:0;display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:7px;padding:8px 12px;color:#fff;text-decoration:none;font-weight:600;transition:background-color .15s ease}',
+    '.kanpou-topbar-link:hover{background-color:rgba(0,0,0,.18);color:#fff;text-decoration:none}',
+    '.kanpou-topbar-link--kanpou{background:linear-gradient(90deg,rgba(185,28,28,0) 0%,rgba(0,0,0,.12) 100%)}',
+    '.kanpou-topbar-link--koikoi{background:linear-gradient(90deg,rgba(0,0,0,.12) 0%,rgba(190,24,93,0) 100%)}',
+    '.kanpou-topbar-divider{width:1px;align-self:center;height:60%;background:rgba(255,255,255,.4);flex:0 0 auto}',
+    '.kanpou-topbar-badge{background:#fef3c7;color:#7c2d12;font-size:.68rem;font-weight:800;letter-spacing:.1em;padding:2px 7px;border-radius:3px;flex-shrink:0}',
+    '.kanpou-topbar-icon{font-size:1.05rem;flex-shrink:0}',
+    '.kanpou-topbar-brand{font-size:.95rem;font-weight:900;letter-spacing:.05em;flex-shrink:0}',
+    '.kanpou-topbar-copy{opacity:.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}',
+    '.kanpou-topbar-cta{font-weight:800;background:rgba(255,255,255,.22);padding:2px 9px;border-radius:4px;letter-spacing:.02em;flex-shrink:0}',
+    '@media (max-width:900px){.kanpou-topbar-copy{display:none}}',
+    '@media (max-width:600px){.kanpou-topbar-link{padding:6px 8px;font-size:.78rem;gap:5px}.kanpou-topbar-badge{display:none}.kanpou-topbar-brand{font-size:.82rem;letter-spacing:.02em}}',
+    'body.kanpou-has-topbar .navbar.fixed-top,body.kanpou-has-topbar .sticky-top,body.kanpou-has-topbar .navbar.sticky-top{top:40px !important}',
+    'body.kanpou-has-topbar{padding-top:40px !important}',
+    '@media (max-width:600px){body.kanpou-has-topbar{padding-top:34px !important}body.kanpou-has-topbar .navbar.fixed-top,body.kanpou-has-topbar .sticky-top,body.kanpou-has-topbar .navbar.sticky-top{top:34px !important}}',
+    '.kanpou-footer-banner{max-width:1100px;margin:40px auto 32px;padding:0 16px}',
+    '.kanpou-promo-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}',
+    '.kanpou-promo-card{display:block;position:relative;overflow:hidden;color:#fff;text-decoration:none;border-radius:14px;padding:32px 24px;text-align:center;box-shadow:0 15px 35px rgba(0,0,0,.18);transition:transform .18s ease,box-shadow .18s ease}',
+    '.kanpou-promo-card:hover{color:#fff;text-decoration:none;transform:translateY(-4px);box-shadow:0 22px 45px rgba(0,0,0,.28)}',
+    '.kanpou-promo-card::before{content:"";position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,255,255,.18) 0%,transparent 70%);pointer-events:none}',
+    '.kanpou-promo-card--kanpou{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%)}',
+    '.kanpou-promo-card--koikoi{background:linear-gradient(135deg,#831843 0%,#db2777 50%,#ff1493 100%)}',
+    '.kanpou-promo-label{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.2em;color:#fde68a;background:rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;margin-bottom:14px}',
+    '.kanpou-promo-card--koikoi .kanpou-promo-label{color:#fce7f3}',
+    '.kanpou-promo-logo{font-size:2.25rem;line-height:1;margin-bottom:6px}',
+    '.kanpou-promo-title{font-size:1.6rem;font-weight:900;letter-spacing:.06em;margin:0 0 10px;color:#fff}',
+    '.kanpou-promo-tagline{font-size:.9rem;line-height:1.7;opacity:.92;margin:0 auto 20px;max-width:420px}',
+    '.kanpou-promo-cta{display:inline-block;font-weight:900;font-size:.9rem;letter-spacing:.02em;padding:11px 26px;border-radius:8px;background:#facc15;color:#1e1b4b;box-shadow:0 6px 16px rgba(250,204,21,.32);transition:background-color .15s ease}',
+    '.kanpou-promo-card--koikoi .kanpou-promo-cta{background:#fef3c7;color:#831843;box-shadow:0 6px 16px rgba(251,113,133,.32)}',
+    '.kanpou-promo-card:hover .kanpou-promo-cta{background:#fde047}',
+    '.kanpou-promo-card--koikoi:hover .kanpou-promo-cta{background:#fff}',
+    '.kanpou-promo-url{margin-top:14px;font-size:.78rem;letter-spacing:.08em;opacity:.78}',
+    '@media (max-width:800px){.kanpou-promo-grid{grid-template-columns:1fr;gap:16px}.kanpou-promo-card{padding:26px 18px}.kanpou-promo-title{font-size:1.35rem}.kanpou-promo-tagline{font-size:.85rem}}'
+  ].join('');
+
+  function injectStyle() {
+    if (document.getElementById('kanpou-banner-style')) return;
+    var style = document.createElement('style');
+    style.id = 'kanpou-banner-style';
+    style.appendChild(document.createTextNode(CSS));
+    document.head.appendChild(style);
+  }
+
+  function buildTopBarLink(p) {
+    var a = document.createElement('a');
+    a.className = 'kanpou-topbar-link kanpou-topbar-link--' + p.modifier;
+    a.href = p.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML =
+      '<span class="kanpou-topbar-badge">PR</span>' +
+      '<span class="kanpou-topbar-icon" aria-hidden="true">' + p.icon + '</span>' +
+      '<span class="kanpou-topbar-brand">' + p.brand + '</span>' +
+      '<span class="kanpou-topbar-copy">' + p.topbarCopy + '</span>' +
+      '<span class="kanpou-topbar-cta">→</span>';
+    return a;
+  }
+
+  function buildTopBar() {
+    var bar = document.createElement('div');
+    bar.className = 'kanpou-topbar';
+    bar.appendChild(buildTopBarLink(PROMOTIONS.kanpou));
+    var divider = document.createElement('span');
+    divider.className = 'kanpou-topbar-divider';
+    divider.setAttribute('aria-hidden', 'true');
+    bar.appendChild(divider);
+    bar.appendChild(buildTopBarLink(PROMOTIONS.koikoi));
+    return bar;
+  }
+
+  function buildPromoCard(p) {
+    var card = document.createElement('a');
+    card.className = 'kanpou-promo-card kanpou-promo-card--' + p.modifier;
+    card.href = p.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
+    card.innerHTML =
+      '<div class="kanpou-promo-label">PR / 弊社開発ツール</div>' +
+      '<div class="kanpou-promo-logo">' + p.icon + '</div>' +
+      '<div class="kanpou-promo-title">' + p.brand + '</div>' +
+      '<p class="kanpou-promo-tagline">' + p.tagline + '</p>' +
+      '<span class="kanpou-promo-cta">' + p.cta + '</span>' +
+      '<div class="kanpou-promo-url">' + p.domain + '</div>';
+    return card;
+  }
+
+  function buildFooterBanner() {
+    var section = document.createElement('section');
+    section.className = 'kanpou-footer-banner';
+    section.setAttribute('aria-label', '弊社開発ツール プロモーション');
+    var grid = document.createElement('div');
+    grid.className = 'kanpou-promo-grid';
+    grid.appendChild(buildPromoCard(PROMOTIONS.kanpou));
+    grid.appendChild(buildPromoCard(PROMOTIONS.koikoi));
+    section.appendChild(grid);
+    return section;
+  }
+
+  function install() {
+    injectStyle();
+    if (document.querySelector('.kanpou-topbar')) return;
+    document.body.insertBefore(buildTopBar(), document.body.firstChild);
+    document.body.classList.add('kanpou-has-topbar');
+    var footer = document.querySelector('footer');
+    var banner = buildFooterBanner();
+    if (footer && footer.parentNode) {
+      footer.parentNode.insertBefore(banner, footer);
+    } else {
+      document.body.appendChild(banner);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', install);
+  } else {
+    install();
+  }
+})();
+"""
+    write(DIST / "assets" / "js" / "kanpou-banner.js", js)
 
 
 # ---------- Main -----------------------------------------------------------
@@ -965,6 +1115,7 @@ def main() -> None:
     write_sitemap(urls)
     write_robots()
     write_ads_txt()
+    write_kanpou_js()
 
     # Emit 404 page (Amplify will serve this on missing paths if configured)
     write(DIST / "404.html", layout(

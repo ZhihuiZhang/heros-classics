@@ -378,8 +378,8 @@ def write_css() -> None:
   --card: #fff;
   --border: #e5e5e4;
   --border-strong: #d4d4d3;
-  --accent: #d11a2a;
-  --accent-dark: #8c0e1a;
+  --accent: #f59e0b;
+  --accent-dark: #b45309;
   --ink: #0a0a0a;
   --max-w: 1180px;
 }
@@ -904,7 +904,7 @@ def write_kanpou_js() -> None:
       name: 'PRIDE CLASSICS',
       icon: '🏆',
       desc: 'PRIDE 伝説の名勝負アーカイブ',
-      gradient: 'linear-gradient(135deg,#1a1a2e 0%,#7c2d12 100%)'
+      gradient: 'linear-gradient(135deg,#1a1a2e 0%,#be185d 100%)'
     }
   ];
 

@@ -918,9 +918,8 @@ def write_kanpou_js() -> None:
     '.kanpou-topbar-copy{opacity:.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
     '.kanpou-topbar-cta{font-weight:800;background:rgba(255,255,255,.22);padding:3px 10px;border-radius:4px;letter-spacing:.02em}',
     '@media (max-width:720px){.kanpou-topbar-copy{display:none}.kanpou-topbar-link{padding:6px 10px;font-size:.8125rem}}',
-    'body.kanpou-has-topbar .navbar.fixed-top,body.kanpou-has-topbar .sticky-top,body.kanpou-has-topbar .navbar.sticky-top{top:40px !important}',
-    'body.kanpou-has-topbar{padding-top:40px !important}',
-    '@media (max-width:720px){body.kanpou-has-topbar{padding-top:34px !important}body.kanpou-has-topbar .navbar.fixed-top,body.kanpou-has-topbar .sticky-top,body.kanpou-has-topbar .navbar.sticky-top{top:34px !important}}',
+    'body.kanpou-has-topbar .navbar.fixed-top,body.kanpou-has-topbar .sticky-top,body.kanpou-has-topbar .navbar.sticky-top{top:var(--kanpou-topbar-h,40px) !important}',
+    '@media (max-width:720px){body.kanpou-has-topbar{--kanpou-topbar-h:34px}}',
     '.kanpou-footer-banner{max-width:1100px;margin:40px auto 32px;padding:0 16px}',
     '.kanpou-promo-card{display:block;position:relative;overflow:hidden;color:#fff;text-decoration:none;border-radius:14px;padding:32px 24px;text-align:center;box-shadow:0 15px 35px rgba(30,27,75,.28);background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);transition:transform .18s ease,box-shadow .18s ease}',
     '.kanpou-promo-card:hover{color:#fff;text-decoration:none;transform:translateY(-4px);box-shadow:0 22px 45px rgba(30,27,75,.4)}',
@@ -1067,6 +1066,11 @@ def write_kanpou_js() -> None:
     injectStyle();
     if (document.querySelector('.kanpou-topbar')) return;
     document.body.classList.add('kanpou-banner-host');
+    // Add topbar height to whatever padding-top the page already has,
+    // rather than overriding it (which would hide the page's own fixed navbar).
+    var barH = (window.innerWidth <= 720) ? 34 : 40;
+    var existingPad = parseInt(window.getComputedStyle(document.body).paddingTop, 10) || 0;
+    document.body.style.paddingTop = (existingPad + barH) + 'px';
     document.body.insertBefore(buildTopBar(), document.body.firstChild);
     document.body.classList.add('kanpou-has-topbar');
     wrapWideTables();

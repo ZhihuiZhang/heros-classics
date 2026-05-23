@@ -944,7 +944,19 @@ def write_kanpou_js() -> None:
     '.kanpou-network-card-name{font-size:.95rem;font-weight:900;letter-spacing:.04em}',
     '.kanpou-network-card-desc{font-size:.78rem;line-height:1.55;opacity:.92;margin:0 0 8px}',
     '.kanpou-network-card-cta{font-size:.7rem;font-weight:800;letter-spacing:.12em;opacity:.85;text-transform:uppercase}',
-    '@media (max-width:760px){.kanpou-network-grid{grid-template-columns:1fr}}'
+    '@media (max-width:760px){.kanpou-network-grid{grid-template-columns:1fr}}',
+    /* ---- Mobile defensive rules (apply to all 4 sites) ---- */
+    'html,body{max-width:100%;overflow-x:hidden}',
+    '.kanpou-banner-host img,.kanpou-banner-host picture,.kanpou-banner-host video,.kanpou-banner-host iframe,.kanpou-banner-host embed,.kanpou-banner-host object{max-width:100%!important;height:auto}',
+    '.kanpou-table-wrap{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin-bottom:1rem}',
+    '.kanpou-table-wrap>table{margin-bottom:0}',
+    '@media (max-width:640px){',
+    '  .kanpou-banner-host pre,.kanpou-banner-host code{white-space:pre-wrap;word-break:break-word}',
+    '  .kanpou-banner-host td,.kanpou-banner-host th{word-break:break-word}',
+    '  .kanpou-banner-host a{word-break:break-word}',
+    '  .kanpou-banner-host [width]:not(table):not(td):not(th):not(img):not(col){max-width:100%!important}',
+    '  .kanpou-banner-host img[width]{width:auto!important;max-width:100%!important}',
+    '}'
   ].join('');
 
   function injectStyle() {
@@ -1030,11 +1042,34 @@ def write_kanpou_js() -> None:
     return section;
   }
 
+  function wrapWideTables() {
+    var tables = document.querySelectorAll('table');
+    for (var i = 0; i < tables.length; i++) {
+      var t = tables[i];
+      // Skip already wrapped
+      if (t.parentNode && t.parentNode.className &&
+          (t.parentNode.className.indexOf('kanpou-table-wrap') !== -1 ||
+           t.parentNode.className.indexOf('table-responsive') !== -1 ||
+           t.parentNode.className.indexOf('table-wrap') !== -1)) continue;
+      // Skip nested tables (their parent is a td)
+      if (t.parentNode && t.parentNode.tagName === 'TD') continue;
+      // Wrap
+      var wrap = document.createElement('div');
+      wrap.className = 'kanpou-table-wrap';
+      if (t.parentNode) {
+        t.parentNode.insertBefore(wrap, t);
+        wrap.appendChild(t);
+      }
+    }
+  }
+
   function install() {
     injectStyle();
     if (document.querySelector('.kanpou-topbar')) return;
+    document.body.classList.add('kanpou-banner-host');
     document.body.insertBefore(buildTopBar(), document.body.firstChild);
     document.body.classList.add('kanpou-has-topbar');
+    wrapWideTables();
     var footer = document.querySelector('footer');
     var fragment = document.createDocumentFragment();
     fragment.appendChild(buildPromoCard());

@@ -42,7 +42,7 @@ def layout(*, title: str, description: str, canonical: str, body: str, extra_hea
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://hero-s.k-1.info/assets/og-image.png">
 <link rel="stylesheet" href="/assets/site.css">
-<script async src="/assets/js/kanpou-banner.js"></script>
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6755798026215933"></script>
 {extra_head}
 </head>
 <body>
@@ -79,6 +79,15 @@ def layout(*, title: str, description: str, canonical: str, body: str, extra_hea
     <p class="footer-copy">© HERO'S Classics</p>
   </div>
 </footer>
+<aside class="sister-sites" aria-label="K-1 CLASSICS NETWORK 姉妹サイト" style="max-width:1100px;margin:32px auto 20px;padding:18px 16px;text-align:center;border-top:1px solid #e5e5e4;border-bottom:1px solid #e5e5e4;background:#fff;">
+<div style="font-size:11px;font-weight:800;letter-spacing:0.25em;color:#6b7280;margin-bottom:10px;font-family:system-ui,-apple-system,sans-serif;">K-1 CLASSICS NETWORK</div>
+<nav style="display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;font-size:13px;font-family:system-ui,-apple-system,sans-serif;">
+<a href="https://k-1.info" style="color:#0d6efd;font-weight:700;text-decoration:none;">K-1 CLASSICS</a>
+<a href="https://fight.k-1.info" style="color:#dc2626;font-weight:700;text-decoration:none;">K-1 Fight Classics</a>
+<a href="https://hero-s.k-1.info" style="color:#f59e0b;font-weight:700;text-decoration:none;">HERO'S Classics</a>
+<a href="https://pride.k-1.info" style="color:#be185d;font-weight:700;text-decoration:none;">PRIDE CLASSICS</a>
+</nav>
+</aside>
 </body>
 </html>
 """
@@ -856,244 +865,8 @@ Sitemap: {SITE_URL}/sitemap.xml
 
 
 def write_ads_txt() -> None:
-    # AdSense removed; keep an empty file in case crawlers expect it.
-    write(DIST / "ads.txt", "")
+    write(DIST / "ads.txt", "google.com, pub-6755798026215933, DIRECT, f08c47fec0942fa0\n")
 
-
-def write_kanpou_js() -> None:
-    js = r"""(function () {
-  var KANPOU = {
-    url: 'https://kanpou.ai',
-    icon: '📘',
-    brand: '官報AI',
-    domain: 'kanpou.ai',
-    tagline: '膨大な官報をAIが瞬時に検索・要約。<br>毎日の官報チェックをAIで劇的に効率化。',
-    cta: '官報AIを無料で試す →',
-    topbarCopy: '官報をAIで瞬時に検索・要約。毎日の官報チェックを数秒で。'
-  };
-
-  // K-1 CLASSICS network — sister sites for cross-linking
-  var SITES = [
-    {
-      url: 'https://k-1.info',
-      host: 'k-1.info',
-      name: 'K-1 CLASSICS',
-      icon: '🥊',
-      desc: 'K-1 黄金期（1993-2008）の完全アーカイブ',
-      gradient: 'linear-gradient(135deg,#0d2538 0%,#0d6efd 100%)'
-    },
-    {
-      url: 'https://fight.k-1.info',
-      host: 'fight.k-1.info',
-      name: 'K-1 Fight Classics',
-      icon: '🥋',
-      desc: 'K-1 後期（2006-2014）の試合・選手データ',
-      gradient: 'linear-gradient(135deg,#1a0a0a 0%,#dc2626 100%)'
-    },
-    {
-      url: 'https://hero-s.k-1.info',
-      host: 'hero-s.k-1.info',
-      name: "HERO'S Classics",
-      icon: '⚡',
-      desc: "HERO'S（2005-2008）総合格闘技アーカイブ",
-      gradient: 'linear-gradient(135deg,#1a1a2e 0%,#f59e0b 100%)'
-    },
-    {
-      url: 'https://pride.k-1.info',
-      host: 'pride.k-1.info',
-      name: 'PRIDE CLASSICS',
-      icon: '🏆',
-      desc: 'PRIDE 伝説の名勝負アーカイブ',
-      gradient: 'linear-gradient(135deg,#1a1a2e 0%,#be185d 100%)'
-    }
-  ];
-
-  var CSS = [
-    '.kanpou-topbar{position:fixed;top:0;left:0;right:0;z-index:1100;background:linear-gradient(90deg,#b91c1c 0%,#dc2626 50%,#991b1b 100%);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2);font-size:.875rem;line-height:1.4}',
-    '.kanpou-topbar-link{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:8px 14px;color:#fff;text-decoration:none;font-weight:600;transition:background-color .15s ease}',
-    '.kanpou-topbar-link:hover{background-color:rgba(0,0,0,.18);color:#fff;text-decoration:none}',
-    '.kanpou-topbar-badge{background:#fef3c7;color:#7c2d12;font-size:.7rem;font-weight:800;letter-spacing:.1em;padding:2px 8px;border-radius:3px}',
-    '.kanpou-topbar-icon{font-size:1.1rem}',
-    '.kanpou-topbar-brand{font-size:1rem;font-weight:900;letter-spacing:.06em}',
-    '.kanpou-topbar-copy{opacity:.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
-    '.kanpou-topbar-cta{font-weight:800;background:rgba(255,255,255,.22);padding:3px 10px;border-radius:4px;letter-spacing:.02em}',
-    '@media (max-width:720px){.kanpou-topbar-copy{display:none}.kanpou-topbar-link{padding:6px 10px;font-size:.8125rem}}',
-    'body.kanpou-has-topbar .navbar.fixed-top,body.kanpou-has-topbar .sticky-top,body.kanpou-has-topbar .navbar.sticky-top{top:var(--kanpou-topbar-h,40px) !important}',
-    '@media (max-width:720px){body.kanpou-has-topbar{--kanpou-topbar-h:34px}}',
-    '.kanpou-footer-banner{max-width:1100px;margin:40px auto 32px;padding:0 16px}',
-    '.kanpou-promo-card{display:block;position:relative;overflow:hidden;color:#fff;text-decoration:none;border-radius:14px;padding:32px 24px;text-align:center;box-shadow:0 15px 35px rgba(30,27,75,.28);background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);transition:transform .18s ease,box-shadow .18s ease}',
-    '.kanpou-promo-card:hover{color:#fff;text-decoration:none;transform:translateY(-4px);box-shadow:0 22px 45px rgba(30,27,75,.4)}',
-    '.kanpou-promo-card::before{content:"";position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(250,204,21,.18) 0%,transparent 70%);pointer-events:none}',
-    '.kanpou-promo-label{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.2em;color:#fde68a;background:rgba(255,255,255,.08);padding:4px 12px;border-radius:20px;margin-bottom:16px}',
-    '.kanpou-promo-logo{font-size:2.25rem;margin-bottom:6px;line-height:1}',
-    '.kanpou-promo-title{font-size:1.75rem;font-weight:900;letter-spacing:.08em;margin:0 0 10px;color:#fff}',
-    '.kanpou-promo-tagline{font-size:.95rem;line-height:1.7;opacity:.92;margin:0 auto 22px;max-width:520px}',
-    '.kanpou-promo-cta{display:inline-block;background:#facc15;color:#1e1b4b;font-weight:900;font-size:.95rem;padding:12px 32px;border-radius:8px;letter-spacing:.02em;transition:background-color .15s ease;box-shadow:0 6px 16px rgba(250,204,21,.3)}',
-    '.kanpou-promo-card:hover .kanpou-promo-cta{background:#fde047}',
-    '.kanpou-promo-url{margin-top:14px;font-size:.78rem;letter-spacing:.08em;opacity:.78}',
-    '@media (max-width:720px){.kanpou-promo-card{padding:26px 18px}.kanpou-promo-title{font-size:1.4rem}.kanpou-promo-tagline{font-size:.875rem}}',
-    '.kanpou-network{max-width:1100px;margin:0 auto 40px;padding:0 16px}',
-    '.kanpou-network-head{text-align:center;margin:0 0 18px;font-size:.78rem;font-weight:800;letter-spacing:.3em;color:#475569;text-transform:uppercase}',
-    '.kanpou-network-head::before,.kanpou-network-head::after{content:"";display:inline-block;width:40px;height:1px;background:#cbd5e1;vertical-align:middle;margin:0 12px}',
-    '.kanpou-network-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}',
-    '.kanpou-network-card{display:flex;flex-direction:column;justify-content:space-between;color:#fff;text-decoration:none;border-radius:12px;padding:18px 18px 16px;min-height:130px;box-shadow:0 8px 18px rgba(0,0,0,.18);transition:transform .15s ease,box-shadow .15s ease;position:relative;overflow:hidden}',
-    '.kanpou-network-card:hover{color:#fff;text-decoration:none;transform:translateY(-3px);box-shadow:0 14px 28px rgba(0,0,0,.28)}',
-    '.kanpou-network-card-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}',
-    '.kanpou-network-card-icon{font-size:1.25rem}',
-    '.kanpou-network-card-name{font-size:.95rem;font-weight:900;letter-spacing:.04em}',
-    '.kanpou-network-card-desc{font-size:.78rem;line-height:1.55;opacity:.92;margin:0 0 8px}',
-    '.kanpou-network-card-cta{font-size:.7rem;font-weight:800;letter-spacing:.12em;opacity:.85;text-transform:uppercase}',
-    '@media (max-width:760px){.kanpou-network-grid{grid-template-columns:1fr}}',
-    /* ---- Mobile defensive rules (apply to all 4 sites) ---- */
-    'html,body{max-width:100%;overflow-x:hidden}',
-    '.kanpou-banner-host img,.kanpou-banner-host picture,.kanpou-banner-host video,.kanpou-banner-host iframe,.kanpou-banner-host embed,.kanpou-banner-host object{max-width:100%!important;height:auto}',
-    '.kanpou-table-wrap{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin-bottom:1rem}',
-    '.kanpou-table-wrap>table{margin-bottom:0}',
-    '@media (max-width:640px){',
-    '  .kanpou-banner-host pre,.kanpou-banner-host code{white-space:pre-wrap;word-break:break-word}',
-    '  .kanpou-banner-host td,.kanpou-banner-host th{word-break:break-word}',
-    '  .kanpou-banner-host a{word-break:break-word}',
-    '  .kanpou-banner-host [width]:not(table):not(td):not(th):not(img):not(col){max-width:100%!important}',
-    '  .kanpou-banner-host img[width]{width:auto!important;max-width:100%!important}',
-    '}'
-  ].join('');
-
-  function injectStyle() {
-    if (document.getElementById('kanpou-banner-style')) return;
-    var style = document.createElement('style');
-    style.id = 'kanpou-banner-style';
-    style.appendChild(document.createTextNode(CSS));
-    document.head.appendChild(style);
-  }
-
-  function buildTopBar() {
-    var bar = document.createElement('div');
-    bar.className = 'kanpou-topbar';
-    var p = KANPOU;
-    bar.innerHTML =
-      '<a class="kanpou-topbar-link" href="' + p.url + '" target="_blank" rel="noopener">' +
-      '<span class="kanpou-topbar-badge">PR</span>' +
-      '<span class="kanpou-topbar-icon" aria-hidden="true">' + p.icon + '</span>' +
-      '<span class="kanpou-topbar-brand">' + p.brand + '</span>' +
-      '<span class="kanpou-topbar-copy">— ' + p.topbarCopy + '</span>' +
-      '<span class="kanpou-topbar-cta">公式サイトへ →</span>' +
-      '</a>';
-    return bar;
-  }
-
-  function buildPromoCard() {
-    var p = KANPOU;
-    var section = document.createElement('section');
-    section.className = 'kanpou-footer-banner';
-    section.setAttribute('aria-label', '官報AI プロモーション');
-    var a = document.createElement('a');
-    a.className = 'kanpou-promo-card';
-    a.href = p.url;
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.innerHTML =
-      '<div class="kanpou-promo-label">PR / 弊社開発ツール</div>' +
-      '<div class="kanpou-promo-logo">' + p.icon + '</div>' +
-      '<div class="kanpou-promo-title">' + p.brand + '</div>' +
-      '<p class="kanpou-promo-tagline">' + p.tagline + '</p>' +
-      '<span class="kanpou-promo-cta">' + p.cta + '</span>' +
-      '<div class="kanpou-promo-url">' + p.domain + '</div>';
-    section.appendChild(a);
-    return section;
-  }
-
-  function buildNetworkSection() {
-    var host = (window.location && window.location.hostname) || '';
-    var sisterSites = [];
-    for (var i = 0; i < SITES.length; i++) {
-      if (SITES[i].host !== host) sisterSites.push(SITES[i]);
-    }
-    if (sisterSites.length === 0) return null;
-
-    var section = document.createElement('section');
-    section.className = 'kanpou-network';
-    section.setAttribute('aria-label', '姉妹サイト');
-    var head = document.createElement('div');
-    head.className = 'kanpou-network-head';
-    head.textContent = '姉妹サイト / K-1 CLASSICS NETWORK';
-    section.appendChild(head);
-    var grid = document.createElement('div');
-    grid.className = 'kanpou-network-grid';
-    for (var j = 0; j < sisterSites.length; j++) {
-      var s = sisterSites[j];
-      var card = document.createElement('a');
-      card.className = 'kanpou-network-card';
-      card.href = s.url;
-      card.rel = 'noopener';
-      card.style.background = s.gradient;
-      card.innerHTML =
-        '<div>' +
-        '<div class="kanpou-network-card-head">' +
-        '<span class="kanpou-network-card-icon" aria-hidden="true">' + s.icon + '</span>' +
-        '<span class="kanpou-network-card-name">' + s.name + '</span>' +
-        '</div>' +
-        '<p class="kanpou-network-card-desc">' + s.desc + '</p>' +
-        '</div>' +
-        '<div class="kanpou-network-card-cta">サイトを見る →</div>';
-      grid.appendChild(card);
-    }
-    section.appendChild(grid);
-    return section;
-  }
-
-  function wrapWideTables() {
-    var tables = document.querySelectorAll('table');
-    for (var i = 0; i < tables.length; i++) {
-      var t = tables[i];
-      // Skip already wrapped
-      if (t.parentNode && t.parentNode.className &&
-          (t.parentNode.className.indexOf('kanpou-table-wrap') !== -1 ||
-           t.parentNode.className.indexOf('table-responsive') !== -1 ||
-           t.parentNode.className.indexOf('table-wrap') !== -1)) continue;
-      // Skip nested tables (their parent is a td)
-      if (t.parentNode && t.parentNode.tagName === 'TD') continue;
-      // Wrap
-      var wrap = document.createElement('div');
-      wrap.className = 'kanpou-table-wrap';
-      if (t.parentNode) {
-        t.parentNode.insertBefore(wrap, t);
-        wrap.appendChild(t);
-      }
-    }
-  }
-
-  function install() {
-    injectStyle();
-    if (document.querySelector('.kanpou-topbar')) return;
-    document.body.classList.add('kanpou-banner-host');
-    // Add topbar height to whatever padding-top the page already has,
-    // rather than overriding it (which would hide the page's own fixed navbar).
-    var barH = (window.innerWidth <= 720) ? 34 : 40;
-    var existingPad = parseInt(window.getComputedStyle(document.body).paddingTop, 10) || 0;
-    document.body.style.paddingTop = (existingPad + barH) + 'px';
-    document.body.insertBefore(buildTopBar(), document.body.firstChild);
-    document.body.classList.add('kanpou-has-topbar');
-    wrapWideTables();
-    var footer = document.querySelector('footer');
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(buildPromoCard());
-    var network = buildNetworkSection();
-    if (network) fragment.appendChild(network);
-    if (footer && footer.parentNode) {
-      footer.parentNode.insertBefore(fragment, footer);
-    } else {
-      document.body.appendChild(fragment);
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', install);
-  } else {
-    install();
-  }
-})();
-"""
-    write(DIST / "assets" / "js" / "kanpou-banner.js", js)
 
 
 def main() -> None:
@@ -1210,8 +983,6 @@ def main() -> None:
     write_sitemap(urls)
     write_robots()
     write_ads_txt()
-    write_kanpou_js()
-
     # Emit 404 page (Amplify will serve this on missing paths if configured)
     write(DIST / "404.html", layout(
         title="ページが見つかりません",

@@ -107,6 +107,22 @@ def format_date(iso: str) -> str:
     return dt.strftime("%Y年%m月%d日")
 
 
+def fighter_jsonld(f: dict, url: str) -> str:
+    data = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": f["name_jp"],
+        "url": url,
+        "jobTitle": "Mixed Martial Artist",
+        "affiliation": {"@type": "SportsOrganization", "name": "HERO'S"},
+    }
+    if f.get("name_en"):
+        data["alternateName"] = f["name_en"]
+    if f.get("images"):
+        data["image"] = SITE_URL + archive_img_url(f["images"][0])
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
+
+
 def format_body_html(body: str) -> str:
     # Paragraph-split on blank lines; linkify URLs
     lines = [ln.strip() for ln in body.split("\n") if ln.strip()]
@@ -956,8 +972,8 @@ def main() -> None:
 
     # Fighters
     write(DIST / "fighters" / "index.html", layout(
-        title="選手一覧",
-        description="HERO'S 出場選手のプロフィール一覧。",
+        title="HERO'S出場選手一覧・プロフィール",
+        description=f"HERO'S（2005-2008年）出場選手{len(fighters)}名のプロフィール・戦績一覧。",
         canonical=f"{SITE_URL}/fighters/",
         body=build_fighters_index(fighters),
     ))
@@ -965,10 +981,11 @@ def main() -> None:
         url = f"{SITE_URL}/fighters/{f['slug']}/"
         urls.append(url)
         write(DIST / "fighters" / f["slug"] / "index.html", layout(
-            title=f["name_jp"],
-            description=f"{f['name_jp']} のプロフィール。" + (f" {f['info'].get('team','')}" if f.get('info') else ""),
+            title=f"{f['name_jp']} プロフィール・戦績",
+            description=f"{f['name_jp']}のHERO'S出場記録・プロフィール。" + (f" {f['info'].get('team','')}" if f.get('info') else ""),
             canonical=url,
             body=build_fighter_page(f),
+            extra_head=fighter_jsonld(f, url),
         ))
 
     # About

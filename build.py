@@ -872,12 +872,69 @@ def write_sitemap(urls: list[str]) -> None:
     write(DIST / "sitemap.xml", "\n".join(lines) + "\n")
 
 
+AI_BOTS = [
+    "GPTBot", "OAI-SearchBot", "ChatGPT-User",
+    "ClaudeBot", "anthropic-ai", "Claude-User", "Claude-SearchBot",
+    "PerplexityBot", "Perplexity-User", "Google-Extended",
+    "Applebot", "Applebot-Extended", "bingbot", "Amazonbot",
+    "meta-externalagent", "CCBot", "DuckAssistBot", "MistralAI-User",
+]
+
+
 def write_robots() -> None:
-    robots = f"""User-agent: *
-Allow: /
-Sitemap: {SITE_URL}/sitemap.xml
+    lines = [
+        "# robots.txt for HERO'S Classics",
+        "# AI / LLM crawlers explicitly welcomed (GEO)",
+        "",
+        "User-agent: *",
+        "Allow: /",
+        "",
+        "# --- AI / LLM crawlers: full access ---",
+    ]
+    for bot in AI_BOTS:
+        lines.append(f"User-agent: {bot}")
+        lines.append("Allow: /")
+        lines.append("")
+    lines.append(f"Sitemap: {SITE_URL}/sitemap.xml")
+    write(DIST / "robots.txt", "\n".join(lines) + "\n")
+
+
+def write_llms() -> None:
+    txt = f"""# HERO'S Classics
+
+> HERO'S Classics ({SITE_URL.replace('https://','')}) is a Japanese-language archive of HERO'S, a mixed martial arts (MMA) promotion (2005–2008): event results, fighter interviews, and news. 総合格闘技イベント『HERO'S』(2005〜2008年)の試合結果・選手インタビュー・ニュースのアーカイブ。
+
+HERO'S was a Japanese mixed martial arts promotion run by FEG (the operators of K-1) from 2005 to 2008, known for lightweight and middleweight tournaments and fighters such as Norifumi "Kid" Yamamoto and Caol Uno. This site archives its events, results, and news.
+
+## Main pages
+- [Home]({SITE_URL}/): Site overview
+- [News (ニュース)]({SITE_URL}/news/): All HERO'S news articles (2005–2008)
+- [Events (大会)]({SITE_URL}/events/): Event listings
+- [Results (試合結果)]({SITE_URL}/results/): Match results
+- [About HERO'S]({SITE_URL}/about/): About the promotion
+
+## Related sites (K-1 CLASSICS NETWORK)
+- [K-1 CLASSICS](https://k-1.info): K-1 kickboxing golden era archive 1993–2008
+- [K-1 Fight Classics](https://fight.k-1.info): K-1 kickboxing archive 2006–2014
+- [PRIDE CLASSICS](https://pride.k-1.info): PRIDE Fighting Championships archive
 """
-    write(DIST / "robots.txt", robots)
+    write(DIST / "llms.txt", txt)
+
+
+def site_jsonld() -> str:
+    data = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {"@type": "WebSite", "@id": f"{SITE_URL}/#website", "name": SITE_NAME,
+             "url": f"{SITE_URL}/", "inLanguage": "ja", "description": SITE_DESC,
+             "publisher": {"@id": f"{SITE_URL}/#org"}},
+            {"@type": "Organization", "@id": f"{SITE_URL}/#org", "name": SITE_NAME,
+             "url": f"{SITE_URL}/", "logo": f"{SITE_URL}/assets/og-image.png",
+             "description": SITE_DESC,
+             "sameAs": ["https://k-1.info", "https://fight.k-1.info", "https://pride.k-1.info"]},
+        ],
+    }
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
 
 
 def write_ads_txt() -> None:
@@ -911,6 +968,7 @@ def main() -> None:
         canonical=f"{SITE_URL}/",
         body=home_body,
         full_width=True,
+        extra_head=site_jsonld(),
     ))
 
     # News index
@@ -999,6 +1057,7 @@ def main() -> None:
     copy_media(news + events + results + fighters)
     write_sitemap(urls)
     write_robots()
+    write_llms()
     write_ads_txt()
     # Emit 404 page (Amplify will serve this on missing paths if configured)
     write(DIST / "404.html", layout(

@@ -107,7 +107,16 @@ def format_date(iso: str) -> str:
     return dt.strftime("%Y年%m月%d日")
 
 
+def parse_birth_jp(s: str):
+    """Parse 'YYYY年M月D日' into ISO 'YYYY-MM-DD'."""
+    if not s:
+        return None
+    m = re.search(r"(\d{4})年(\d{1,2})月(\d{1,2})日", s)
+    return f"{int(m.group(1)):04d}-{int(m.group(2)):02d}-{int(m.group(3)):02d}" if m else None
+
+
 def fighter_jsonld(f: dict, url: str) -> str:
+    info = f.get("info", {})
     data = {
         "@context": "https://schema.org",
         "@type": "Person",
@@ -118,6 +127,17 @@ def fighter_jsonld(f: dict, url: str) -> str:
     }
     if f.get("name_en"):
         data["alternateName"] = f["name_en"]
+    bd = parse_birth_jp(info.get("birth"))
+    if bd:
+        data["birthDate"] = bd
+    if info.get("origin"):
+        data["birthPlace"] = {"@type": "Place", "name": info["origin"]}
+    if info.get("height") and re.search(r"\d", info["height"]):
+        data["height"] = info["height"]
+    if info.get("weight") and re.search(r"\d", info["weight"]):
+        data["weight"] = info["weight"]
+    if info.get("team") and info["team"] not in ("フリー", "-", ""):
+        data["memberOf"] = {"@type": "SportsTeam", "name": info["team"]}
     if f.get("images"):
         data["image"] = SITE_URL + archive_img_url(f["images"][0])
     return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
@@ -921,6 +941,33 @@ HERO'S was a Japanese mixed martial arts promotion run by FEG (the operators of 
     write(DIST / "llms.txt", txt)
 
 
+FAQ = [
+    ("HERO'Sとは何ですか？",
+     "HERO'S（ヒーローズ）は、K-1を運営するFEG（Fighting and Entertainment Group）が2005年から開催した日本の総合格闘技（MMA）団体です。ライト級・ミドル級のトーナメントを中心に、立ち技の名選手も多く参戦し人気を集めました。"),
+    ("HERO'Sのアーカイブ期間はいつですか？",
+     "本サイト「HERO'S Classics」は、2005年から2008年にかけてのHERO'Sの試合結果・選手インタビュー・ニュース記事をアーカイブしています。"),
+    ("HERO'Sを代表する選手は誰ですか？",
+     "山本\"KID\"徳郁、宇野薫、須藤元気、ノルマン・パーク、ホドリゴ・グレイシーなどがHERO'Sを代表する選手として知られています。"),
+    ("HERO'Sはその後どうなりましたか？",
+     "HERO'Sは2008年、同じくFEG系の総合格闘技イベント「DREAM」へと発展的に統合され、その役割を引き継ぎました。"),
+]
+
+
+def faq_html() -> str:
+    rows = "".join(
+        f'<details style="border-bottom:1px solid #2a2a2a;"><summary style="cursor:pointer;padding:14px 0;font-weight:700;color:#fff;">{esc(q)}</summary>'
+        f'<p style="padding:0 0 14px;color:#ccc;">{esc(a)}</p></details>'
+        for q, a in FAQ)
+    return f'<section class="container" aria-label="よくある質問" style="margin:48px auto;"><h2 style="font-size:22px;font-weight:800;color:#fff;border-bottom:1px solid #3a3a3a;padding-bottom:10px;">よくある質問（FAQ）</h2>{rows}</section>'
+
+
+def faq_jsonld() -> str:
+    data = {"@context": "https://schema.org", "@type": "FAQPage",
+            "mainEntity": [{"@type": "Question", "name": q,
+                            "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQ]}
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
+
+
 def site_jsonld() -> str:
     data = {
         "@context": "https://schema.org",
@@ -966,9 +1013,9 @@ def main() -> None:
         title=SITE_NAME,
         description=SITE_DESC,
         canonical=f"{SITE_URL}/",
-        body=home_body,
+        body=home_body + faq_html(),
         full_width=True,
-        extra_head=site_jsonld(),
+        extra_head=site_jsonld() + faq_jsonld(),
     ))
 
     # News index

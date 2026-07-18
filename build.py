@@ -143,6 +143,63 @@ def fighter_jsonld(f: dict, url: str) -> str:
     return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
 
 
+# venue -> (addressLocality, addressCountry); 2005-11-05 / 2007-10-28 はソウル開催
+VENUE_PLACES = {
+    "京セラドーム大阪": ("大阪市", "JP"),
+    "大阪ドーム": ("大阪市", "JP"),
+    "横浜アリーナ": ("横浜市", "JP"),
+    "名古屋市総合体育館レインボーホール": ("名古屋市", "JP"),
+    "さいたまスーパーアリーナ": ("さいたま市", "JP"),
+    "日本武道館": ("東京都", "JP"),
+    "有明コロシアム": ("東京都", "JP"),
+    "ジャンチュン体育館": ("Seoul", "KR"),
+    "オリンピック第１体育館": ("Seoul", "KR"),
+}
+
+
+def result_event_jsonld(item: dict, url: str, fighters: list[dict]) -> str:
+    body = item["body"]
+    venue_m = re.search(r"会場[：:]\s*([^\n]+)", body)
+    venue = venue_m.group(1).strip() if venue_m else None
+    name = re.sub(r"\s*(試合結果|大会結果|大会概要)\s*$", "", item["title"])
+    data = {
+        "@context": "https://schema.org",
+        "@type": "SportsEvent",
+        "name": name,
+        "url": url,
+        "sport": "Mixed Martial Arts",
+        "startDate": item["date"],
+        "endDate": item["date"],
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "organizer": {"@type": "SportsOrganization", "name": "HERO'S", "url": SITE_URL + "/"},
+    }
+    if venue:
+        place = {"@type": "Place", "name": venue}
+        loc, country = VENUE_PLACES.get(
+            venue if venue in VENUE_PLACES else venue.replace(" ", ""),
+            (None, "JP") if not venue.startswith("国立代々木") else ("東京都", "JP"),
+        )
+        addr = {"@type": "PostalAddress", "addressCountry": country}
+        if loc:
+            addr["addressLocality"] = loc
+        place["address"] = addr
+        data["location"] = place
+        data["description"] = (
+            f"{name}は、{item['date'][:4]}年に開催されたHERO'S（総合格闘技・MMA）の大会です。会場は{venue}。"
+        )
+    if item.get("images"):
+        data["image"] = SITE_URL + archive_img_url(item["images"][0])
+    performers = [
+        {"@type": "Person", "name": f["name_jp"], "url": f"{SITE_URL}/fighters/{f['slug']}/"}
+        for f in fighters
+        if len(f["name_jp"].replace(" ", "")) >= 3 and f["name_jp"] in body
+    ]
+    if performers:
+        data["performer"] = sorted(performers, key=lambda p: p["name"])
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
+
+
 def format_body_html(body: str) -> str:
     # Paragraph-split on blank lines; linkify URLs
     lines = [ln.strip() for ln in body.split("\n") if ln.strip()]
@@ -1073,6 +1130,7 @@ def main() -> None:
             description=desc or it["title"],
             canonical=url,
             body=build_event_or_result_page(it, "result"),
+            extra_head=result_event_jsonld(it, url, fighters),
         ))
 
     # Fighters

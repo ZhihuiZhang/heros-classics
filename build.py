@@ -947,6 +947,8 @@ def write_sitemap(urls: list[str]) -> None:
         lines.append(f"  <url><loc>{esc(u)}</loc><lastmod>{today}</lastmod></url>")
     lines.append("</urlset>")
     write(DIST / "sitemap.xml", "\n".join(lines) + "\n")
+    # GSC「取得できませんでした」固着対策の別名サイトマップ
+    write(DIST / "sitemap2.xml", "\n".join(lines) + "\n")
 
 
 AI_BOTS = [
@@ -973,6 +975,7 @@ def write_robots() -> None:
         lines.append("Allow: /")
         lines.append("")
     lines.append(f"Sitemap: {SITE_URL}/sitemap.xml")
+    lines.append(f"Sitemap: {SITE_URL}/sitemap2.xml")
     write(DIST / "robots.txt", "\n".join(lines) + "\n")
 
 

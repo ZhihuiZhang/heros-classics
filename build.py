@@ -947,8 +947,6 @@ def write_sitemap(urls: list[str]) -> None:
         lines.append(f"  <url><loc>{esc(u)}</loc><lastmod>{today}</lastmod></url>")
     lines.append("</urlset>")
     write(DIST / "sitemap.xml", "\n".join(lines) + "\n")
-    # GSC「取得できませんでした」固着対策の別名サイトマップ
-    write(DIST / "sitemap2.xml", "\n".join(lines) + "\n")
 
 
 AI_BOTS = [
@@ -975,7 +973,6 @@ def write_robots() -> None:
         lines.append("Allow: /")
         lines.append("")
     lines.append(f"Sitemap: {SITE_URL}/sitemap.xml")
-    lines.append(f"Sitemap: {SITE_URL}/sitemap2.xml")
     write(DIST / "robots.txt", "\n".join(lines) + "\n")
 
 
@@ -1087,7 +1084,14 @@ def main() -> None:
     ))
 
     # Article pages
-    urls = [f"{SITE_URL}/", f"{SITE_URL}/news/", f"{SITE_URL}/about/"]
+    urls = [
+        f"{SITE_URL}/",
+        f"{SITE_URL}/news/",
+        f"{SITE_URL}/events/",
+        f"{SITE_URL}/results/",
+        f"{SITE_URL}/fighters/",
+        f"{SITE_URL}/about/",
+    ]
     for it in news:
         url = f"{SITE_URL}/news/{it['slug']}/"
         urls.append(url)
@@ -1173,6 +1177,7 @@ def main() -> None:
         description="指定されたページは存在しません。",
         canonical=f"{SITE_URL}/404.html",
         body="<h1>404 - ページが見つかりません</h1><p><a href=\"/\">トップに戻る</a></p>",
+        extra_head='<meta name="robots" content="noindex, follow">',
     ))
 
     print(f"built: {len(news)} articles, {len(urls)} urls")

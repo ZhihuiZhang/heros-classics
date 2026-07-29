@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "scripts": {
+    "audit": "node scripts/audit-site.mjs --root dist --domain hero-s.k-1.info --strict",
+    "verify": "npm run audit"
+  }
+}

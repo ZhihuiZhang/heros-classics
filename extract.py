@@ -128,11 +128,14 @@ def visible_text_blocks(soup: BeautifulSoup) -> str:
         br.replace_with("\n")
     raw = soup.get_text("\n", strip=True)
     cleaned = clean_text(raw)
-    seen: set[str] = set()
     out: list[str] = []
     for line in cleaned.split("\n"):
         line = line.strip(" 　\t")
-        if not line or len(line) < 2:
+        if not line:
+            continue
+        # One-character fighter names such as 「曙」 are meaningful content.
+        # Keep CJK names while continuing to discard stray punctuation.
+        if len(line) < 2 and not re.fullmatch(r"[\u3400-\u9fff々〆ヶ]", line):
             continue
         # Drop entire line if it matches contact/company patterns
         if any(p.search(line) for p in LINE_DROP_PATTERNS):
@@ -149,9 +152,6 @@ def visible_text_blocks(soup: BeautifulSoup) -> str:
         # Skip the repeated <title> line
         if "HERO'S" in line and "NEWS" in line and len(line) < 25:
             continue
-        if line in seen:
-            continue
-        seen.add(line)
         out.append(line)
     return "\n".join(out)
 
@@ -301,28 +301,54 @@ def extract_event_results() -> list[dict]:
             continue
         images = collect_local_images(primary, soup)
         nice_date = f"{date_str[:4]}.{date_str[4:6]}.{date_str[6:8]}"
-        # Collect additional sub-pages (per fight)
+        # Collect additional sub-pages (per fight). Follow the links in the
+        # event page so the generated cards retain the original fight order.
+        # Some newer pages put every fight HTML in one "*more" directory;
+        # the old implementation kept only the first file from that directory.
         subpages: list[dict] = []
-        for sub in sorted(entry.iterdir()):
-            if not sub.is_dir():
+        linked_subpages: list[Path] = []
+        seen_subpages: set[Path] = set()
+        for link in soup.find_all("a", href=True):
+            href = (link.get("href") or "").split("#", 1)[0].split("?", 1)[0]
+            if not href.lower().endswith((".html", ".htm")):
                 continue
-            for sub_html in sorted(sub.glob("*.html")):
-                if "@" in sub_html.name:
-                    continue
-                sub_soup = BeautifulSoup(
-                    sub_html.read_text(encoding="utf-8", errors="replace"), "lxml")
-                sub_body = visible_text_blocks(sub_soup)
-                if not sub_body or len(sub_body) < 20:
-                    continue
-                sub_title = derive_title(sub_body, date_str)
-                sub_images = collect_local_images(sub_html, sub_soup)
-                subpages.append({
-                    "slug": sub.name,
-                    "title": sub_title,
-                    "body": sub_body,
-                    "images": sub_images,
-                })
-                break
+            candidate = (primary.parent / href).resolve()
+            try:
+                candidate.relative_to(entry.resolve())
+            except ValueError:
+                continue
+            if candidate == primary.resolve() or not candidate.is_file() or "@" in candidate.name:
+                continue
+            if candidate not in seen_subpages:
+                seen_subpages.add(candidate)
+                linked_subpages.append(candidate)
+
+        # Also include any unlinked local detail pages after the linked pages.
+        for candidate in sorted(entry.glob("*/*.html")):
+            resolved = candidate.resolve()
+            if "@" not in candidate.name and resolved not in seen_subpages:
+                seen_subpages.add(resolved)
+                linked_subpages.append(resolved)
+
+        for sub_html in linked_subpages:
+            sub_soup = BeautifulSoup(
+                sub_html.read_text(encoding="utf-8", errors="replace"), "lxml")
+            sub_body = visible_text_blocks(sub_soup)
+            if not sub_body or len(sub_body) < 20:
+                continue
+            rel = sub_html.resolve().relative_to(entry.resolve()).with_suffix("")
+            if len(rel.parts) == 2 and rel.parts[0] == rel.parts[1]:
+                slug = rel.parts[0]
+            else:
+                slug = rel.as_posix()
+            sub_title = derive_title(sub_body, date_str)
+            sub_images = collect_local_images(sub_html, sub_soup)
+            subpages.append({
+                "slug": slug,
+                "title": sub_title,
+                "body": sub_body,
+                "images": sub_images,
+            })
         items.append({
             "id": entry.name,
             "date": f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:8]}",

@@ -212,6 +212,276 @@ def format_body_html(body: str) -> str:
     return "\n".join(paragraphs)
 
 
+EVENT_META_PATTERNS = (
+    ("開催日", re.compile(r"^[★●]?(?:日時|日\s*時)[：: ]+\s*(.+)$")),
+    ("会場", re.compile(r"^[★●]?会\s*場[：: ]+\s*(.+)$")),
+    ("入場者数", re.compile(r"^[★●]?入場者数[：: ]+\s*(.+)$")),
+)
+RESULT_MARKER_RE = re.compile(r"^HERO['’]?S\s*[［\[]?EVENT[★☆]RESULT", re.IGNORECASE)
+DETAIL_RESULT_RE = re.compile(
+    r"(?:\d+\s*[RＲ].*?(?:秒|分)|判定|K\.?O\.?|T\.?K\.?O\.?|一本|"
+    r"ノーコンテスト|ドロー|無効|反則|不戦|中止)",
+    re.IGNORECASE,
+)
+
+
+def body_lines(body: str) -> list[str]:
+    return [line.strip() for line in body.splitlines() if line.strip()]
+
+
+def split_event_meta(body: str) -> tuple[list[tuple[str, str]], list[str]]:
+    """Separate date/venue/attendance from the archived event copy."""
+    facts: list[tuple[str, str]] = []
+    remaining: list[str] = []
+    for line in body_lines(body):
+        if RESULT_MARKER_RE.search(line) or "EVENT★SCHEDULE" in line or "EVENT☆SCHEDULE" in line:
+            continue
+        matched = False
+        for label, pattern in EVENT_META_PATTERNS:
+            match = pattern.match(line)
+            if match:
+                facts.append((label, match.group(1).strip()))
+                matched = True
+                break
+        if not matched:
+            remaining.append(line)
+    return facts, remaining
+
+
+def event_masthead(item: dict, kind: str) -> str:
+    facts, _ = split_event_meta(item["body"])
+    if not any(label == "開催日" for label, _ in facts):
+        facts.insert(0, ("開催日", format_date(item["date"])))
+    facts_html = "".join(
+        f'<div class="event-fact"><dt>{esc(label)}</dt><dd>{esc(value)}</dd></div>'
+        for label, value in facts
+    )
+    logo = ""
+    if item.get("images"):
+        logo = (
+            f'<figure class="event-mark"><img src="{esc(archive_img_url(item["images"][0]))}" '
+            f'alt="{esc(item["title"])}" loading="eager" decoding="async"></figure>'
+        )
+    label = "試合結果" if kind == "result" else "大会概要"
+    return f"""
+  <header class="event-head">
+    <p class="event-kicker">HERO'S ARCHIVE / {label}</p>
+    <h1>{esc(item["title"])}</h1>
+    <div class="event-overview">
+      {logo}
+      <dl class="event-facts">{facts_html}</dl>
+    </div>
+  </header>
+"""
+
+
+def _is_affiliation(line: str) -> bool:
+    return bool(re.match(r"^[（(].+[）)]$", line))
+
+
+def _is_name_fragment(line: str) -> bool:
+    if (
+        not line
+        or len(line) > 42
+        or _is_affiliation(line)
+        or "ルール" in line
+        or DETAIL_RESULT_RE.search(line)
+        or re.match(r"^(?:第[0-9０-９一二三四五六七八九十]+試合|オープニング|休憩|開会式)", line)
+        or line.startswith(("※", "＊", "*"))
+        or re.fullmatch(r"[\d\s.,，、\-－–—]+", line)
+    ):
+        return False
+    return True
+
+
+def _clean_fighter_name(parts: list[str]) -> str:
+    value = "".join(parts).strip()
+    return re.sub(r"^[○●×△▲◎\s]+", "", value).strip()
+
+
+def parse_bout_summary(subpage: dict) -> dict | None:
+    """Parse the compact result table at the start of an archived fight page."""
+    lines = body_lines(subpage["body"])
+    if lines and lines[0] == "大会結果詳細":
+        lines = lines[1:]
+    stop = next(
+        (index for index, line in enumerate(lines) if line in ("試合内容", "クリックで拡大", "コメント")),
+        len(lines),
+    )
+    intro = lines[:stop]
+    try:
+        versus = next(index for index, line in enumerate(intro) if line.lower() == "vs")
+    except StopIteration:
+        return None
+
+    left = intro[:versus]
+    right = intro[versus + 1:]
+    left_aff_index = next((i for i in range(len(left) - 1, -1, -1) if _is_affiliation(left[i])), None)
+    if left_aff_index is None:
+        return None
+
+    left_name_end = left_aff_index
+    left_name_start = left_name_end
+    while left_name_start > 0 and left_name_end - left_name_start < 3:
+        candidate = left[left_name_start - 1]
+        if not _is_name_fragment(candidate):
+            break
+        left_name_start -= 1
+    fighter_left = _clean_fighter_name(left[left_name_start:left_name_end])
+    affiliation_left = left[left_aff_index]
+    if not fighter_left:
+        fighter_left = "選手名記録なし"
+
+    right_aff_index = next((i for i, line in enumerate(right) if _is_affiliation(line)), None)
+    if right_aff_index is None:
+        right_name_parts = [line for line in right[:3] if _is_name_fragment(line)]
+        affiliation_right = ""
+    else:
+        right_name_parts = [line for line in right[:right_aff_index] if _is_name_fragment(line)]
+        affiliation_right = right[right_aff_index]
+    fighter_right = _clean_fighter_name(right_name_parts) or "選手名記録なし"
+
+    header = left[:left_name_start]
+    result_index = next(
+        (i for i, line in enumerate(header) if "ルール" not in line and DETAIL_RESULT_RE.search(line)),
+        None,
+    )
+    rule_index = next((i for i, line in enumerate(header) if "ルール" in line), None)
+    title_end = rule_index if rule_index is not None else (result_index if result_index is not None else min(1, len(header)))
+    title = " ".join(header[:title_end]).strip() or subpage.get("title") or "試合詳細"
+    if result_index is None:
+        rules = " ".join(header[rule_index:] if rule_index is not None else [])
+        result = ""
+    else:
+        rules = " ".join(header[rule_index:result_index] if rule_index is not None else [])
+        result = " ".join(header[result_index:])
+    return {
+        "title": title,
+        "rules": rules,
+        "result": result,
+        "fighter_left": fighter_left,
+        "affiliation_left": affiliation_left,
+        "fighter_right": fighter_right,
+        "affiliation_right": affiliation_right,
+    }
+
+
+def bout_summary_html(summary: dict, *, compact: bool = False) -> str:
+    compact_class = " compact" if compact else ""
+    rules = f'<p class="bout-rules">{esc(summary["rules"])}</p>' if summary.get("rules") else ""
+    result = f'<p class="bout-result"><span>RESULT</span>{esc(summary["result"])}</p>' if summary.get("result") else ""
+    left_aff = f'<small>{esc(summary["affiliation_left"])}</small>' if summary.get("affiliation_left") else ""
+    right_aff = f'<small>{esc(summary["affiliation_right"])}</small>' if summary.get("affiliation_right") else ""
+    return f"""
+<div class="bout-summary{compact_class}">
+  <p class="bout-label">{esc(summary["title"])}</p>
+  {rules}
+  <div class="matchup">
+    <div class="competitor"><strong>{esc(summary["fighter_left"])}</strong>{left_aff}</div>
+    <span class="versus" aria-label="対">VS</span>
+    <div class="competitor"><strong>{esc(summary["fighter_right"])}</strong>{right_aff}</div>
+  </div>
+  {result}
+</div>
+"""
+
+
+def build_result_contents(item: dict) -> str:
+    bouts: list[str] = []
+    reports: list[str] = []
+    for subpage in item.get("subpages", []):
+        href = f'/results/{esc(item["slug"])}/{esc(subpage["slug"])}/'
+        summary = parse_bout_summary(subpage)
+        if summary:
+            bouts.append(
+                f'<a class="bout-card" href="{href}">'
+                f'{bout_summary_html(summary, compact=True)}'
+                f'<span class="bout-link">試合詳細 <span aria-hidden="true">→</span></span></a>'
+            )
+            continue
+        lines = body_lines(subpage["body"])
+        title = next((line for line in lines if line != "大会結果詳細"), subpage.get("title", "関連レポート"))
+        preview_lines = [
+            line for line in lines
+            if line not in ("大会結果詳細", "クリックで拡大") and line != title
+        ]
+        preview = re.sub(r"\s+", " ", " ".join(preview_lines))[:110]
+        reports.append(
+            f'<a class="report-card" href="{href}"><span class="report-label">EVENT REPORT</span>'
+            f'<strong>{esc(title)}</strong>'
+            f'{("<p>" + esc(preview) + "…</p>") if preview else ""}'
+            f'<span class="report-link">読む →</span></a>'
+        )
+
+    if bouts:
+        bouts_html = (
+            f'<section class="event-section"><div class="event-section-head">'
+            f'<p>MATCH CARD</p><h2>対戦カード・試合結果</h2>'
+            f'<span>{len(bouts)}試合</span></div><div class="bout-list">{"".join(bouts)}</div></section>'
+        )
+    else:
+        _, remaining = split_event_meta(item["body"])
+        raw = [line for line in remaining if line not in ("対戦カード", "コメント＆雑感")]
+        bouts_html = (
+            '<section class="event-section"><div class="event-section-head">'
+            '<p>MATCH CARD</p><h2>対戦カード・試合結果</h2></div>'
+            f'<div class="archive-copy">{format_body_html(chr(10).join(raw))}</div></section>'
+        )
+
+    reports_html = ""
+    if reports:
+        reports_html = (
+            '<section class="event-section reports-section"><div class="event-section-head">'
+            '<p>REPORTS</p><h2>大会レポート</h2></div>'
+            f'<div class="report-grid">{"".join(reports)}</div></section>'
+        )
+    return bouts_html + reports_html
+
+
+def format_event_schedule(body: str) -> str:
+    _, lines = split_event_meta(body)
+    heading_re = re.compile(
+        r"^(?:出場予定選手|実施概要|対戦カード|スーパーファイト|"
+        r".+トーナメント(?:決勝戦|準決勝|リザーブファイト)?)$"
+    )
+    parts: list[str] = []
+    open_group = False
+    for line in lines:
+        if heading_re.match(line):
+            if open_group:
+                parts.append("</div>")
+            parts.append(f'<h2>{esc(line)}</h2><div class="schedule-group">')
+            open_group = True
+        else:
+            parts.append(f"<p>{esc(line)}</p>")
+    if open_group:
+        parts.append("</div>")
+    return "\n".join(parts)
+
+
+def format_result_detail_copy(body: str) -> str:
+    lines = body_lines(body)
+    if lines and lines[0] == "大会結果詳細":
+        lines = lines[1:]
+    start = next((i + 1 for i, line in enumerate(lines) if line == "試合内容"), None)
+    if start is not None:
+        lines = lines[start:]
+    else:
+        # Feature/ceremony reports have no bout intro.
+        lines = [line for line in lines if line != "クリックで拡大"]
+    parts: list[str] = []
+    for line in lines:
+        if line == "クリックで拡大":
+            continue
+        if line == "コメント":
+            parts.append('<h2 class="detail-heading">選手コメント</h2>')
+        elif line.endswith("のコメント") and len(line) < 60:
+            parts.append(f'<h3 class="comment-heading">{esc(line)}</h3>')
+        else:
+            parts.append(f"<p>{esc(line)}</p>")
+    return "\n".join(parts)
+
+
 # ---------- Pages ----------------------------------------------------------
 
 
@@ -268,11 +538,18 @@ def build_news_index(items: list[dict]) -> str:
 def build_home(news: list[dict], events: list[dict], results: list[dict], fighters: list[dict]) -> str:
     def card(base: str, it: dict, date: bool = True) -> str:
         has_img = bool(it.get("images"))
-        img = (
-            f'<img src="{esc(archive_img_url(it["images"][0]))}" alt="" loading="lazy">'
-            if has_img else ""
-        )
-        cls = "card" if has_img else "card no-img"
+        is_event_card = base in ("/events/", "/results/")
+        if has_img and is_event_card:
+            img = (
+                f'<div class="event-thumb"><img src="{esc(archive_img_url(it["images"][0]))}" '
+                f'alt="" loading="lazy"></div>'
+            )
+        else:
+            img = (
+                f'<img src="{esc(archive_img_url(it["images"][0]))}" alt="" loading="lazy">'
+                if has_img else ""
+            )
+        cls = ("card event-card" if is_event_card else "card") if has_img else "card no-img"
         time_html = f'<time>{esc(format_date(it["date"]))}</time>' if date and it.get("date") else ""
         return (
             f'<a class="{cls}" href="{base}{esc(it["slug"])}/">{img}'
@@ -329,40 +606,53 @@ CATEGORY_LABELS = {
 
 
 def build_event_or_result_page(item: dict, kind: str) -> str:
-    body_html = format_body_html(item["body"])
-    imgs_html = ""
-    if item["images"]:
-        tiles = "".join(
-            f'<figure><img src="{esc(archive_img_url(i))}" alt="" loading="lazy"></figure>'
-            for i in item["images"]
-        )
-        imgs_html = f'<div class="gallery">{tiles}</div>'
-    sub_html = ""
-    if item.get("subpages"):
-        cards = ""
-        for s in item["subpages"]:
-            thumb = ""
-            if s["images"]:
-                thumb = f'<img src="{esc(archive_img_url(s["images"][0]))}" alt="" loading="lazy">'
-            preview = re.sub(r"\s+", " ", s["body"])[:120]
-            cards += (
-                f'<div class="sub-card">{thumb}'
-                f'<h3>{esc(s["title"])}</h3>'
-                f'<p>{esc(preview)}…</p></div>'
-            )
-        sub_html = f'<section class="subpages"><h2>関連レポート</h2><div class="sub-grid">{cards}</div></section>'
     back = "/events/" if kind == "event" else "/results/"
     back_label = "イベント一覧へ" if kind == "event" else "試合結果一覧へ"
+    if kind == "result":
+        contents = build_result_contents(item)
+    else:
+        contents = (
+            '<section class="event-section schedule-section">'
+            '<div class="event-section-head"><p>EVENT GUIDE</p><h2>大会情報</h2></div>'
+            f'<div class="schedule-copy">{format_event_schedule(item["body"])}</div></section>'
+        )
     return f"""
-<article class="article">
-  <header>
-    <p class="date">{esc(format_date(item["date"]))}</p>
-    <h1>{esc(item["title"])}</h1>
-  </header>
-  {imgs_html}
-  <div class="prose">{body_html}</div>
-  {sub_html}
+<article class="event-detail {'result-detail' if kind == 'result' else 'schedule-detail'}">
+  <p class="breadcrumb"><a href="/">ホーム</a><span>/</span><a href="{back}">{back_label.replace("へ", "")}</a></p>
+  {event_masthead(item, kind)}
+  {contents}
   <p class="back"><a href="{back}">← {back_label}</a></p>
+</article>
+"""
+
+
+def build_result_subpage(item: dict, subpage: dict) -> str:
+    summary = parse_bout_summary(subpage)
+    lines = body_lines(subpage["body"])
+    report_title = next((line for line in lines if line != "大会結果詳細"), "大会レポート")
+    title = summary["title"] if summary else report_title
+    imgs_html = ""
+    if subpage.get("images"):
+        tiles = "".join(
+            f'<figure><img src="{esc(archive_img_url(image))}" alt="" loading="lazy"></figure>'
+            for image in subpage["images"]
+        )
+        imgs_html = f'<div class="gallery detail-gallery">{tiles}</div>'
+    intro = bout_summary_html(summary) if summary else (
+        f'<div class="report-hero"><p>EVENT REPORT</p><h2>{esc(report_title)}</h2></div>'
+    )
+    return f"""
+<article class="event-detail fight-detail">
+  <p class="breadcrumb"><a href="/">ホーム</a><span>/</span><a href="/results/">試合結果</a>
+  <span>/</span><a href="/results/{esc(item["slug"])}/">{esc(format_date(item["date"]))}</a></p>
+  <header class="fight-detail-head">
+    <p class="event-kicker">{esc(item["title"])}</p>
+    <h1>{esc(title)}</h1>
+  </header>
+  {intro}
+  {imgs_html}
+  <section class="detail-copy">{format_result_detail_copy(subpage["body"])}</section>
+  <p class="back"><a href="/results/{esc(item["slug"])}/">← {esc(item["title"])}へ戻る</a></p>
 </article>
 """
 
@@ -379,9 +669,13 @@ def build_event_index(items: list[dict], kind: str) -> str:
         for it in by_year[year]:
             thumb = ""
             if it["images"]:
-                thumb = f'<img src="{esc(archive_img_url(it["images"][0]))}" alt="" loading="lazy">'
+                thumb = (
+                    f'<div class="event-thumb"><img src="{esc(archive_img_url(it["images"][0]))}" '
+                    f'alt="" loading="lazy"></div>'
+                )
+            card_class = "card event-card" if it["images"] else "card no-img"
             parts.append(
-                f'<a class="card" href="{base}{esc(it["slug"])}/">'
+                f'<a class="{card_class}" href="{base}{esc(it["slug"])}/">'
                 f'{thumb}<div class="card-body">'
                 f'<time>{esc(format_date(it["date"]))}</time>'
                 f'<h3>{esc(it["title"])}</h3></div></a>'
@@ -644,6 +938,24 @@ a:hover { text-decoration: underline; }
   background: #f0f0ef;
   display: block;
 }
+.event-thumb {
+  display: grid;
+  min-height: 190px;
+  padding: 24px;
+  place-items: center;
+  background:
+    linear-gradient(135deg, rgba(245,158,11,.07), transparent 65%),
+    #fafaf9;
+  border-bottom: 1px solid var(--border);
+}
+.event-thumb img {
+  width: auto;
+  max-width: 100%;
+  max-height: 150px;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: transparent;
+}
 .card.no-img {
   background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
   color: #fff;
@@ -823,6 +1135,340 @@ a:hover { text-decoration: underline; }
 }
 .back a { font-size: 14px; font-weight: 500; }
 
+/* Event and result details */
+.event-detail {
+  width: 100%;
+  margin: 32px 0 56px;
+  padding: clamp(24px, 4vw, 52px);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(17, 17, 17, .06);
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 30px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.breadcrumb a { color: #525252; font-weight: 700; }
+.breadcrumb span { color: #c4c4c3; }
+.event-head {
+  margin-bottom: 40px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid var(--border);
+}
+.event-kicker {
+  margin: 0 0 8px;
+  color: var(--accent-dark);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+.event-head h1,
+.fight-detail-head h1 {
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.35;
+  letter-spacing: -.02em;
+}
+.event-overview {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) 1fr;
+  gap: clamp(24px, 5vw, 60px);
+  align-items: center;
+  margin-top: 30px;
+  padding: 28px;
+  background:
+    linear-gradient(135deg, rgba(245,158,11,.08), transparent 60%),
+    #fafaf9;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.event-mark {
+  display: flex;
+  min-height: 150px;
+  margin: 0;
+  padding: 16px;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.event-mark img {
+  width: auto;
+  max-width: 100%;
+  max-height: 180px;
+  object-fit: contain;
+}
+.event-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 18px;
+  margin: 0;
+}
+.event-fact {
+  min-width: 0;
+  padding-left: 16px;
+  border-left: 3px solid var(--accent);
+}
+.event-fact dt {
+  margin-bottom: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.event-fact dd {
+  margin: 0;
+  color: #171717;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+.event-section { margin-top: 44px; }
+.event-section-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-strong);
+}
+.event-section-head p {
+  grid-column: 1 / -1;
+  margin: 0 0 2px;
+  color: var(--accent-dark);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+.event-section-head h2 {
+  margin: 0;
+  font-size: clamp(21px, 3vw, 28px);
+  line-height: 1.4;
+}
+.event-section-head > span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+.bout-list { display: grid; gap: 14px; }
+.bout-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: center;
+  padding: 0;
+  overflow: hidden;
+  color: var(--fg);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.bout-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px rgba(17,17,17,.08);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+.bout-summary { overflow: hidden; }
+.bout-summary.compact { padding: 0; }
+.bout-label {
+  margin: 0;
+  padding: 11px 18px;
+  color: #fff;
+  background: #171717;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+.bout-rules {
+  margin: 0;
+  padding: 8px 18px;
+  color: #57534e;
+  background: #fafaf9;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+}
+.matchup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr);
+  align-items: center;
+  min-height: 86px;
+  padding: 14px 18px;
+}
+.competitor { min-width: 0; text-align: center; }
+.competitor strong {
+  display: block;
+  color: #171717;
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.45;
+}
+.competitor small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.versus {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  color: var(--accent-dark);
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 900;
+}
+.bout-result {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin: 0;
+  padding: 9px 18px;
+  color: #292524;
+  background: #fffbeb;
+  border-top: 1px solid #fde68a;
+  font-size: 13px;
+  font-weight: 800;
+}
+.bout-result span {
+  color: var(--accent-dark);
+  font-size: 9px;
+  letter-spacing: .12em;
+}
+.bout-link {
+  margin-right: 20px;
+  color: var(--accent-dark);
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.report-card {
+  display: flex;
+  min-height: 170px;
+  padding: 20px;
+  flex-direction: column;
+  color: #fff;
+  background: linear-gradient(135deg, #292524, #0a0a0a);
+  border: 1px solid #292524;
+  border-radius: 12px;
+}
+.report-card:hover { border-color: var(--accent); text-decoration: none; }
+.report-label {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+.report-card strong { margin-top: 8px; font-size: 17px; line-height: 1.5; }
+.report-card p {
+  margin: 8px 0 0;
+  color: #d6d3d1;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.report-link {
+  margin-top: auto;
+  padding-top: 16px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+}
+.schedule-copy,
+.archive-copy {
+  padding: clamp(20px, 4vw, 36px);
+  background: #fafaf9;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.schedule-copy h2 {
+  margin: 30px 0 12px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  font-size: 20px;
+}
+.schedule-copy h2:first-child { margin-top: 0; }
+.schedule-group {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.schedule-group p,
+.archive-copy p { margin: 0; }
+.archive-copy { display: grid; gap: 10px; }
+
+/* Individual fight reports */
+.fight-detail { max-width: 980px; margin-left: auto; margin-right: auto; }
+.fight-detail-head {
+  margin-bottom: 26px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+}
+.fight-detail > .bout-summary {
+  margin-bottom: 34px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.report-hero {
+  margin-bottom: 32px;
+  padding: 26px;
+  color: #fff;
+  background: linear-gradient(135deg, #292524, #0a0a0a);
+  border-radius: 12px;
+}
+.report-hero p {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+.report-hero h2 { margin: 0; font-size: clamp(22px, 4vw, 32px); }
+.detail-gallery { margin: 0 0 34px; }
+.detail-copy {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 2;
+}
+.detail-copy p { margin: 0 0 1.35em; }
+.detail-heading {
+  margin: 46px 0 20px;
+  padding: 10px 14px;
+  color: #fff;
+  background: #171717;
+  border-left: 4px solid var(--accent);
+  font-size: 22px;
+}
+.comment-heading {
+  margin: 28px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 18px;
+}
+
 /* Footer */
 .site-footer {
   background: var(--ink);
@@ -926,6 +1572,21 @@ a:hover { text-decoration: underline; }
   .site-nav { gap: 14px; }
   .article { padding: 18px; }
   .news-list img { width: 64px; height: 48px; }
+  .event-detail { margin: 18px 0 36px; padding: 20px 16px; border-radius: 12px; }
+  .event-overview { grid-template-columns: 1fr; padding: 18px; }
+  .event-mark { min-height: 120px; }
+  .event-facts { grid-template-columns: 1fr; gap: 14px; }
+  .bout-card { grid-template-columns: 1fr; gap: 0; }
+  .bout-link {
+    margin: 0;
+    padding: 12px 18px;
+    text-align: right;
+    border-top: 1px solid var(--border);
+  }
+  .matchup { grid-template-columns: 1fr; gap: 10px; padding: 16px; }
+  .versus { width: 30px; height: 30px; margin: 0 auto; }
+  .event-section-head { grid-template-columns: 1fr; }
+  .event-section-head > span { margin-top: 4px; }
 }
 """
     write(DIST / "assets" / "site.css", css.strip() + "\n")
@@ -1139,6 +1800,24 @@ def main() -> None:
             body=build_event_or_result_page(it, "result"),
             extra_head=result_event_jsonld(it, url, fighters),
         ))
+        for subpage in it.get("subpages", []):
+            sub_url = f"{url}{subpage['slug']}/"
+            urls.append(sub_url)
+            sub_desc = re.sub(r"\s+", " ", subpage["body"])[:140]
+            sub_summary = parse_bout_summary(subpage)
+            sub_title = sub_summary["title"] if sub_summary else next(
+                (
+                    line for line in body_lines(subpage["body"])
+                    if line not in ("大会結果詳細", "クリックで拡大")
+                ),
+                subpage["title"],
+            )
+            write(DIST / "results" / it["slug"] / subpage["slug"] / "index.html", layout(
+                title=f"{sub_title} | {it['title']}",
+                description=sub_desc or it["title"],
+                canonical=sub_url,
+                body=build_result_subpage(it, subpage),
+            ))
 
     # Fighters
     write(DIST / "fighters" / "index.html", layout(
